@@ -1,7 +1,3 @@
-echo "# public_repo" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/Trogloduck/public_repo.git
-git push -u origin main
+# welcome!
+This is _Incelticide_'s public repo
+Here you will personal projects, groups projects and notes
