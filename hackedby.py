@@ -58,9 +58,8 @@ def animate_text(message,  width = get_terminal_width(), display_time=0.02, clea
         clear_screen()
         time.sleep(clear_time)  # Short delay to prevent flickering
 
-if __name__ == "__main__":
+while True:
     animate_text(message)
-
 
 # to get the file from github through powershell execute the following line:
 # curl -o "name I want to give to the file" "https://raw.githubusercontent.com/Trogloduck/public_repo/main/hackedby.py"
