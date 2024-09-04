@@ -1,8 +1,0 @@
-**TCP** (Transmission Control Protocol): checks if you actually received data and resends it if you didn’t, ensures more integrity of data thanks to *error checking*
---> file sharing, internet browsing, email sending/receiving
-
-**UDP** (User Datagram Protocol): *faster* and more adequate for *real-time* data sharing
---> multiplayer FPS game for instance, while when you open a shop it would use TCP; videocall
-
-
-https://en.wikipedia.org/wiki/Huffman_coding: to spare resources
