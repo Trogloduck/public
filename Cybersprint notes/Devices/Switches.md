@@ -1,0 +1,1 @@
+Switches are devices in a network that connect different devices and manage the flow of data between them
