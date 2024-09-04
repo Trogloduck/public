@@ -1,0 +1,1 @@
+Protocol Data Unit: unit of data specified in a network protocol that encapsulates information at a particular layer of the OSI model

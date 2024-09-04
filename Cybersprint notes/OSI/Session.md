@@ -1,0 +1,4 @@
+- Establishes *connection* to other computer data destined for
+- When connection is established, so is the *session*
+- *Synchronizes* 2 computers to make sure they are on the same page before data is sent/received
+- *Divides* data into *packets* and sends them one at a time
