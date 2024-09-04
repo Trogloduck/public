@@ -1,6 +1,7 @@
 import time
 import sys
 import os
+import signal
 
 message = [
     "  _    _          _____ _  ________ _____    ______     __",
@@ -16,6 +17,14 @@ message = [
     "                        _/ // / / / /__/  __/ / /_/ / /__/ / /_/ /  __/",
     "                       /___/_/ /_/\\___/\\___/_/\\__/_/\\___/_/\\__,_/\\___/"
 ]
+
+
+# Define a signal handler that ignores SIGINT (Ctrl + C)
+def ignore_interrupt(signal_received, frame):
+    print("Nice try ;)")
+
+# Override the default SIGINT handler
+signal.signal(signal.SIGINT, ignore_interrupt)
 
 
 def clear_screen():
