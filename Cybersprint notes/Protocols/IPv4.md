@@ -13,6 +13,8 @@ IPv4 packet headers:
 - **Source IP address**: IP address of sending machine
 - **Destination IP address**: IP address of destination machine
 
+# ajouter une image d'un frame IPv4
+
 [[Classes of IPv4]]: 
 
 | Class | Description                         | Range of IP        |
