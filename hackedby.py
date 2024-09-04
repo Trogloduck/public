@@ -3,7 +3,7 @@ import sys
 import os
 import signal
 
-message = [
+signature = [
     "  _    _          _____ _  ________ _____    ______     __",
     " | |  | |   /\   / ____| |/ /  ____|  __ \\  |  _ \\ \\   / /",
     " | |__| |  /  \\ | |    | ' /| |__  | |  | | | |_) \\ \\_/ / ",
@@ -40,9 +40,9 @@ def get_terminal_width():
         columns = 80  # Default width if the terminal size cannot be determined
     return columns
 
-def animate_text(message,  width = get_terminal_width(), display_time=0.02, clear_time=0.001):
+def animate_text(signature,  width = get_terminal_width(), display_time=0.02, clear_time=0.001):
     # Determine the width of the text block (the longest line)
-    text_width = max(len(line) for line in message)
+    text_width = max(len(line) for line in signature)
     position = -1
     direction = 1  # 1 for right, -1 for left
 
@@ -50,7 +50,7 @@ def animate_text(message,  width = get_terminal_width(), display_time=0.02, clea
         clear_screen()
 
         # Generate each line of the animation
-        for line in message:
+        for line in signature:
             # Create the line with text at the current position
             animated_line = ' ' * position + line
             # Print only up to the width of the terminal
@@ -68,7 +68,7 @@ def animate_text(message,  width = get_terminal_width(), display_time=0.02, clea
         time.sleep(clear_time)  # Short delay to prevent flickering
 
 while True:
-    animate_text(message)
+    animate_text(signature)
 
 # to get the file from github through powershell execute the following line:
 # curl -o "name I want to give to the file" "https://raw.githubusercontent.com/Trogloduck/public_repo/main/hackedby.py"
