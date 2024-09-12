@@ -13,17 +13,3 @@ The protocol:
 Types of IP: 
 - [[IPv4]]
 - [[IPv6]]
-
-
-IP \* subnet mask = network IP (in binary):
-(the multiplication is called "ANDING", why? nobody knows)
-
-Ex:
-
-|                       | Decimal       | Binary                                        |
-| --------------------- | ------------- | --------------------------------------------- |
-| **IP Address**        | 192.10.10.33  | 1100 0000 . 0110 0100 . 0000 1010 . 0010 0001 |
-| **Subnet Mask**       | 255.255.255.0 | 1111 1111 . 1111 1111 . 1111 1111 . 0000 0000 |
-| *Multiply bit by bit* |               |                                               |
-| **Network IP**        | 192.10.10.0   | 1100 0000 . 0110 0100 . 0000 1010 . 0000 0000 |
-

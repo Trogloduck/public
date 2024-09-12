@@ -66,7 +66,6 @@ Other examples of topology:
 ![[Pasted image 20240902163524.png]]
 
 **[[Router]]**: connects networks and passes data between them, performs routing (creating a path for data packets to travel to their destination, using IP)
-
 **[[Switches]]**: aggregates multiple devices within a network, the devices plug into a switch’s port, doesn’t perform routing, uses packet switching breaking down data into smaller more manageable chunks of data
 
 Switches and routers can be used in the same network, increasing ***redundancy***, adding multiple paths for data to travel on

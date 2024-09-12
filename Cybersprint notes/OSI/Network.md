@@ -6,7 +6,8 @@ Between [[Transport]] and [[Data link]]
 - ***fastest*** physical connection: copper vs fiber
 --> OSPF (Open Shortest Path First), RIP (Routing Information Protocol)
 
-At this layer, everything is dealt via [[IP]]
+At this layer, everything is dealt via [[IP]] ([[IPv4]], [[IPv6]])
 
-Takes information from transport layer to encapsulate [[PDU]] that needs to be sent
-De-encapsulates PDU received
+**Encapsulates** outgoing [[PDU]] with info from transport layer (such as source and destination IPs)
+
+**De-encapsulates** ingoing PDU

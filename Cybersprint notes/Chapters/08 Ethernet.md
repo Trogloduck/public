@@ -42,3 +42,8 @@ Ethernet [[Frame]]:
 	- `arp -a` on Windows
 	- `ip neigh` or `arp -n` on Linux
 
+ARP spoofing: often used to facilitate other types of attack
+- DoS (Denial of Service): use ARP spoofing to link multiple IP to a single target MAC (overloading traffic)
+- Session hijacking: ARP spoofing used to steal credentials
+- Man-in-the-middle (MITM): ARP spoofing to intercept and modify traffic
+
