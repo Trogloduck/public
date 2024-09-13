@@ -1,4 +1,4 @@
-< [[10 Python]]
+< [[Python]]
 
 **Indentation**: *4 spaces* > tab (displayed the same across editors)
 

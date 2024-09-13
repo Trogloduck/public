@@ -16,6 +16,6 @@ HTTPS: info transmitted in cipher text --> man in the middle can't understand wi
 DNS is not secure: info transmitted in plain text
 --> man in the middle can reply DNS query and send you to malicious website -- spoofing DNS request
 We could use sDNS: encrypting DNS requests
-There is lobbying against sDNS because DNS provides a lot of information about consumers
+There is lobbying against sDNS because DNS provides a lot of valuable information about consumers
 
 TOR is hiding DNS requests or using a different system

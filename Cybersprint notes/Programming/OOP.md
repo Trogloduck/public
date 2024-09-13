@@ -1,4 +1,4 @@
-< [[10 Python]]
+< [[Python]]
 
 - [[#**Class** defines *attributes* and *methods* related to *objects* of that class]]
 - [[#**Encapsulation** limit access to variables and methods within a class]]
