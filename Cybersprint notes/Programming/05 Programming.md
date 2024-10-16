@@ -1,6 +1,0 @@
-- [[Python]]
-	- [[OOP]]
-	- [[Good practices]]
-	- [[Python packages]]
-- [[HTML]]
-- [[CSS]]
