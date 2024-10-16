@@ -1,0 +1,193 @@
+{
+  "main": {
+    "id": "88e6ad73e9e5c58a",
+    "type": "split",
+    "children": [
+      {
+        "id": "dc8ef755df719692",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b6b01c720e9e4bad",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "76bb890040ff040b",
+    "type": "split",
+    "children": [
+      {
+        "id": "18adc10f0ea0dc4e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c4234cad69e146d1",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "e35ee8a4d45c5ecd",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "184b3693606d9435",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "b7609994c803c5c8",
+    "type": "split",
+    "children": [
+      {
+        "id": "e31d3004f52c6bd4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9ecda448453cc7f8",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "22d59a6144e9e145",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "8057a28eabf67881",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "2231d47fce21e9ec",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "templater-obsidian:Templater": false
+    }
+  },
+  "active": "b6b01c720e9e4bad",
+  "lastOpenFiles": [
+    "z note.md",
+    "Shopping list.md",
+    "Cauchemar 9-03.md",
+    "Hacking toolbox.md",
+    "cybersprint.canvas",
+    "Pasted image 20241003163041.png",
+    "wifi.md",
+    "Targets/Nobodies.md",
+    "Cybersprint notes/Networking/Subnetting.md",
+    "Cybersprint notes/Networking/Switch.md",
+    "Cybersprint notes/Networking/Ethernet.md",
+    "Cybersprint notes/Networking/Protocols/IP/IP.md",
+    "Cybersprint notes/Networking/04 Networking.md",
+    "Cybersprint notes/Networking/NAT.md",
+    "Cybersprint notes/Networking/IOS.md",
+    "Cybersprint notes/Networking/Router.md",
+    "Cybersprint notes/Networking/watch later.md",
+    "Cybersprint notes/Networking/OSI/00 OSI.md",
+    "Cybersprint notes/Networking/OSI/Frame.md",
+    "Cybersprint notes/Miscellaneous/06 Phishing.md",
+    "Cybersprint notes/Networking/OSI/2. Data link.md",
+    "Cybersprint notes/Programming/05 Programming.md",
+    "Cybersprint notes/Programming/CSS.md",
+    "Cybersprint notes/Programming/HTML.md",
+    "Cybersprint notes/Programming/Python.md",
+    "Cybersprint notes/Programming/Python packages.md",
+    "Cybersprint notes/Programming/Good practices.md",
+    "Cybersprint notes/Programming/VirtualEnv.md",
+    "Cybersprint notes/Networking/Protocols/IP",
+    "marmite lot de 6.pdf",
+    "Cybersprint notes/images/Pasted image 20240917133433.png",
+    "Cybersprint notes/images/Pasted image 20240917135033.png",
+    "'curry muncher' - +32 498 42 64 20.png",
+    "'pajeet scum' - +32 493 74 02 73.png",
+    "'pajeet scum' - +32 493 74 02 73 - pp.png",
+    "'curry muncher' - +32 498 42 64 20 - pp.jpg",
+    "Targets/images/'curry muncher' - +32 498 42 64 20.png",
+    "Targets/images",
+    "Targets/images/'pajeet scum' - +32 493 74 02 73.png",
+    "Targets/images/'pajeet scum' - +32 493 74 02 73 - pp.png",
+    "Targets/Rapists",
+    "Targets",
+    "Epistocracy",
+    "Interviews prep",
+    "Python/bootcamp.py",
+    "Cybersprint notes/Networking",
+    "dossier démo",
+    "Untitled 1.canvas"
+  ]
+}

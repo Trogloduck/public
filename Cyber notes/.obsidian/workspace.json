@@ -1,0 +1,191 @@
+{
+  "main": {
+    "id": "a524abc899c449d6",
+    "type": "split",
+    "children": [
+      {
+        "id": "581a0c83202e6a29",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a2c7e0da249e407a",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "9a291457fa7cc487",
+    "type": "split",
+    "children": [
+      {
+        "id": "2c01525bb1c48090",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "60f93d95bb65f1a8",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "fba8aa776d604a63",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "e832393f268a4961",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "bc60b225d2cc334d",
+    "type": "split",
+    "children": [
+      {
+        "id": "78b35bab31303c38",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b7785d1712c27fe0",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "83b56d9763957b89",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "1a9bcc45ada576d2",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "52a8916a79df5017",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "templater-obsidian:Templater": false
+    }
+  },
+  "active": "a2c7e0da249e407a",
+  "lastOpenFiles": [
+    "Jeremy Bower notes/Glossary.md",
+    "Jeremy Bower notes/Network.md",
+    "Jeremy Bower notes/git.md",
+    "Cybersprint notes/Programming/05 Programming.md",
+    "Jeremy Bower notes",
+    "Cybersprint notes/Programming/git.md",
+    "phishing exercise/response.md",
+    "chatgpt prompts.md",
+    "znote.md",
+    "phishing exercise/email1.md",
+    "Cybersprint notes/Programming/HTML.md",
+    "Cybersprint notes/Programming/CSS.md",
+    "Cybersprint notes/Chapters/11 Phishing.md",
+    "Cybersprint notes/Programming",
+    "Code/email_3.html",
+    "Code/mail_3.html",
+    "Code/email_2.html",
+    "Code/email_1.html",
+    "phishing exercise",
+    "Cybersprint notes/Tech talks/Anonymous.md",
+    "Cybersprint notes/Tech talks/SOC analyst.md",
+    "Cybersprint notes/Chapters/00 Table of contents.md",
+    "Code/mailtoalice.html",
+    "Code/mailtoalice",
+    "Code/env/Lib/site-packages/pip/_vendor/urllib3/packages/backports/__init__.py",
+    "Cybersprint notes/images/Pasted image 20240910093308.png",
+    "Cybersprint notes/images/Pasted image 20240909145015.png",
+    "Cybersprint notes/Python packages.md",
+    "Cybersprint notes/list of commands.md",
+    "Cybersprint notes/Tech talks/Scraping.md",
+    "Cybersprint notes/Devices/Router.md",
+    "Cybersprint notes/OSI/Network.md",
+    "Cybersprint notes/Protocols/IPv6.md",
+    "Cybersprint notes/Protocols/IPv4.md",
+    "Cybersprint notes/images/Pasted image 20240902163107.png",
+    "Cybersprint notes/images/Pasted image 20240829121543.png",
+    "Cybersprint notes/Chapters/08 Ethernet.md",
+    "Cybersprint notes/Chapters/09 Network layer.md",
+    "Cybersprint notes/Protocols/MAC.md",
+    "Cybersprint notes/OSI/Transport.md",
+    "Cybersprint notes/images/Pasted image 20240905095800.png",
+    "Pasted image 20240903134030.png",
+    "Pasted image 20240903133934.png",
+    "Pasted image 20240903133644.png",
+    "Pasted image 20240829121543.png",
+    "Pasted image 20240829115914.png"
+  ]
+}
