@@ -2,7 +2,7 @@
 
 |Deliverable|Format|
 |---|---|
-|Packet Tracer Network|.pka|
+|Packet Tracer Network|.pkt|
 |Documentation|.pdf / .docx|
 |Presentation|.ppt (10 minutes)|
 
