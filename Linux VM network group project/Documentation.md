@@ -303,7 +303,7 @@ server {
 
 `ssh username@server_ip_adress`
 
-	b. open your web navigator and type the ip address of your server as the url
+Open your web navigator and type the ip address of your server as the url
 
 15. If it is still not working:
 	1. delete the default file in /var/www/
