@@ -124,7 +124,7 @@ network:
 
 Apply the changes:
 
-`sudo apply netplan`
+`sudo netplan apply`
 
 Test the configuration:
 
