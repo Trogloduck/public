@@ -202,8 +202,6 @@ Enable firewall and allow bind9
 
 `sudo ufw enable`
 
-`sudo ufw status`
-
 `sudo ufw allow bind9`
 
 `sudo ufw reload`
