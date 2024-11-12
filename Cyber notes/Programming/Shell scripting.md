@@ -45,6 +45,7 @@ Arguments can be passed in my_script.sh:
 `my_script.sh argument1 argument2 argument3`
 
 `$0` references the script itself
+
 `$1` references the 1st argument, and so on
 
 Output: 
