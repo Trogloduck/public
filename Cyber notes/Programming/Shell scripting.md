@@ -22,7 +22,7 @@ echo "My number is $variable1"
 echo "Another way to display ${variable1}"
 ```
 
-Substitution: assigning a command to a variable. For instance, 
+Substitution: assigning a command to a variable, using \`command\`
 
 ```
 filelist=`ls`
