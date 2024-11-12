@@ -4,33 +4,62 @@
 
 *As part of a 7-month training program at BeCode, we undertook a group project to create a network composed of two virtual machines (VMs): a Kali Linux client with LibreOffice, Gimp and Mullvad browser installed and a Linux server providing DHCP, DNS, web server, and SSH connection services.*
 ___
-**Table of contents**
-- [Setting up the VMs](#setting-up-the-vms)
+Table of contents
+- [Introduction](#1-introduction)
+- [Project Infrastructure](#2-project-infrastructure)
+- [Key Functionalities](#3-key-functionalities)
+- [Project Demonstration](#4-project-demonstration)
 - [DHCP](#dhcp)
 - [DNS](#dns)
 - [Web server](#web-server)
 - [Backups](#backups-cron)
-- [SSH](#ssh-connection)
-___
-## Setting up the VMs
-
-**Client**: https://cdimage.kali.org/kali-2024.3/kali-linux-2024.3-virtualbox-amd64.7z
-
-Download the file at the above link, extract all, in the extracted file double click “kali-linux-2024.3-virtualbox-amd64” (the one with a blue cube, Type “VirtualBox Machine Definition”). VirtualBox will automatically execute the file and start a Kali Linux VM
-
-**Server**: [Get Ubuntu Server | Download](https://ubuntu.com/download/server)
-
-VirtualBox Manager > New > ISO Image: ubuntu-24.04.1-live-server-amd64; Type: Linux
-
-### Putting both VMs on the same network
-
-Before getting in the server or the vm, on VirtualBox, we have to change some network parameters:
- - for the server, put the first adapter in internal network mode and the second adapter on NAT
- - for the VM, put the first adapter in internal network
- - make sure that both internal network settings are on the same network name (e.g: "intnet")
-
+- [SSH](#ssh)
 ___
 
+## 1. Introduction
+### Project Overview
+The goal was to set up a Linux server and workstation for a local library with limited funds, demonstrating the benefits of using open-source Linux over licensed software.  
+**Context:** Linux is an affordable and flexible solution ideal for public or budget-conscious environments.
+
+## 2. Project Infrastructure
+### Server Setup
+- **Ubuntu Server:** A non-GUI (Graphical User Interface) environment, typically used for backend services like DHCP, DNS, SSH, and web servers.
+- **Kali Linux Workstation:** A client with a GUI, ideal for installing and running applications that require a graphical interface for productivity and browsing.
+
+### Components of the Server Setup:
+- **DHCP Server (isc-dhcp-server):** Automatically assigns IP addresses to clients.
+- **DNS Server (Bind):** Resolves internal resources and redirects external queries.
+- **Web Server (Nginx):** Hosts a local webpage for easy library access.
+- **Remote Management (SSH):** Enables remote access to manage the server securely.
+
+### Components of the Workstation Setup:
+- **Applications Installed:**
+  - **LibreOffice:** Office productivity suite.
+  - **Gimp:** Image editing software.
+  - **Mullvad Browser:** For privacy-focused browsing.
+- **Automatic IP Addressing:** Using DHCP from the server.
+- **Separate /home Partition:** Ensures data organization and persistence across OS updates.
+
+## 3. Key Functionalities
+### Backup System:
+- **Configuration Backup:** Scheduled weekly backups of configuration files using cron, stored in a compressed archive.
+- **Optional Feature:** Additional storage on a separate partition mounted only during backups.
+
+### Security and Accessibility:
+- **Internal Network Isolation:** The virtual DHCP network avoids interference with the external LAN.
+- **Remote Assistance (Optional):** Discuss any implemented solutions for helping users remotely, if applicable.
+
+## 4. Project Demonstration
+### Demo Plan
+1. **Server Setup and Configuration Files:**
+   - Demonstrate server setup and highlight key configuration files.
+2. **Workstation Setup:**
+   - Show the installed applications and network connectivity.
+3. **Backup and Recovery Process:**
+   - Demonstrate how the backup system is configured and how to recover configurations.
+4. **Navigating the Web Server's Local Page:**
+   - Show the local webpage hosted by the Nginx server.
+___
 ### DHCP
 
 Update the package: 
@@ -274,7 +303,7 @@ server {
 
 `ssh username@server_ip_adress`
 
-	b. open your web navigator and type the ip address of your server as the url
+Open your web navigator and type the ip address of your server as the url
 
 15. If it is still not working:
 	1. delete the default file in /var/www/
@@ -430,7 +459,6 @@ If the default route isn't your server, you should add it:
 `sudo ip route add default via 10.0.2.1`
 
 Know you should be able to ping whatever you want and have access to internet!
-
 
 ___
 ## Online resources:
