@@ -204,3 +204,70 @@ if [[ $VAR_A[0] -eq 1 && ($VAR_B = "bee" || $VAR_T = "tee") ]] ; then
 fi
 ```
 
+___
+Loops
+
+```bash
+for arg in [list] ; do
+ command(s)...
+done
+```
+*runs command(s) for each arg in list*
+
+```bash
+while [ condition ] ; do
+ command(s)...
+done
+```
+*runs command(s) as long as condition is true*
+
+```bash
+until [ condition ] ; do
+ command(s)...
+done
+```
+*runs command(s) until condition is true (i.e. as long as condition is false)*
+
+`break`and `continue` can be used in similar ways to Python
+
+Conditions can be nested:
+```bash
+#!/bin/bash
+# Enter your array comparison code here
+
+a=(3 5 8 10 6)
+b=(6 5 4 12)
+c=(14 7 5 7)
+
+# Selects the common element in all the lists
+
+for number in "${a[@]}"; do
+  in_b=false
+  in_c=false
+  for element in "${b[@]}"; do
+    if [ "$number" -eq "$element" ]; then
+      in_b=true
+      break
+    fi
+  done
+  for element in "${c[@]}"; do
+    if [ "$number" -eq "$element" ]; then
+      in_c=true
+      break
+    fi
+  done
+  if $in_b && $in_c; then
+    echo $number
+  fi
+done
+```
+
+___
+Functions
+
+```bash
+function function_name {
+  command...
+}
+```
+
