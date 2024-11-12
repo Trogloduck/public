@@ -124,7 +124,7 @@ network:
 
 Apply the changes:
 
-`sudo apply netplan`
+`sudo netplan apply`
 
 Test the configuration:
 
@@ -201,8 +201,6 @@ forwarders {
 Enable firewall and allow bind9
 
 `sudo ufw enable`
-
-`sudo ufw status`
 
 `sudo ufw allow bind9`
 
@@ -458,7 +456,7 @@ If the default route isn't your server, you should add it:
 
 `sudo ip route add default via 10.0.2.1`
 
-Know you should be able to ping whatever you want and have access to internet!
+Now you should be able to ping whatever you want and have access to internet!
 
 ___
 ## Online resources:
