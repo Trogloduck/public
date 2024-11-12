@@ -18,7 +18,7 @@ ___
 **Immutable** objects: ID attributed to object may change if object is modified
 
 Ex:
-```
+```python
 x = 1
 print(id(x))
 x += 1
@@ -29,7 +29,7 @@ print(id(x))
 **Mutable** object: ID doesn't change
 
 Ex:
-```
+```python
 x = [1, 2, 3]
 print(id(x))
 x.append(4)
@@ -45,7 +45,7 @@ print(id(x))
 ___
 
 At the end of `my_script.py`:
-```
+```python
 if __name__ == "__main__":
     my_function()
 ```
