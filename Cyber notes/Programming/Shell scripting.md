@@ -187,9 +187,10 @@ fi
 
 Numeric comparisons:
 
-| $a -lt $b | $a -gt $b | $a -le $b  | $a -ge $b  | $a -eq $b | $a -ne $b  |
-| --------- | --------- | ---------- | ---------- | --------- | ---------- |
-| a \< b    | a \> b    | a $\leq$ b | a $\geq$ b | a = b     | a $\neq$ b |
+| $a **-lt** $b | $a **-gt** $b | $a **-le** $b | $a **-ge** $b | $a **-eq** $b | $a **-ne** $b |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| a \< b        | a \> b        | a $\leq$ b    | a $\geq$ b    | a = b         | a $\neq$ b    |
+
 String comparisons:
 
 | $a = $b            | $a == $b           | $a != $b              | -z "$variable" |
