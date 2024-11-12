@@ -108,3 +108,98 @@ echo ${STRING:$POS:$LEN}   # his
 ```
 If `$LEN` omitted, prints until the end
 
+Substring replacement
+
+```bash
+STRING="to be or not to be"
+echo ${STRING[@]/be/eat}        # to eat or not to be
+```
+*replaces 1st occurrence*
+
+```bash
+STRING="to be or not to be"
+echo ${STRING[@]//be/eat}        # to eat or not to eat
+```
+*replaces all occurrences*
+
+```bash
+STRING="to be or not to be"
+echo ${STRING[@]// not/}        # to be or to be
+```
+*deletes all occurrences*
+
+```bash
+STRING="to be or not to be"
+echo ${STRING[@]/#to be/eat now}    # eat now or not to be
+```
+*replaces occurrence if at beginning of $STRING*
+
+```bash
+STRING="to be or not to be"
+echo ${STRING[@]/%be/eat}        # to be or not to eat
+```
+*replaces occurrence if at end of $STRING*
+
+```bash
+STRING="to be or not to be"
+echo ${STRING[@]/%be/be on $(date +%Y-%m-%d)}    # to be or not to be on 2012-06-14
+```
+*replaces occurrence with shell command output*
+
+___
+Decision making
+
+```bash
+if [ expression ]; then
+  code that will execute if 'expression' is true
+fi
+```
+
+```bash
+NAME="John"
+if [ "$NAME" = "John" ]; then
+  echo "True - my name is indeed John"
+fi
+```
+
+Else condition:
+```bash
+NAME="Bill"
+if [ "$NAME" = "John" ]; then
+  echo "True - my name is indeed John"
+else
+  echo "False"
+  echo "You must mistaken me for $NAME"
+fi
+```
+
+Elif condition:
+```bash
+NAME="George"
+if [ "$NAME" = "John" ]; then
+  echo "John Lennon"
+elif [ "$NAME" = "George" ]; then
+  echo "George Harrison"
+else
+  echo "This leaves us with Paul and Ringo"
+fi
+```
+
+Numeric comparisons:
+
+| $a -lt $b | $a -gt $b | $a -le $b  | $a -ge $b  | $a -eq $b | $a -ne $b  |
+| --------- | --------- | ---------- | ---------- | --------- | ---------- |
+| a \< b    | a \> b    | a $\leq$ b | a $\geq$ b | a = b     | a $\neq$ b |
+String comparisons:
+
+| $a = $b            | $a == $b           | $a != $b              | -z "$variable" |
+| ------------------ | ------------------ | --------------------- | -------------- |
+| a is the same as b | a is the same as b | a is different from b | a is empty     |
+
+Conditions can be combined:
+```bash
+if [[ $VAR_A[0] -eq 1 && ($VAR_B = "bee" || $VAR_T = "tee") ]] ; then
+    command...
+fi
+```
+
