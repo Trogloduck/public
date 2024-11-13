@@ -91,7 +91,10 @@ Edit in the config file:
 ```
 subnet 10.0.2.0 netmask 255.255.255.0 {
 
- range 10.0.2.10 10.0.2.100; # Range of IPs for DHCP option routers 10.0.2.1; # Default gateway option domain-name-servers 10.0.2.1, 8.8.8.8; # DNS servers for the subnet option domain-name "example.local"; # Local domain 
+ range 10.0.2.10 10.0.2.100; # Range of IPs for DHCP
+ option routers 10.0.2.1; # Default gateway
+ option domain-name-servers 10.0.2.1, 8.8.8.8; # DNS servers for the subnet
+ option domain-name "example.local"; # Local domain 
 
 }
 ```
