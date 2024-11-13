@@ -91,7 +91,10 @@ Edit in the config file:
 ```
 subnet 10.0.2.0 netmask 255.255.255.0 {
 
- range 10.0.2.10 10.0.2.100; # Range of IPs for DHCP option routers 10.0.2.1; # Default gateway option domain-name-servers 10.0.2.1, 8.8.8.8; # DNS servers for the subnet option domain-name "example.local"; # Local domain 
+ range 10.0.2.10 10.0.2.100; # Range of IPs for DHCP
+ option routers 10.0.2.1; # Default gateway
+ option domain-name-servers 10.0.2.1, 8.8.8.8; # DNS servers for the subnet
+ option domain-name "example.local"; # Local domain 
 
 }
 ```
@@ -117,6 +120,9 @@ network:
 			dhcp4: no
 			addresses:
 			 - 10.0.2.1/24
+			nameservers:
+			  addresses:
+			   - 10.0.2.1
 		enp0s8:
 			dhcp4: yes
 	version: 2
@@ -124,7 +130,7 @@ network:
 
 Apply the changes:
 
-`sudo apply netplan`
+`sudo netplan apply`
 
 Test the configuration:
 
@@ -201,8 +207,6 @@ forwarders {
 Enable firewall and allow bind9
 
 `sudo ufw enable`
-
-`sudo ufw status`
 
 `sudo ufw allow bind9`
 
@@ -303,7 +307,7 @@ server {
 
 `ssh username@server_ip_adress`
 
-	b. open your web navigator and type the ip address of your server as the url
+Open your web navigator and type the ip address of your server as the url
 
 15. If it is still not working:
 	1. delete the default file in /var/www/
@@ -436,9 +440,12 @@ Save and apply the changes:
 
 Now, we need to add some elements to the iptable:
 
-`sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE`
+`sudo iptables -t nat -A POSTROUTING -o enp0s8 -j MASQUERADE`
 
-This will add to the NAT table a line saying that it can communicate through the enp0s3 interface since it is the interface connected to the internet.
+This will add to the NAT table a line saying that it can communicate through the enp0s8 interface since it is the interface connected to the internet.
+
+`sudo iptables -A FORWARD -i enp0s3 -o enp0s8 -j ACCEPT`
+`sudo iptables -A FORWARD -i enp0s8 -o enp0s3 -j ACCEPT`
 
 Add those lines of command to the start-up config:
 
@@ -458,7 +465,7 @@ If the default route isn't your server, you should add it:
 
 `sudo ip route add default via 10.0.2.1`
 
-Know you should be able to ping whatever you want and have access to internet!
+Now you should be able to ping whatever you want and have access to internet!
 
 ___
 ## Online resources:

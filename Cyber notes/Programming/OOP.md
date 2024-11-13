@@ -7,7 +7,7 @@
 ___
 ##### **Class**: defines *attributes* and *methods* related to *objects* of that class
 
-```
+```python
 class Object:
 	def __init__(self):
 		self.name = "an object"
@@ -18,7 +18,7 @@ class Object:
 `self.name`: `self` refers to the object, `.name`is a method assigning a name to the object
 
 `__init__`can take several parameters:
-```
+```python
 class Object:	
 	def __init__(self, name, shape, size):
 		self.name = name
@@ -58,14 +58,14 @@ Sub/derived/child has access to attributes and methods of super/base/parent
 
 Ex:
 Super class
-```
+```python
 class Super:
     def __init__(self, super_attribute):
         self.super_attribute = super_attribute
 ```
 
 Sub class
-```
+```python
 class Sub(Super):
 
     def __init__(self, super_attribute, sub_attribute):
@@ -83,7 +83,7 @@ A sub class can have several super classes:
 `class Sub(Super1, Super2, Super3, ... , SuperN):`
 
 **`super()`** can be used instead of calling super class by its name (here Super):
-```
+```python
 class Sub(Super):
     def __init__(self, super_attribute, sub_attribute):
         super().__init__(super_attribute)
@@ -98,7 +98,7 @@ ___
 ##### **Static method**: method with no access to other elements in the class
 
 Ex:
-```
+```python
 class Calculator:
 	"""
 	Class that contains methods to perform basic operations.

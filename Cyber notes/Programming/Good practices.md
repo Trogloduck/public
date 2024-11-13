@@ -3,7 +3,7 @@
 **Indentation**: *4 spaces* > tab (displayed the same across editors)
 
 **Code layout**: include \\n between functions, use """ to explain what a function does, when dealing with many parameters declaring them across several lines:
-```
+```python
 def my_function(parameter):
 	"""
 	What the function does
