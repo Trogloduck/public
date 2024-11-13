@@ -447,11 +447,6 @@ This will add to the NAT table a line saying that it can communicate through the
 `sudo iptables -A FORWARD -i enp0s3 -o enp0s8 -j ACCEPT`
 `sudo iptables -A FORWARD -i enp0s8 -o enp0s3 -j ACCEPT`
 
-`sudo nano /etc/sysctl.conf`
-
---> clear
-
-
 Add those lines of command to the start-up config:
 
 `sudo apt-get install iptables-persistent`
