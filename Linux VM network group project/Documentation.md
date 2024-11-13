@@ -120,6 +120,9 @@ network:
 			dhcp4: no
 			addresses:
 			 - 10.0.2.1/24
+			nameservers:
+			  addresses:
+			   - 10.0.2.1
 		enp0s8:
 			dhcp4: yes
 	version: 2
