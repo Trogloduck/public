@@ -44,6 +44,8 @@ wrapper(main)
 ```python
 import curses
 from curses import wrapper
+from curses.textpad import Textbox, rectangle # draw rectangles
+import time # add delay
 ```
 
 Getting the screen dimensions:
@@ -94,3 +96,22 @@ for i range(curses.LINES-1):
 ```
 *moves content displayed horizontally*
 
+### Other functions
+```python
+stdscr.getkey() # gets key --> actual character
+stfscr.getch() # gets character --> number of the character
+stdscr.nodelay(True) # make the screen not wait for user input to do stuff
+```
+
+### Textbox
+```python
+win = curses.newwin(3, 18, 2, 2)
+box = Textbox(win) # create text editing area, using emacs keybindings
+rectangle(stdscr, 1, 1, 5, 20)
+stdscr.refresh()
+
+box.edit() # edit the box
+text = box.gather().strip().replace("\n", "") # gather the text from the box
+
+stdscr.addstr(7, 3, text, curses.A_REVERSE) # add the text to the screen
+```
