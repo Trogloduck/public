@@ -442,7 +442,7 @@ Now, we need to add some elements to the iptable:
 
 `sudo iptables -t nat -A POSTROUTING -o enp0s8 -j MASQUERADE`
 
-This will add to the NAT table a line saying that it can communicate through the enp0s3 interface since it is the interface connected to the internet.
+This will add to the NAT table a line saying that it can communicate through the enp0s8 interface since it is the interface connected to the internet.
 
 `sudo iptables -A FORWARD -i enp0s8 -o enp0s3 -j ACCEPT`
 
