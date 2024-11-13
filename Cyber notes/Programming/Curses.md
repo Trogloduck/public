@@ -115,3 +115,30 @@ text = box.gather().strip().replace("\n", "") # gather the text from the box
 
 stdscr.addstr(7, 3, text, curses.A_REVERSE) # add the text to the screen
 ```
+N.B: coordinates and dimensions are reversed between windows and textboxes
+
+### Adding an attribute
+```python
+stdscr.attron(GREEN_AND_BLACK)
+rectangle(stdscr, 1, 1, 5, 20)
+stdscr.addstr(2, 2, "Hello")
+stdscr.attroff(GREEN_AND_BLACK)
+```
+
+### Adding a border
+```python
+stdscr.border()
+```
+
+### Changing cursor location
+```python
+stdscr.move(y, x)
+```
+
+### Setting up a key to leave the program
+```python
+while True:
+    key = stdscr.getkey()
+    if key == "q":
+        break
+```
