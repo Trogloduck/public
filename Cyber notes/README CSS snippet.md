@@ -21,7 +21,7 @@ If you want to be able to use that snippet, follow these steps:
 4. Enjoy!
 
 As you can see in this example, adding `#center` centers the image (you can't see that if you haven't added the snippet) 
-You can also modify the size of an image with the pipe `|`
+You can also modify the size of an image with the pipe "`|`"
 
 ![[Pasted image 20240912150855.png#center | 400]]
 
