@@ -6,8 +6,8 @@ import psutil
 def Main(stdscr):
 
     max_width = (curses.COLS) - 1
-    curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_BLUE)
-    BLUE_AND_BLACK = curses.color_pair(3)
+    curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_BLUE)
+    BLUE_AND_BLACK = curses.color_pair(1)
 
     """
     Display CPU, RAM usage and disk usage
