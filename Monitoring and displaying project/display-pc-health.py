@@ -21,13 +21,13 @@ def cpu_ram_disk(stdscr, max_width, BLUE_AND_BLACK):
 
         # create windows
         cpu_window = curses.newwin(3, max_width, 0, 0)
-        cpu_border = cpu_window.border()
+        cpu_window.border()
 
         ram_window = curses.newwin(3, max_width, 5, 0)
-        ram_border = ram_window.border()
+        ram_window.border()
 
         disk_window = curses.newwin(3, max_width, 10, 0)
-        disk_border = disk_window.border()
+        disk_window.border()
 
         # display title and bars
         cpu_window.addstr(0, 0, f"CPU Usage: {cpu_percent:.2f}%", curses.A_BOLD)
@@ -61,24 +61,24 @@ def cpu_ram_disk(stdscr, max_width, BLUE_AND_BLACK):
         stdscr.refresh()
 
 
-def top_processes(stdscr):
+def top_processes(stdscr, max_width):
     """
     Display top 5 processes
     """
     while True:
-
         # gather data
-        processes = {p.pid: p.info for p in psutil.process_iter(['name', 'username'])}
+        processes = {p.pid: p.info for p in psutil.process_iter(['name', 'username', 'memory_percent'])}
         processes = sorted(processes.items(), key=lambda x: x[1]['memory_percent'], reverse=True)
 
         # create windows
-        top_processes_window = curses.newwin(5, curses.COLS, 16, 0)
+        top_processes_window = curses.newwin(6, max_width, 16, 0)
         top_processes_window.border()
+
+        # display title and top 5 processes
         top_processes_window.addstr(0, 0, "Top 5 Processes", curses.A_BOLD)
         top_processes_window.refresh()
 
-        # display top 5 processes
-        for i, (pid, process) in enumerate(processes[:5]):
+        for i, (_, process) in enumerate(processes[:5]):
             stdscr.addstr(16 + i, 0, f"{i + 1}. {process['name']}, {process['username']}", curses.A_BOLD)
             stdscr.refresh()
 
@@ -94,7 +94,7 @@ def Main(stdscr):
     BLUE_AND_BLACK = curses.color_pair(3)
 
     cpu_ram_disk(stdscr, max_width, BLUE_AND_BLACK)
-    top_processes(stdscr)
+    top_processes(stdscr, max_width)
 
 
 wrapper(Main)
