@@ -8,7 +8,7 @@ Table of content
 - [Loops](#loops)
 - [Functions](#functions)
 - [Monitoring commands](../../Monitoring%20and%20displaying%20project/Elements%20to%20monitor.md)
-
+___
 ### Basics
 
 `#!/bin/bash`: 1st line of a shell script, called "sha-bang", "/bin/bash" is the path where the shell interpreter is located

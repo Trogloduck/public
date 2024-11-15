@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "3d3067a16df75b27",
+        "id": "45e902ecd0dbe012",
         "type": "tabs",
         "children": [
           {
-            "id": "2818ca8a7c933a40",
+            "id": "e67c5d524bc45c8d",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -68,19 +68,9 @@
               "icon": "lucide-bookmark",
               "title": "Bookmarks"
             }
-          },
-          {
-            "id": "fbf1818c3976137b",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
-            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "horizontal",
@@ -165,7 +155,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "fbf1818c3976137b",
+  "active": "1f065a688f915f74",
   "lastOpenFiles": [
     "Cyber notes/Tech talks/VIM.md",
     "Linux VM network group project/Summary.md",
