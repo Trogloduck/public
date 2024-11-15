@@ -1,3 +1,10 @@
+Table of content
+- [Basics](#basics)
+- [Variables](#variables)
+- [Calling arguments](#calling-arguments)
+
+### Basics
+
 `#!/bin/bash`: 1st line of a shell script, called "sha-bang", "/bin/bash" is the path where the shell interpreter is located
 
 `which bash`: used to find the path for the above line
@@ -7,7 +14,8 @@
 `#`: used to comment
 
 ___
-Variables can be declared like so
+### Variables
+can be declared like so
 
 ```bash
 variable1=number
@@ -29,6 +37,7 @@ filelist=`ls`
 ```
 
 ___
+### Calling arguments
 my_script.sh:
 
 ```bash
