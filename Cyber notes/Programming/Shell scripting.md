@@ -7,7 +7,7 @@ Table of content
 - [Decision making](#decision-making)
 - [Loops](#loops)
 - [Functions](#functions)
-- [Monitoring commands](../Monitoring%20and%20displaying%20project/Elements%20to%20monitor.md)
+- [Monitoring commands](../../Monitoring%20and%20displaying%20project/Elements%20to%20monitor.md)
 
 ### Basics
 
