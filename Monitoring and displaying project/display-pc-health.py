@@ -2,6 +2,7 @@ import curses
 from curses import wrapper
 import time
 import psutil
+import threading
 
 
 def cpu_ram_disk(stdscr, max_width, BLUE_AND_BLACK):
@@ -67,24 +68,25 @@ def top_processes(stdscr, max_width):
     """
     while True:
         # gather data
-        processes = {p.pid: p.info for p in psutil.process_iter(['name', 'username', 'memory_percent'])}
+        processes = {p.pid: p.info for p in psutil.process_iter(['name', 'username', 'memory_percent', 'memory_info'])}
         processes = sorted(processes.items(), key=lambda x: x[1]['memory_percent'], reverse=True)
 
         # create windows
-        top_processes_window = curses.newwin(6, max_width, 16, 0)
+        top_processes_window = curses.newwin(8, max_width, 16, 0)
         top_processes_window.border()
 
-        # display title and top 5 processes
+        # display title and top 5 processes and their memory usage
         top_processes_window.addstr(0, 0, "Top 5 Processes", curses.A_BOLD)
         top_processes_window.refresh()
 
         for i, (_, process) in enumerate(processes[:5]):
-            stdscr.addstr(16 + i, 0, f"{i + 1}. {process['name']}, {process['username']}", curses.A_BOLD)
-            stdscr.refresh()
+            mem_usage_mb = process['memory_info'].rss / (1024 * 1024)
+            top_processes_window.addstr(1 + i, 1, f"{i + 1}. {process['name']}, {process['username']}, {mem_usage_mb:.2f} MB, {process['memory_percent']:.2f}%", curses.A_BOLD)
+            top_processes_window.refresh()
 
         time.sleep(1)
-        stdscr.clear()
-        stdscr.refresh()
+        top_processes_window.clear()
+        top_processes_window.refresh()
 
 
 def Main(stdscr):
@@ -92,6 +94,10 @@ def Main(stdscr):
     max_width = (curses.COLS) - 1
     curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_BLUE)
     BLUE_AND_BLACK = curses.color_pair(3)
+    # Run top_processes in a separate thread
+    top_processes_thread = threading.Thread(target=top_processes, args=(stdscr, max_width))
+    top_processes_thread.daemon = True
+    top_processes_thread.start()
 
     cpu_ram_disk(stdscr, max_width, BLUE_AND_BLACK)
     top_processes(stdscr, max_width)
