@@ -1,6 +1,3 @@
-"""
-Initialization
-"""
 import curses
 from curses import wrapper
 import psutil
