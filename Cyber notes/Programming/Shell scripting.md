@@ -1,3 +1,16 @@
+Table of content
+- [Basics](#basics)
+- [Variables](#variables)
+- [Calling arguments](#calling-arguments)
+- [Arrays](#arrays)
+- [Basic operations](#basic-operations)
+- [Decision making](#decision-making)
+- [Loops](#loops)
+- [Functions](#functions)
+- [Monitoring commands](../../Monitoring%20and%20displaying%20project/Elements%20to%20monitor.md)
+___
+### Basics
+
 `#!/bin/bash`: 1st line of a shell script, called "sha-bang", "/bin/bash" is the path where the shell interpreter is located
 
 `which bash`: used to find the path for the above line
@@ -7,7 +20,8 @@
 `#`: used to comment
 
 ___
-Variables can be declared like so
+### Variables
+can be declared like so
 
 ```bash
 variable1=number
@@ -29,6 +43,7 @@ filelist=`ls`
 ```
 
 ___
+### Calling arguments
 my_script.sh:
 
 ```bash
@@ -58,7 +73,8 @@ File name: my_script.sh
 ```
 
 ___
-Arrays: works similarly to lists in Python but with parentheses and without commas
+### Arrays
+works similarly to lists in Python but with parentheses and without commas
 
 ```bash
 my_array=(apple banana "Fruit Basket" orange)
@@ -75,7 +91,7 @@ echo ${my_array[${#my_array[@]}-1]}
 *will find the total number of elements in the array, subtract 1, find and print the element corresponding to that index (the last element of the array)*
 
 ___
-Basic operations:
+### Basic operations
 
 ```bash
 A=3
@@ -147,7 +163,7 @@ echo ${STRING[@]/%be/be on $(date +%Y-%m-%d)}    # to be or not to be on 2012-06
 *replaces occurrence with shell command output*
 
 ___
-Decision making
+### Decision making
 
 ```bash
 if [ expression ]; then
@@ -205,7 +221,7 @@ fi
 ```
 
 ___
-Loops
+### Loops
 
 ```bash
 for arg in [list] ; do
@@ -263,11 +279,13 @@ done
 ```
 
 ___
-Functions
+### Functions
 
 ```bash
 function function_name {
   command...
 }
 ```
+
+___
 

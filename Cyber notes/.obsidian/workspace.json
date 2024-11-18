@@ -4,21 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "581a0c83202e6a29",
+        "id": "684700560363ca25",
         "type": "tabs",
         "children": [
           {
-            "id": "a2c7e0da249e407a",
+            "id": "6879a14a94bf7a1a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Programming/Curses.md",
+                "file": "Programming/Shell scripting.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Curses"
+              "title": "Shell scripting"
+            }
+          },
+          {
+            "id": "99fd446de399bbe0",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Programming/Shell scripting.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Shell scripting"
             }
           }
         ]
@@ -150,17 +164,20 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "templater-obsidian:Templater": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "templater-obsidian:Templater": false
     }
   },
-  "active": "a2c7e0da249e407a",
+  "active": "6879a14a94bf7a1a",
   "lastOpenFiles": [
+    "Programming/Shell scripting.md",
+    "Programming/Curses.md",
+    "System administration/Keyboard to Belgian.md",
     "Programming/05 Programming.md",
     "Jeremy Bower notes/Glossary.md",
     "Jeremy Bower notes/Network.md",
@@ -198,9 +215,6 @@
     "Cybersprint notes/Protocols/IPv4.md",
     "Cybersprint notes/images/Pasted image 20240902163107.png",
     "Cybersprint notes/images/Pasted image 20240829121543.png",
-    "Cybersprint notes/Chapters/08 Ethernet.md",
-    "Cybersprint notes/Chapters/09 Network layer.md",
-    "Cybersprint notes/Protocols/MAC.md",
     "Cybersprint notes/images/Pasted image 20240905095800.png",
     "Pasted image 20240903134030.png",
     "Pasted image 20240903133934.png",
