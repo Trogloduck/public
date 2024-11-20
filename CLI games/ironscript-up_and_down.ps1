@@ -17,7 +17,7 @@ $currentUptime = (Get-Date) - (gcim Win32_OperatingSystem).LastBootUpTime
 # Computer name
 $computerName = $env:COMPUTERNAME
 
-# Name of user who initiated last shutdown
+# Name of last shutdown initiator
 $shutdownUser = (Get-EventLog -LogName System -Source USER32 -EntryType Information | Where-Object { $_.EventID -eq 1074 } | Select-Object -First 1).ReplacementStrings[1]
 
 # Output
