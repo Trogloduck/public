@@ -1,4 +1,6 @@
 # Century game (underthewire.tech)
+These are the solutions for each level of the pedagogic Powershell game found on the website https://underthewire.tech/
+
 *On each line of this file is the password to connect to the next level using `ssh century[n° of the level]@century.underthewire.tech -p 22` and the command used to find that password*
 
 0 --> 1: century1
