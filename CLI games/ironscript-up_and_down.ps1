@@ -11,7 +11,7 @@ $startupTime = (Get-EventLog -LogName System -Source EventLog -EntryType Informa
 # Down time
 $downTime = $startupTime - $shutdownTime
 
-# Current uptime (how long the computer has been running)
+# Current uptime
 $currentUptime = (Get-Date) - (gcim Win32_OperatingSystem).LastBootUpTime
 
 # Computer name
