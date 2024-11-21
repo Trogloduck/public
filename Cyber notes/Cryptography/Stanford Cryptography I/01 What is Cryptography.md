@@ -1,0 +1,61 @@
+# How it does it
+
+1. Secret key establishment
+2. Secure communication
+Provides **confidentiality** and **integrity**
+
+# What it can do
+
+**Digital signature**: the signature is a **function** of the document being signed --> can't be copy pasted on other documents
+
+**Anonymous communication**, for instance using a ***mix net***: messages get encrypted and decrypted through a series of proxies
+
+**Anonymous digital cash**: allows to spend money anonymously, prevents double spending
+
+### Secure multi-party computation
+
+Each participant has a secret input
+
+Goal: compute f(x_1, x_2, x_3, ... , x_n)
+
+Dumb solution: 
+1. Trusted authority collects inputs, promises to keep confidentiality
+2. Calculates and publishes result
+
+**/!\\** *Anything that can be done with a trusted authority can be also (and should be) done without a trusted authority*
+
+**Elections**
+- Anonymous
+- Only allowed voters
+- No double voting
+- Calculates result
+
+Private **auctions**, example: Vickrey auction
+- Anonymous and unknown bids
+- Only 2 informations made public: highest bidder pays 2nd highest bid
+
+# Crypto magic
+
+**Privately outsourcing computation**: *The server can compute on encrypted data without knowing exactly what's in the encrypted data*
+
+For instance, we could send web requests anonymously and without the server knowing what we want: 
+1. A sends query to B
+2. B receives query but doesn't know it's A who sent it
+3. B doesn't know what exactly is the query but still solves it
+4. B sends back result to A without knowing it's sending it to A
+
+NB: this is only theoretical and for now can only be applied to simpler computations
+
+ 
+
+**Zero knowledge**, example: zero knowledge proof of knowledge
+
+N = p\*q (p and q are very big prime numbers)
+
+A and B know the number N. A can prove to B that it knows the factorisation of N without B knowing that factorisation
+
+# Rigorous science
+
+- Precisely specify **threat model**: what an ***attacker*** can do forging a signature and what their goal is, what does it mean for a signature to be unforgeable
+- **Propose construction**
+- Prove that **breaking construction** under threat model will solve an underlying **hard problem**

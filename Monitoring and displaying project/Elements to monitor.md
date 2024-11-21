@@ -9,6 +9,7 @@
 ## Disk Usage
 - **Commands**: `df -h`, `du -sh /path/to/directory`, `iostat`
 - **Metrics**: Used and available disk space, disk I/O
+- df -m
 
 ## Network Traffic
 - **Commands**: `ifconfig`, `ip a`, `netstat -i`, `iftop`, `nload`
@@ -19,6 +20,7 @@
 - **Metrics**: Running processes, resource consumption, zombie processes
 
 ## Log Files
+*Files that record events, errors, and other messages from the system and applications.*
 - **Locations**: `/var/log/`
   - `/var/log/syslog`: General system log
   - `/var/log/auth.log`: Authentication and security logs
