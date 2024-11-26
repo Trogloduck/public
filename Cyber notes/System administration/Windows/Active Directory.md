@@ -14,7 +14,7 @@ In a scenario where a company has several servers across different locations, AD
 
 For a large corporation, AD will help divide a main domain into children domains. 
 
->With Azure AD, the database is not on the server, it's in Azure's cloud. 
->It is structured in a similar way to the file explorer on Windows.
+>*With Azure AD, the database is not on the server, it's in Azure's cloud.* 
+>*It is structured in a similar way to the file explorer on Windows.*
 ___
 
