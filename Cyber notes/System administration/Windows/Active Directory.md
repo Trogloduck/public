@@ -2,7 +2,7 @@ Active Directory Domain Services (AD-DS) is an identity platform
 
 It's basically a **database** of **objects**: users, groups, computers (or other devices), ...
 
-Users can be structured into **Organization Unit**, according to department, location, function, etc. 
+Users can be structured into **Organizational Units**, according to department, location, function, etc. 
 
 All objects have **attributes**. For instance, a user has 1st name, a last name, an e-mail address, ...
 
