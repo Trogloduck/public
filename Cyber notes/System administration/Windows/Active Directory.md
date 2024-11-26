@@ -8,7 +8,7 @@ All objects have **attributes**. For instance, a user has 1st name, a last name,
 
 The ensemble of users in the database is called the **schema**. 
 
-In a scenario where a company has several servers across different locations, AD can be used to replicate the databases on its servers:
+In a scenario where a company has several servers across different locations, the AD database will be replicated on each server:
 - Intra-site replication: automatic replication in one location
 - Inter-site replication: replication across sites
 
