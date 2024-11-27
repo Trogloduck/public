@@ -32,8 +32,13 @@ In a scenario where a company has several servers across different locations, th
 #### Security and Authentication 
 AD-DS also plays a crucial role in security by providing authentication and authorization services.
 
-#### Group Policies
-AD-DS allows administrators to define group policies for managing the configuration and security settings of user and computer environments.
+#### Group Policy Objects (GPOs)
+AD-DS allows managing the configuration and security settings of user and computer environments. GPOs can enforce:
+- Security settings (e.g., password policies, account lockout policies)
+- Software deployment
+- Registry modifications
+- Scripts (e.g., logon, logoff, startup, and shutdown scripts)
+- Desktop configurations (e.g., setting wallpaper, restricting access to certain parts of the OS)
 
 ___
 
