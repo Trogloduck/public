@@ -1,4 +1,5 @@
 1. Configure server to perform routing for clients connected to it in LAN
+
 On the client, Windows + R, `ncpa.cpl` > Live Migration > Properties > Internet Protocol Version 4 > Default gateway: the IP of the interface for internet on the server (Ethernet) ; DNS: the IP of the server
 
 On the server, Add roles and features > tick `Remote Access` > Role services > tick `Routing`
