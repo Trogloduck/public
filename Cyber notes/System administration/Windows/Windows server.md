@@ -6,4 +6,4 @@
 
 Windows + R, `wf.msc` > Inbound rules > New rule > Custom > Protocol: ICMPv4 >> Name: Allow ICMPv4
 
-Tools > Routing and Remote access > DC (local) > click/right-click > Configure and Enable Routing and Remote Access > Custom configuration > LAN routing >> Start service
+Tools > Routing and Remote access > DC (local) > click/right-click > Configure and Enable Routing and Remote Access > Custom configuration > LAN/NAT (?) routing >> Start service
