@@ -55,6 +55,7 @@ Groups identities that have same access needs
 ___
 #### Hybrid ID
 
+Dig more
 - **Inter-directory**: provisioning identity between 2 different directory services systems; typically, from AD to Entra
 - **Synchronization**: matching on-premise identity with cloud
 ___
@@ -68,3 +69,4 @@ ___
 
 CIAM: Customer Identity and Access Management
 ![[Pasted image 20241217113950.png]]
+
