@@ -1,0 +1,1 @@
+Subject to the laws and regulations of country/region in which data is collected, held, processed
