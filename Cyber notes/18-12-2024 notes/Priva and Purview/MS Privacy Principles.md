@@ -1,0 +1,9 @@
+- **Control**: client in control of its data
+- **Transparency**: about what data is collected
+- **Security**: encryption
+- **Strong legal protection**
+- **No content-based targeting**: no sharing for advertising/marketing
+- **Benefits to you**
+	- Troubleshooting
+	- Feature improvement
+	- Personalized experience
