@@ -8,7 +8,7 @@ Components of a conditional access
 	- **Target resources**: apps/services/actions
 	- **Network**: control access based on network/location
 	- **Conditions**: where, when policy applies
-		- Sign-in/user risk: sign-in wasn't authorized by identity owner / account was compromised
+		- Sign-in/user risk: sign-in wasn't authorized by identity owner / account was compromised; sign-in evaluated in real-time > request additional authentication, user evaluated in longer time frame > password reset / monitoring
 		- Insider risk
 		- Devices platform: OS
 		- Client apps: browser, mobile apps, desktop clients, ...
