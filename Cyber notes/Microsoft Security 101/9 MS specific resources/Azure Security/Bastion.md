@@ -5,3 +5,5 @@ Bastion: connect to VMs with SSH or RDP through Azure platform, using TLS (Trans
 No need for NSGs
 
 Protected against port scanning
+
+Deployed per VNet with support for VNet peering
