@@ -44,3 +44,94 @@ User can see what capability Copilot used to generate response
 - Provide context for Copilot to narrow down
 - Give positive instructions >>> negative
 - Directly address Copilot ("You")
+___
+
+#### Provisioning
+
+- Need an Azure subscription
+- Be an Azure owner/contributor
+
+Recommended to provision within Security Copilot rather than through Azure portal
+
+Select a number of SCUs (Security Compute Units) to be provisioned \[1, 100]
+
+#### Set up default environment
+
+Need to have Entra role Global admin / Security admin
+
+Setup
+- SCU capacity
+- Data storage
+- Where prompts are evaluated
+- Logging audit data in Purview: can store admin/user actions, Copilot responses
+- Org's data sharing yes/no
+- Plugin settings
+#### Role permissions
+
+Roles grant varying levels of access to Copilot
+
+Entra roles
+- Global admin: owner
+- Security admin: owner
+- Security operator: read/write
+- Security reader: read only
+
+Sec Copilot roles
+- Copilot owner
+- Copilot contributor: read/write
+
+Can make role assignments
+- Global admin
+- Security admin
+- Copilot owner
+
+<html>
+<head>
+    <title>Role Access Summary</title>
+</head>
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th colspan="2" style="vertical-align: middle; text-align: center">Entra Roles</th>
+                <th colspan="2" style="vertical-align: middle; text-align: center">Sec Copilot Roles</th>
+                <th rowspan="2" style="vertical-align: middle; text-align: center">Can Make Role Assignments</th>
+            </tr>
+            <tr>
+                <th style="vertical-align: middle; text-align: center">Role</th>
+                <th style="vertical-align: middle; text-align: center">Access Level</th>
+                <th style="vertical-align: middle; text-align: center">Role</th>
+                <th style="vertical-align: middle; text-align: center">Access Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Global Admin</td>
+                <td>Owner</td>
+                <td rowspan="2" colspan="2" style="vertical-align: middle; text-align: center">Copilot Owner</td>
+                <td>Global Admin</td>
+            </tr>
+            <tr>
+                <td>Security Admin</td>
+                <td>Owner</td>
+                <td>Security Admin</td>
+            </tr>
+            <tr>
+                <td>Security Operator</td>
+                <td>Read/Write</td>
+				<td>Copilot Contributor</td>
+                <td>Read/Write</td>
+                <td>Copilot Owner</td>
+            </tr>
+            <tr>
+                <td>Security Reader</td>
+                <td>Read Only</td>
+                <td colspan="3"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+
