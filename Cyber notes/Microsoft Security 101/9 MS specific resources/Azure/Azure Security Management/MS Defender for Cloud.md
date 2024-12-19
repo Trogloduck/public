@@ -7,3 +7,16 @@ CNAPP (Cloud-Native Application Protection Platform)
 Integrates Copilot
 
 Defender for Cloud > automatic access to MS Defender [[4.3 SecOps capabilities#XDR|XDR]]
+___
+
+Plans for
+- Servers
+- App service
+- Storage
+- SQL
+- Kubernetes
+- Container registries
+- Key Vault
+- Resource Manager
+- DNS
+- Open-source relational protections
