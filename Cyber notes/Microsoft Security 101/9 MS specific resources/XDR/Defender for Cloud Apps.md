@@ -1,4 +1,4 @@
-Integrated in XDR, accessed through Defender portal, under Cloud apps node
+Integrated in XDR, accessed through [[Defender portal]], under Cloud apps node
 
 Protection for SaaS apps
 - **CASB** (Cloud Access Security Broker): gatekeeper to broker real-time access between users and cloud resources, discovery into cloud app usage and shadow IT, protection against app-based threats, information protection, compliance

@@ -1,6 +1,6 @@
 Endpoints: laptops, phones, tablets, PCs, access points, routers, firewalls
 
-Accessed through MS Defender portal
+Accessed through [[Defender portal]]
 
 Technologies
 - **Endpoint behavioral sensors**: embedded in Windows 10+, collect, process signals OS

@@ -1,6 +1,6 @@
 Protects against phishing, malware arriving by email links, attachments, collaboration tools (SharePoint, Teams, Outlook)
 
-Accessed through Defender portal (Email & collaboration node)
+Accessed through [[Defender portal]] (Email & collaboration node)
 
 Real-time views of threats, investigation, hunting, remediation
 

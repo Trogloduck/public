@@ -1,4 +1,4 @@
-Accessed through Defender portal
+Accessed through [[Defender portal]]
 
 
 1. Software-based sensors installed on identity infrastructure servers (domain controllers, Active Directory servers)
