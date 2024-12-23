@@ -4,5 +4,3 @@ Suite including
 - **[[Defender for Office 365]]**: threats by email messages, links (URLs), collaboration tools
 - **[[Defender for Identity]]**: Active Directory signals to identify, detect, investigate advanced threats, compromised identities, malicious insider actions
 - **[[Defender for Cloud Apps]]**: SaaS applications protection
-
-Integrates Copilot
