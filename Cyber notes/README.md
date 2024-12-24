@@ -1,3 +1,5 @@
+These are Obsidian notes. For the best experience, download Obsidian and put the notes in an Obsidian Vault.
+
 I use the following CSS snippet to modify the alignment of preview elements as there is no built-in function for that on Obsidian:
 
 ```
