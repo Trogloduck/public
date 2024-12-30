@@ -50,7 +50,7 @@ ___
 *and make it inaccessible by declaring it like this:*
 `__self.nature = "physical"`
 
-*Adding* `_` *or* `__` *is "called name mangling"*
+*Adding* `__` *is "called name mangling"*
 ___
 ##### **Inheritance**: building a class from an already existing one
 

@@ -1,5 +1,14 @@
 < [[05 Programming]]
 
+- [[#Mutable vs Immutable]]
+- [`if __name__ == "__main__"`]([[#`if __name__ == "__main__" `]])
+- [[Exception]]
+- [[OOP]]: Object-oriented programming
+- [[VirtualEnv]]: Install needed dependencies in separate Python environment to avoid conflicts
+- [[Good practices]]
+- [[Python packages]]
+___
+
 I can create a library with custom functions then import it to call the functions
 The library just needs to be in the same folder
 
@@ -14,6 +23,7 @@ os.system(command)
 *this will create a* `command` *that we want the python script to execute in the shell*
 *in this example the command uses* `ssh` *to connect to* `ip_address`*, using default user* `root` *and default port* `22`*
 ___
+# Mutable vs Immutable
 
 **Immutable** objects: ID attributed to object may change if object is modified
 
@@ -43,6 +53,7 @@ print(id(x))
 | {Dictionaries:} | "Strings" |
 | {Sets}          | (Tuples)  |
 ___
+# `if __name__ == "__main__":`
 
 At the end of `my_script.py`:
 ```python
@@ -55,18 +66,4 @@ if __name__ == "__main__":
 In terminal, `python my_script.py` --> `__name__ = "__main__"` --> it will execute `my_function`
 
 If I import `my_script.py` in `another_script.py`, then `__name__ = my_script` so it won't execute `my_function`, the function will only execute if the line `my_script.my_function()` is included in `another_script.py`
-___
 
-**[[OOP]]**: Object-oriented programming
-___
-
-**[[VirtualEnv]]**: Install needed dependencies in separate Python environment to avoid conflicts
-___
-
-**[[Good practices]]**
-___
-
-**[[Python packages]]**
-___
-
-Go dig Enumeration
