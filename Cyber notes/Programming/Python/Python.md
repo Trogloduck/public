@@ -3,6 +3,7 @@
 - [[#Mutable vs Immutable]]
 - [`if __name__ == "__main__"`]([[#`if __name__ == "__main__" `]])
 - [[Exception]]
+- [[RegEx]]
 - [[OOP]]: Object-oriented programming
 - [[VirtualEnv]]: Install needed dependencies in separate Python environment to avoid conflicts
 - [[Good practices]]
