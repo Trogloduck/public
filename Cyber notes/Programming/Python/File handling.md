@@ -23,6 +23,7 @@ with open(file_name, 'r') as my_file:
 
 #### Opening with relative path
 
+Allows to use `..` and `/` to navigate
 ```python
 from pathlib import Path
 
