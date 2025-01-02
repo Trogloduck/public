@@ -78,3 +78,9 @@ last_name = match.group('last_name')
 **`re.split(pattern, string)`**: uses *pattern* to split *string*, returns list
 
 **`re.sub(pattern, repl, string, count, flags)`**: search *pattern* in *string* and replace with *repl* (maximum *count* times)
+
+#### Flags
+
+**`re.M`** (ULTILINE): make begin/end consider each line
+
+**`re.I`** (GNORECASE): ignores lower/upper

@@ -14,11 +14,12 @@
 
 **`file_name.close()`**
 
-Best practice: opening with a *context manager*
+Best practice: opening with a *context manager* (closes file by itself at end of block of code, preventing errors)
 ```python
 with open(file_name, 'r') as my_file:
 	print(my_file.read())
 ```
+*`my_file` exists outside of the block but is closed*
 
 #### Opening with relative path
 
