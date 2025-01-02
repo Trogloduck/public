@@ -19,6 +19,7 @@ A regular expression describes a way to search a string for a pattern
 **Quantifier**
 - `[aeiou]{x}`: *matches strings containing x consecutive vowels*
 - `^\w{x}$`: *exactly x characters long strings*
+- `https?`: *s can occur 0-1 time, matches strings containing http or https*
 
 #### Use
 
@@ -48,9 +49,11 @@ for name in names:
 	- **`match.start`**: returns start of span
 	- **`match.end`**: returns end of span
 
-**`re.findall`**: returns list of all strings matching regex
+**`re.findall`**: returns *list* of all strings matching regex
 
-**`re.match`**: 
+**`re.match`**: equivalent to **`re.search`** with '^' (search for match in the beginning of string)
+
+**`re.fullmatch`**: checks if entire string fits regex pattern (not just looking for match)
 
 **Groups**
 
@@ -70,3 +73,8 @@ first_name = match.group('first_name')
 last_name = match.group('last_name')
 ```
 
+#### Other re functions
+
+**`re.split(pattern, string)`**: uses *pattern* to split *string*, returns list
+
+**`re.sub(pattern, repl, string, count, flags)`**: search *pattern* in *string* and replace with *repl* (maximum *count* times)
