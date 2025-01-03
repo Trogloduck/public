@@ -31,6 +31,8 @@ with file_name.open() as my_file:
 #### OS
 *Operating system dependent module allowing to do file/path manipulation*
 
+**Script directory**
+
 `import os`
 
 ```python
@@ -47,3 +49,10 @@ Or
 ```python
 relative_path = Path(__file__).parent / "./test/bogus.txt"
 ```
+
+
+```python
+test_path = os.path.join(current_path, "test")
+```
+*adds `\path` or `/path` depending on OS to the current_path*
+
