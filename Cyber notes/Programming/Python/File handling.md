@@ -1,4 +1,4 @@
-#### Open
+#### Opening modes
 
 **`open(/path, 'r'/'w')`**: opens file located at */path*, in *reading/writing* mode
 
@@ -10,25 +10,40 @@
 
 `'+'` can be used to modify `r`, `w`, ...
 
-#### Close
+**`file_name.close()`**: always close file at the end in order to avoid errors
 
-**`file_name.close()`**
 
-Best practice: opening with a *context manager* (closes file by itself at end of block of code, preventing errors)
+Best practice: opening with a ***context manager*** (closes file by itself at end of block of code, preventing errors)
 ```python
 with open(file_name, 'r') as my_file:
 	print(my_file.read())
 ```
+or
+```python
+with file_name.open() as my_file:
+	print(my_file.read())
+```
+
 *`my_file` exists outside of the block but is closed*
 
-#### Opening with relative path
+*`.open()` is a method of the Path object in the pathlib module*
 
-Allows to use `..` and `/` to navigate
+#### OS
+*Operating system dependent module allowing to do file/path manipulation*
+
+`import os`
+
 ```python
-from pathlib import Path
+os.path.dirname(os.path.realpath(__file__))
+```
+*returns directory in which the current code/script is stored*
 
-relative_path = Path(__file__).parent / "./test/bogusfile.txt"
+From there, it's possible to concatenate path to move relatively to the initial location (adding "`\..`" for instance)
 
-with relative_path.open() as my_file:
-    print(my_file.read())
+Or
+
+`from pathlib import Path`
+
+```python
+relative_path = Path(__file__).parent / "./test/bogus.txt"
 ```
