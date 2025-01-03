@@ -2,6 +2,7 @@
 - [[#Delivery]]
 - [[#Headers]]
 - [[#Types of phishing]]
+- [[#Practical tips]]
 - [[#Tools for/against phishing]]
 ___
 # Protocols
@@ -57,6 +58,12 @@ ___
 
 **BEC** (Business Email Compromise): adversary gains control of internal employee's account and uses compromised email account to convince other internal employees to perform unauthorized or fraudulent actions
 ___
+# Practical tips
+
+- Use inspector to examine the code of legitimate page, DOM (Document Object Model), to replicate
+- Falsify federated identity providing service (login with google, facebook, etc.)
+	- Redirect to legitimate wrong password page
+
 # Tools for/against phishing
 
 Possible to investigate shortened links with online tools
