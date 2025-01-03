@@ -15,3 +15,5 @@ Example ideas for a more complete project:
 - **Personalized invitation**: include a false profile overview of what Shimi's profile could look like (with a justification "our AI system scours the internet for dog friends") giving further incentive to log into the website. 
 
 A similar idea can be used for Alice. The idea can be modified in order to suit her interest. The website could appear to have a sale section for instance.
+
+The PHP file created to gather the credentials is not currently working. In the future, PHP code should be used to make the PHP file work.
