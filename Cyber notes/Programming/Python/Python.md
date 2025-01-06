@@ -8,6 +8,7 @@
 - [[VirtualEnv]]: Install needed dependencies in separate Python environment to avoid conflicts
 - [[Good practices]]
 - [[Python packages]]
+- [[VirtualEnv]]
 ___
 
 I can create a library with custom functions then import it to call the functions

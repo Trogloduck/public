@@ -1,6 +1,5 @@
 import time
 import sys
-import os
 
 
 prompt = "Please enter a number for the countdown: "
