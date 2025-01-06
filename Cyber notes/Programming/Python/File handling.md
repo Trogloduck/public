@@ -28,6 +28,8 @@ with file_name.open() as my_file:
 
 *`.open()` is a method of the Path object in the pathlib module*
 
+After `print(my_file.read)`, the pointer is at the end of the file. To make further operations on the file, the pointer needs to be reset at the beginning of the file with **`my_file.seek(0)`**
+
 #### OS
 *Operating system dependent module allowing to do file/path manipulation*
 

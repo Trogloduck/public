@@ -1,6 +1,6 @@
 *Automatic data collection on the Web*
 
-#### XML
+# XML
 
 Language used to describe data and facilitate data exchange between machines and software
 
@@ -14,7 +14,7 @@ Language used to describe data and facilitate data exchange between machines and
 import os
 from lxml import etree
 
-# Get directory in which the script is located
+# Get directory in which the current script is located
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 # Create a file path for the data.xml file
@@ -39,4 +39,33 @@ for user in tree.xpath("/users/user[job='Veterinary']/name"):
 	print(user.text)
 ```
 *displays the names of users whose job is Veterinary*
+
+# Web scraping
+*In the same way it is possible to parse XML, it is possible to parse HTML, using beautifulsoup for instance*
+
+`pip install beautifulsoup4`
+
+```python
+import os
+from bs4 import BeautifulSoup
+
+# Get directory in which the script is located
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+# Create a file path for the data.xml file
+letterbox_file_path = os.path.join(dir_path, 'letterbox.html')
+
+# Open the file and read its contents
+with open(letterbox_file_path, 'r', encoding = "utf-8") as file:
+    html_doc = file.read()
+    
+# Parse the contents of the file
+soup = BeautifulSoup(html_doc, "lxml")
+
+# Print the titles of the file
+for header_tag in soup.find_all('h1'):
+    print(header_tag.text)
+```
+
+## Scraping via HTTP requests
 
