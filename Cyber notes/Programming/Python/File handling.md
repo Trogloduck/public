@@ -1,3 +1,5 @@
+< [[Python]]
+
 #### Opening modes
 
 **`open(/path, 'r'/'w')`**: opens file located at */path*, in *reading/writing* mode

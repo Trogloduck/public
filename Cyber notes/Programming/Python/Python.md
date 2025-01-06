@@ -3,12 +3,13 @@
 - [[#Mutable vs Immutable]]
 - [`if __name__ == "__main__"`]([[#`if __name__ == "__main__" `]])
 - [[Exception]]
-- [[RegEx]]
 - [[OOP]]: Object-oriented programming
-- [[VirtualEnv]]: Install needed dependencies in separate Python environment to avoid conflicts
+- [[VirtualEnv]]
 - [[Good practices]]
 - [[Python packages]]
-- [[VirtualEnv]]
+- [[RegEx]]
+- [[File handling]]
+- [[Scraping]]
 ___
 
 I can create a library with custom functions then import it to call the functions

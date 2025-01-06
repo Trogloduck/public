@@ -1,3 +1,5 @@
+< [[Python]]
+
 #### try - except
 *allow to handle different types of exceptions*
 

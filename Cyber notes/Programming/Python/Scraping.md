@@ -1,3 +1,5 @@
+< [[Python]]
+
 *Automatic data collection on the Web*
 
 # XML
