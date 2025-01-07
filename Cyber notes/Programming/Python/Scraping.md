@@ -4,7 +4,7 @@
 
 # XML
 
-Language used to describe data and facilitate data exchange between machines and software
+*Language used to describe data and facilitate data exchange between machines and software*
 
 `pip install numpy`
 
@@ -71,3 +71,17 @@ for header_tag in soup.find_all('h1'):
 
 ## Scraping via HTTP requests
 
+HTTP is used to manage web requests: HTTP **request** (client) -- HTTP **response** (server)
+
+- `GET`: request resource
+- `HEAD`: request header
+- `POST`: modifies resource
+- `OPTIONS`: obtain communication options of resource/server
+- `CONNECT`: This method allows you to use a proxy as a communication tunnel
+- `TRACE` This method asks the server to return what it has received, in order to test and diagnose the connection.
+- `PUT` This method allows you to add a resource to the server.
+- `DELETE` This method allows you to delete a resource from the server.
+
+```python
+example code for http requests
+```
