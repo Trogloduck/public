@@ -77,10 +77,10 @@ HTTP is used to manage web requests: HTTP **request** (client) -- HTTP **respons
 - `HEAD`: request header
 - `POST`: modifies resource
 - `OPTIONS`: obtain communication options of resource/server
-- `CONNECT`: This method allows you to use a proxy as a communication tunnel
-- `TRACE` This method asks the server to return what it has received, in order to test and diagnose the connection.
-- `PUT` This method allows you to add a resource to the server.
-- `DELETE` This method allows you to delete a resource from the server.
+- `CONNECT`: use a proxy as communication tunnel
+- `TRACE`: asks what server has received (test and diagnose the connection.
+- `PUT`: add resource to server
+- `DELETE`: delete resource from server
 
 ```python
 example code for http requests
