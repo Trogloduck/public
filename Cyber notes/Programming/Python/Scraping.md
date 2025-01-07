@@ -83,5 +83,22 @@ HTTP is used to manage web requests: HTTP **request** (client) -- HTTP **respons
 - `DELETE`: delete resource from server
 
 ```python
-example code for http requests
+import requests
+from bs4 import BeautifulSoup
+
+# website url
+url = "https://letterboxd.com/incelticide/"
+
+# send GET request to website
+my_request = requests.get(url)
+
+# display the url and status code
+print(url, my_request.status_code)
+
+# parse through content of the website
+soup = BeautifulSoup(my_request.content, "lxml")
+
+# display h1 titles
+for header_tag in soup.find_all('h1'):
+    print(header_tag.text)
 ```
