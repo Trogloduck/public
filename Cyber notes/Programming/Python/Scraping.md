@@ -102,3 +102,69 @@ soup = BeautifulSoup(my_request.content, "lxml")
 for header_tag in soup.find_all('h1'):
     print(header_tag.text)
 ```
+
+___
+
+# Targeted information retrieval
+
+1. Go to website
+2. Right-click > Inspector
+3. Hover over interesting part, it will be highlighted in the HTML code
+2+3. Right-click on element of interest > Inspector
+4. Identify tag of interest
+
+```python
+import requests
+from bs4 import BeautifulSoup
+
+# website url
+url = "https://letterboxd.com/incelticide/"
+
+# send GET request to website
+my_request = requests.get(url)
+
+# display the url and status code
+print(url, my_request.status_code)
+
+# parse through content of the website
+soup = BeautifulSoup(my_request.content, "lxml")
+
+# display reviews titles
+# html tag of review: <div class="body-text -prose collapsible-text">
+index = 1
+for review in soup.find_all('div', class_='body-text -prose collapsible-text'):
+    print(f"_______________________\nReview n°{index}:\n{review.text}")
+    index += 1
+
+# display reviews titles
+# html tag of movie title: <h2 class="headline-2 prettify">
+index = 1
+for title in soup.find_all('h2', class_='headline-2 prettify'):
+    print(f"_______________________\nMovie n°{index}:\n{title.text}")
+    index += 1
+
+# combines displaying reviews and movie titles
+index = 1
+for review, title in zip(soup.find_all('div', class_='body-text -prose collapsible-text'),
+                         soup.find_all('h2', class_='headline-2 prettify')):
+    print(f"_______________________\nMovie n°{index}:\n{title.text}\n{review.text}")
+    index += 1
+```
+
+Navigate through the website and collect data of interest by using the hrefs (`title.a["href"]`) and building URLs by concatenating, then fetch the data from the next webpage with GET:
+```python
+# display reviews titles and links to the film page and synopsis
+index = 0
+for title in soup.find_all(class_='headline-2 prettify'):
+    print(f"_______________________\n{title.text}\n")
+    film_page = "https://letterboxd.com" + title.a['href'].replace('/incelticide', '')
+    print(f"Film page: {film_page}\n")
+    index += 1
+    # send GET request to film page
+    film_request = requests.get(film_page)
+    # parse through content of film page
+    film_soup = BeautifulSoup(film_request.content, "lxml")
+    # display synopsis of film
+    synopsis = film_soup.find(class_='truncate').text
+    print(f"Synopsis: {synopsis}\n")
+```
