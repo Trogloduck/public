@@ -15,6 +15,8 @@ Unix version
 ***Activate***: **`.\env\Scripts\Activate`**
 Windows version
 
+This step might not work if the system doesn't allow to run scripts. Then run this command first: `Set-ExecutionPolicy RemoteSigned`
+
 Prompt change when env activated:
 ![[Pasted image 20240905095800.png]]
 
