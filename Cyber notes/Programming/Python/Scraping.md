@@ -168,3 +168,60 @@ for title in soup.find_all(class_='headline-2 prettify'):
     synopsis = film_soup.find(class_='truncate').text
     print(f"Synopsis: {synopsis}\n")
 ```
+
+Create a dataframe and save it in a .csv file (final step of scraping, full project)
+```python
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+import time
+
+# website url
+url = "https://letterboxd.com/incelticide/"
+
+# send GET request to website
+my_request = requests.get(url)
+time.delay(1)
+
+# display url and status code
+print(url, my_request.status_code)
+
+# parse through website content
+soup = BeautifulSoup(my_request.content, "lxml")
+
+# display movie titles, links to the film page and synopsis, and reviews in that order
+index = 0
+for title, review in zip(soup.find_all(class_='headline-2 prettify'),
+                         soup.find_all('div', class_='body-text -prose collapsible-text')):
+    print(f"_______________________\n{title.text}\n")
+    film_page = "https://letterboxd.com" + title.a['href'].replace('/incelticide', '')
+    time.delay(1)
+    print(f"Film page: {film_page}\n")
+    index += 1
+    # send GET request to film page
+    film_request = requests.get(film_page)
+    # parse through content of film page
+    film_soup = BeautifulSoup(film_request.content, "lxml")
+    # display synopsis of film
+    synopsis = film_soup.find(class_='truncate').text
+    print(f"Synopsis: {synopsis}\n")
+    print(f"Review:\n{review.text}\n")
+
+# create a pandas dataframe
+# create a dictionary with the data
+data = {
+    'Title': [title.text for title in soup.find_all(class_='headline-2 prettify')],
+    'URL': ["https://letterboxd.com" + title.a['href'].replace('/incelticide', '') for title in soup.find_all(class_='headline-2 prettify')],
+    'Synopsis': [film_soup.find(class_='truncate').text if film_soup.find(class_='truncate') else 'No synopsis available' for film_soup in [BeautifulSoup(requests.get("https://letterboxd.com" + title.a['href'].replace('/incelticide', '')).content, "lxml") for title in soup.find_all(class_='headline-2 prettify')]],
+    'Review': [review.text for review in soup.find_all('div', class_='body-text -prose collapsible-text')]
+}
+
+# create a pandas dataframe
+df = pd.DataFrame(data)
+
+# display the dataframe
+print(df)
+
+# save the dataframe in a CSV file
+df.to_csv('letterboxd_data.csv', index=False)
+```
