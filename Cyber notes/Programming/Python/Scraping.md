@@ -12,6 +12,7 @@
 
 ![[XML example file]]
 
+
 ```python
 import os
 from lxml import etree
@@ -225,3 +226,10 @@ print(df)
 # save the dataframe in a CSV file
 df.to_csv('letterboxd_data.csv', index=False)
 ```
+
+___
+
+# Selenium
+
+BeautifulSoup has difficulty getting links to buttons, that's where Selenium intervenes
+
