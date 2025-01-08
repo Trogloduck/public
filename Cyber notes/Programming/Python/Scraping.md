@@ -182,7 +182,7 @@ url = "https://letterboxd.com/incelticide/"
 
 # send GET request to website
 my_request = requests.get(url)
-time.delay(1)
+time.sleep(1)
 
 # display url and status code
 print(url, my_request.status_code)
@@ -191,14 +191,12 @@ print(url, my_request.status_code)
 soup = BeautifulSoup(my_request.content, "lxml")
 
 # display movie titles, links to the film page and synopsis, and reviews in that order
-index = 0
 for title, review in zip(soup.find_all(class_='headline-2 prettify'),
                          soup.find_all('div', class_='body-text -prose collapsible-text')):
     print(f"_______________________\n{title.text}\n")
     film_page = "https://letterboxd.com" + title.a['href'].replace('/incelticide', '')
-    time.delay(1)
+    time.sleep(1)
     print(f"Film page: {film_page}\n")
-    index += 1
     # send GET request to film page
     film_request = requests.get(film_page)
     # parse through content of film page
