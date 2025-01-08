@@ -169,7 +169,7 @@ for title in soup.find_all(class_='headline-2 prettify'):
     print(f"Synopsis: {synopsis}\n")
 ```
 
-Create a dataframe and save it in a .csv file (final step of scraping, full project)
+Create a dataframe and save it in a .csv file (final step of scraping, full project), added time delays to not trigger suspicion by sending requests too fast
 ```python
 import requests
 from bs4 import BeautifulSoup
