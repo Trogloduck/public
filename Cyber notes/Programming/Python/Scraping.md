@@ -229,5 +229,49 @@ ___
 
 # Selenium
 
-BeautifulSoup has difficulty getting links to buttons, that's where Selenium intervenes
+BeautifulSoup just parses through a website
+
+Selenium can be used to perform actions like a human browsing a website, such as writing input and clicking buttons
+
+```python
+"""
+This script uses Selenium
+to automate a web browser
+and perform a search on python.org
+"""
+
+import random
+from random import randint
+import time
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+# Create instance of Chrome WebDriver
+chrome_driver = webdriver.Chrome()
+# Open python.org
+chrome_driver.get("http://www.python.org")
+# Check title contains "Python"
+assert "Python" in chrome_driver.title
+
+# Locate search input element by its name attribute
+search_bar = chrome_driver.find_element("name", "q")
+# Clear any pre-filled text in input field
+search_bar.clear()
+
+# Pause for random float number [1.5, 2] seconds
+time.sleep(random.uniform(1.5, 2))
+
+# Enter "pycon" into search field and submit form
+search_bar.send_keys("pycon")
+search_bar.send_keys(Keys.RETURN)
+# Verify search results are found
+assert "No results found." not in chrome_driver.page_source
+
+# Keep browser open for random float number [1.5, 2] seconds
+time.sleep(random.uniform(1.5, 2))
+
+# Close browser
+chrome_driver.close()
+```
 
