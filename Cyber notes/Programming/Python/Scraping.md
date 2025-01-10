@@ -2,6 +2,12 @@
 
 *Automatic data collection on the Web*
 
+- [[#XML]]
+- [[#Web scraping]]
+	- [[#Scraping via HTTP requests]]
+- [[#Targeted information retrieval]]
+- [[#Selenium]]
+
 # XML
 
 *Language used to describe data and facilitate data exchange between machines and software*
@@ -78,6 +84,8 @@ When scarping online, use time and random libraries to simulate human delays:
 ```python
 time.sleep(random.uniform(1, 2))
 ```
+
+To avoid being blocked, use https://scrapoxy.io/
 
 - `GET`: request resource
 - `HEAD`: request header
@@ -275,4 +283,3 @@ time.sleep(random.uniform(1, 2))
 assert "No results found." not in driver.page_source
 driver.quit()
 ```
-
