@@ -29,7 +29,13 @@ $env:FLASK_DEBUG=1
 ```
 *(turn off when deployed for clients)*
 
-Flask routes can be made dynamic:
+Debug mode can be activated at the end of the flask app script:
+```python
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+Flask routes can be made dynamically:
 ```python
 @app.route("/about/<username>")
 def about_page(username):
@@ -45,13 +51,16 @@ app = Flask(__name__)
 
 # define route for root URL
 @app.route('/')
+@app.route('/home')
 def home_page():
     return render_template('index.html')
 ```
+*Notice several routes can lead to the same html page (`'/'` and `'/home'` lead to `index.html`)*
 
-In a subfolder of the main project, called "templates":
+In a subfolder of the main project, called "templates", `index.html`:
 ```html
 <h1>Hello world!</h1>
 ```
 
 To style the website, use styling framework $\rightarrow$ Bootstrap
+
