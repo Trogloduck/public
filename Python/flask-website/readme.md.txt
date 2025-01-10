@@ -1,0 +1,1 @@
+This folder is dedicated to a Python project using the Flask library to learn about web application development.
