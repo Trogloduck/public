@@ -10,6 +10,7 @@
 - [[RegEx]]
 - [[File handling]]
 - [[Scraping]]
+- [[Flask]]
 ___
 
 I can create a library with custom functions then import it to call the functions
