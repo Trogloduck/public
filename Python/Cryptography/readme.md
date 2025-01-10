@@ -1,0 +1,1 @@
+These are simple scripts I wrote to encrypt/decrypt text while learning about cryptography.
