@@ -184,7 +184,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 # initialize Flask app
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db' # determine name of the database file
 db = SQLAlchemy(app)
 
 class Item(db.Model):
@@ -208,6 +208,7 @@ class Item(db.Model):
 
 `__repr__` method: custom representation of data when using `Item.query.all()` 
 ## Create database.db file
+(it'll be called `market.db`)
 
 Execute `python` in the directory of the main *project*.py
 ```python
