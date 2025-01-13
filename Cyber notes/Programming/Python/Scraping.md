@@ -2,6 +2,12 @@
 
 *Automatic data collection on the Web*
 
+- [[#XML]]
+- [[#Web scraping]]
+	- [[#Scraping via HTTP requests]]
+- [[#Targeted information retrieval]]
+- [[#Selenium]]
+
 # XML
 
 *Language used to describe data and facilitate data exchange between machines and software*
@@ -73,6 +79,13 @@ for header_tag in soup.find_all('h1'):
 ## Scraping via HTTP requests
 
 HTTP is used to manage web requests: HTTP **request** (client) -- HTTP **response** (server)
+
+When scarping online, use time and random libraries to simulate human delays:
+```python
+time.sleep(random.uniform(1, 2))
+```
+
+To avoid being blocked, use https://scrapoxy.io/
 
 - `GET`: request resource
 - `HEAD`: request header
@@ -175,14 +188,16 @@ Create a dataframe and save it in a .csv file (final step of scraping, full proj
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+
 import time
+import random
 
 # website url
 url = "https://letterboxd.com/incelticide/"
 
 # send GET request to website
 my_request = requests.get(url)
-time.sleep(1)
+time.sleep(random.uniform(1, 2))
 
 # display url and status code
 print(url, my_request.status_code)
@@ -195,7 +210,7 @@ for title, review in zip(soup.find_all(class_='headline-2 prettify'),
                          soup.find_all('div', class_='body-text -prose collapsible-text')):
     print(f"_______________________\n{title.text}\n")
     film_page = "https://letterboxd.com" + title.a['href'].replace('/incelticide', '')
-    time.sleep(1)
+    time.sleep(random.uniform(1, 2))
     print(f"Film page: {film_page}\n")
     # send GET request to film page
     film_request = requests.get(film_page)
@@ -229,6 +244,7 @@ ___
 
 # Selenium
 
+<<<<<<< HEAD
 BeautifulSoup just parses through a website
 
 Selenium can be used to perform actions like a human browsing a website, such as writing input and clicking buttons
@@ -274,4 +290,44 @@ time.sleep(random.uniform(1.5, 2))
 # Close browser
 chrome_driver.close()
 ```
+=======
+BeautifulSoup just parses through website source code
+>>>>>>> fcedbe798812020fd1fa15cd601837f39b6f9636
 
+Selenium allows to simulate human behavior like clicking buttons and writing input
+
+```python
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+
+import time
+import random
+
+# create Chrome session
+driver = webdriver.Chrome()
+
+# get webpage
+driver.get("http://www.python.org")
+
+# pause for random float [1, 2] seconds
+time.sleep(random.uniform(1, 2))
+
+# confirm title contains "Python"
+assert "Python" in driver.title
+
+# find element with name "q" (search bar)
+search_bar = driver.find_element(By.NAME, "q")
+
+# clear input field and search for "pycon"
+search_bar.clear()
+search_bar.send_keys("pycon")
+search_bar.send_keys(Keys.RETURN)
+
+# pause for random float [1, 2] seconds
+time.sleep(random.uniform(1, 2))
+
+# confirm results and close browser
+assert "No results found." not in driver.page_source
+driver.quit()
+```
