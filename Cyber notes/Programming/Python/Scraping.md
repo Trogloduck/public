@@ -290,11 +290,10 @@ time.sleep(random.uniform(1.5, 2))
 # Close browser
 chrome_driver.close()
 ```
-=======
-BeautifulSoup just parses through website source code
->>>>>>> fcedbe798812020fd1fa15cd601837f39b6f9636
 
-Selenium allows to simulate human behavior like clicking buttons and writing input
+BeautifulSoup: parses through website source code
+
+Selenium: simulate human behavior like clicking buttons and writing input
 
 ```python
 from selenium import webdriver

@@ -195,7 +195,7 @@ class Item(db.Model):
     description = db.Column(db.String(1024), unique=True)
 
     def __repr__(self):
-        return f'Item {self.name}'
+        return f'Item {self.id}: {self.name}'
 ```
 
 `id` is mandatory
@@ -206,7 +206,8 @@ class Item(db.Model):
 
 `unique=True`: 2 items cannot have same name
 
-#### Create database.db file
+`__repr__` method: custom representation of data when using `Item.query.all()` 
+## Create database.db file
 
 Execute `python` in the directory of the main *project*.py
 ```python
@@ -225,4 +226,30 @@ Alternative: same lines in flask shell
 $env:FLASK_APP="project.py"
 flask shell
 ```
+#### Add item to database
+
+In the python or flask shell
+```python
+item1 = Item(name="Premium package", price=25, barcode='012345678912', description="You know it's just a better experience")
+db.session.add(item1)
+db.session.commit()
+```
+
+`Item.query.all()`: check content of database
+
+#### Looping
+```python
+for item in Item.query.all():
+	item.id
+	item.name
+	item.price
+	item.description
+```
+*shows info for all items*
+#### Filtering
+```python
+for item in Item.query.filter_by(price=25):
+	item.name
+```
+*shows name of all items with price=25*
 

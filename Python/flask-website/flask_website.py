@@ -24,17 +24,13 @@ class Item(db.Model):
     description = db.Column(db.String(1024), nullable=False, unique=True)
 
     def __repr__(self):
-        return f'Item {self.name}'
+        return f'Item {self.id}: {self.name}'
 
 
 # define route for market URL
 @app.route('/market')
 def market_page():
-    items = [
-    {'id': 1, 'name': 'A night stargazing with Mark Zuckerberg', 'barcode': '893212299897', 'price': 10},
-    {'id': 2, 'name': 'A bowling game with Jeffrey Bezos', 'barcode': '123985473165', 'price': 7},
-    {'id': 3, 'name': 'A dinner and a heated debate with Elon Musk', 'barcode': '123985473165', 'price': 10}
-    ]
+    items = Item.query.all()
     return render_template('market.html', items=items)
 
 # activate server with debug mode on
