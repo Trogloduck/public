@@ -175,3 +175,54 @@ index.html
 
 *The index.html page inherits from the base.html and can add more content to it.*
 
+___
+# SQLAlchemy
+
+```python
+from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
+
+# initialize Flask app
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'
+db = SQLAlchemy(app)
+
+class Item(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False, unique=True)
+    barcode = db.Column(db.String(12), nullable=False, unique=True)
+    price = db.Column(db.Float, nullable=False)
+    description = db.Column(db.String(1024), unique=True)
+
+    def __repr__(self):
+        return f'Item {self.name}'
+```
+
+`id` is mandatory
+
+`100` is the max length of `name
+`
+`nullable=False`: item cannot have empty name
+
+`unique=True`: 2 items cannot have same name
+
+#### Create database.db file
+
+Execute `python` in the directory of the main *project*.py
+```python
+from project import db
+db.create_all()
+```
+or
+```python
+from flask_website import app, db
+with app.app_context():
+    db.create_all()
+```
+
+Alternative: same lines in flask shell
+```powershell
+$env:FLASK_APP="project.py"
+flask shell
+```
+
