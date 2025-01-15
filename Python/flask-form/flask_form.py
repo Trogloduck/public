@@ -18,7 +18,7 @@ def form_page():
 
 # regex to check if email is valid
 def is_email_valid(email: str):
-    if re.match(r"[^@]+@[^@]+\.[^@]+", email):
+    if re.match(r"^[a-z0-9_.-]+@[a-z0-9-]+\.[a-z]+$", email):
         return True
     return False
 
