@@ -1,0 +1,63 @@
+<!-- Form, as described in flask_form.py 
+ Fields: First and last name, email, region (North America, South America,
+ Western Europe, Eastern Europe, ...), message, how the person prefers
+ to be addressed (Mr, Mrs, ...), 3 possible subjects (Repair, Order, Other)
+ All fields are mandatory but the gender field
+ By default, the "---" is selected in the select menus
+ For the mandatory select fields "---" cannot remain when clicking on "Submit"
+ All contact information is registered in a SQLAlchemy entry
+ as defined by the Contact class in flask_form.py -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Contact Form</title>
+</head>
+<body>
+    <h1>Contact Form</h1>
+    <h2>Please fill in the form below so our team<br>
+        can get back to you as soon as possible:</h2>
+    <!-- The form will send a POST request to the /submit endpoint when submitted -->
+    <form method="POST" action="/submit">
+        <label for="first_name">First Name:</label><br>
+        <input type="text" id="first_name" name="first_name" required>{{ first_name_error_message }}<br><br>
+        <label for="last_name">Last Name:</label><br>
+        <input type="text" id="last_name" name="last_name" required>{{ last_name_error_message }}<br><br>
+        <label for="addressed">How do you prefer to be addressed?</label><br>
+        <select id="addressed" name="addressed">
+            <option value="">---</option>
+            <option value="Mr">Mr</option>
+            <option value="Mrs">Mrs</option>
+            <option value="Ms">Ms</option>
+            <option value="Dr">Dr</option>
+            <option value="Prof">Prof</option>
+        </select><br><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required>{{ email_error_message }}<br><br>
+        <label for="region">World Region:</label><br>
+        <select id="region" name="region" required>
+            <option value="" disabled selected>---</option>
+            <option value="North America">North America</option>
+            <option value="South America">South America</option>
+            <option value="Western Europe">Western Europe</option>
+            <option value="Eastern Europe">Eastern Europe</option>
+            <option value="Middle East">Middle East</option>
+            <option value="Africa">Africa</option>
+            <option value="Asia">Asia</option>
+            <option value="Oceania">Oceania</option>
+        </select>{{ region_error_message }}<br><br>
+        <label for="subject">Subject:</label><br>
+        <select id="subject" name="subject" required>
+            <option value="" disabled selected>---</option>
+            <option value="Repair">Repair</option>
+            <option value="Order">Order</option>
+            <option value="Other">Other</option>
+        </select>{{ subject_error_message }}<br><br>
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" required placeholder="Enter your message here..."></textarea>{{ message_error_message }}<br><br>
+        <!-- Submit button sending info to the server-side script at /submit endpoint and redirecting user to submit.html page upon successful submission -->
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

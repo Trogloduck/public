@@ -1,0 +1,26 @@
+<!-- page informing user info has been sent well with a summary of info sent -->
+<!DOCTYPE html>
+<html lang="en">
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Thank you for your message!</title>
+    </head>
+    <body>
+        <h1>Message sent!</h1>
+        <p>Thank you for taking the time to contact us.<br>
+        Our team will get back to you as soon as possible.</p>
+        <p>Here is a summary of the information you sent:</p>
+            <ul>
+                <li>First Name: {{ first_name }}</li>
+                <li>Last Name: {{ last_name }}</li>
+                <li>Addressed as: {{ addressed }}</li>
+                <li>Email: {{ email }}</li>
+                <li>Region: {{ region }}</li>
+                <li>Subject: {{ subject }}</li>
+                <li>Message: {{ message }}</li>
+            </ul><br>
+        <p>If some of the information you sent us is incorrect,<br>
+            please correct that information by filling another <a href="/contact-form">contact form</a>.</p>
+    </body>
+</html>
