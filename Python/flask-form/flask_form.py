@@ -17,27 +17,22 @@ def form_page():
     return render_template("form.html")
 
 # regex to check if email is valid
-def is_email_valid(email:str):
+def is_email_valid(email: str):
     if re.match(r"[^@]+@[^@]+\.[^@]+", email):
         return True
     return False
 
 # regex to check if first_name, last_name is valid, preventing XSS attacks
-def is_name_valid(name:str):
+def is_name_valid(name: str):
     if re.match(r"^[A-Za-z\s-]+$", name):
         return True
     return False
 
 # regex to check if message is valid, preventing XSS attacks
-def is_message_valid(message:str):
+def is_message_valid(message: str):
     if re.match(r"^[A-Za-z0-9\s\.,!?]+$", message):
         return True
     return False
-
-# route to nicetry page
-@app.route("/nicetry")
-def nicetry_page():
-    return render_template("nicetry.html")
 
 # route to submit form
 @app.route("/submit", methods=["POST"])
@@ -46,6 +41,7 @@ def submit_page():
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
     email = request.form.get("email")
+    addressed = request.form.get("addressed")
     region = request.form.get("region")
     subject = request.form.get("subject")
     message = request.form.get("message")
@@ -65,18 +61,20 @@ def submit_page():
     if not is_message_valid(message):
         return render_template("form.html", message_error_message="Your message can only contain letters, numbers, spaces and/or punctuation.")
 
-    # Check if the fake field is empty
-    if fake_field:
+    # If there is input in fake_field, redirects to nicetry.html,
+    if fake_field != "":
         return render_template("nicetry.html")
-    
-    return render_template(
-        "submit.html",
-        first_name=request.form["first_name"],
-        last_name=request.form["last_name"],
-        email=request.form["email"],
-        region=request.form["region"],
-        subject=request.form["subject"],
-        message=request.form["message"]
+    # otherwise, displays submit.html with user's input
+    else:
+        return render_template(
+            "submit.html",
+            first_name=request.form["first_name"],
+            last_name=request.form["last_name"],
+            addressed=request.form["addressed"],
+            email=request.form["email"],
+            region=request.form["region"],
+            subject=request.form["subject"],
+            message=request.form["message"],
     )
 
 # run app in debug mode

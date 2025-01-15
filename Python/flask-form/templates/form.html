@@ -1,21 +1,22 @@
 <!-- Form, as described in flask_form.py 
  Fields: First and last name, email, region (North America, South America,
- Western Europe, Eastern Europe, ...), message, how the person prefers
- to be addressed (Mr, Mrs, ...), 3 possible subjects (Repair, Order, Other)
+ Western Europe, Eastern Europe, ...), how the person prefers to be addressed (Mr, Mrs, ...),
+ 3 possible subjects (Repair, Order, Other), message
  All fields are mandatory but the gender field
  By default, the "---" is selected in the select menus
- For the mandatory select fields "---" cannot remain when clicking on "Submit"
- All contact information is registered in a SQLAlchemy entry
- as defined by the Contact class in flask_form.py -->
+ For the mandatory select fields "---" cannot remain when clicking on "Submit" -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <!-- css style to not display the fake class (honey pot class) -->
     <style>
-
+        .fake {
+            display: none;
+        }
     </style>
     <title>Contact Form</title>
 </head>
@@ -26,9 +27,10 @@
         can get back to you as soon as possible:</h3><br>
     <!-- The form will send a POST request to the /submit endpoint when submitted -->
     <form method="POST" action="/submit">
-        <!-- honey pot field not displayed to user, just to lure bots -->
-        <div class="fake"><input name="fake-field"></div>
-        <!-- Labels and input fields for first name, last name, email, how the person prefers to be addressed, world region, subject, and message -->
+        <!-- Honey pot field not displayed to user -->
+        <input class="fake" id="fake_field" name="fake_field">
+        <!-- Labels and input fields for first name, last name, email,
+         how the person prefers to be addressed, world region, subject, and message -->
         <label for="first_name">First Name:</label><br>
         <input type="text" id="first_name" name="first_name" required>{{ first_name_error_message }}<br><br>
         <label for="last_name">Last Name:</label><br>
@@ -65,7 +67,8 @@
         </select>{{ subject_error_message }}<br><br>
         <label for="message">Message:</label><br>
         <textarea id="message" name="message" required placeholder="Enter your message here..."></textarea>{{ message_error_message }}<br><br>
-        <!-- Submit button sending info to the server-side script at /submit endpoint and redirecting user to submit.html page upon successful submission -->
+        <!-- Submit button sending info to the server-side script at /submit endpoint
+         and redirecting user to submit.html page upon successful submission -->
         <input type="submit" value="Submit">
     </form>
 </body>
