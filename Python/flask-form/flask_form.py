@@ -33,6 +33,11 @@ def is_message_valid(string):
         return True
     return False
 
+# route to nicetry page
+@app.route("/nicetry")
+def nicetry_page():
+    return render_template("nicetry.html")
+
 # route to submit form
 @app.route("/submit", methods=["POST"])
 def submit_page():
@@ -43,6 +48,7 @@ def submit_page():
     region = request.form.get("region")
     subject = request.form.get("subject")
     message = request.form.get("message")
+    fake_field = request.form.get("fake_field")
 
     # Check each field fits its requirements and displays error message if not
     if not is_name_valid(first_name):
@@ -58,6 +64,10 @@ def submit_page():
     if not is_message_valid(message):
         return render_template("form.html", message_error_message="Your message can only contain letters, numbers, spaces and/or punctuation.")
 
+    # Check if the fake field is empty
+    if fake_field:
+        return render_template("nicetry.html")
+    
     return render_template(
         "submit.html",
         first_name=request.form["first_name"],
