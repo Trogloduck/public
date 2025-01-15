@@ -12,24 +12,25 @@ app = Flask(__name__)
 
 # route to contact form
 @app.route("/contact-form")
+@app.route("/")
 def form_page():
     return render_template("form.html")
 
 # regex to check if email is valid
-def is_email_valid(email):
+def is_email_valid(email:str):
     if re.match(r"[^@]+@[^@]+\.[^@]+", email):
         return True
     return False
 
 # regex to check if first_name, last_name is valid, preventing XSS attacks
-def is_name_valid(string):
-    if re.match(r"^[A-Za-z\s-]+$", string):
+def is_name_valid(name:str):
+    if re.match(r"^[A-Za-z\s-]+$", name):
         return True
     return False
 
 # regex to check if message is valid, preventing XSS attacks
-def is_message_valid(string):
-    if re.match(r"^[A-Za-z0-9\s\.,!?]+$", string):
+def is_message_valid(message:str):
+    if re.match(r"^[A-Za-z0-9\s\.,!?]+$", message):
         return True
     return False
 
