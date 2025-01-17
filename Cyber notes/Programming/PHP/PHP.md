@@ -11,10 +11,17 @@ Can be string, integer, float, boolean, null (NULL)
 **Array**
 ```php
 $my_array = array(
-  0 => 'item1', 
-  1 => 'item2', 
-  2 => 'item3');
+	"key1" => "value1", 
+	"key2" => "value2");
 ```
+or
+```php
+$my_array = [
+	"key1" => "value1",
+	"key2" => "value2"
+];
+```
+***Keys** can be str or int, **values** can be any type*
 
 #### Conditions
 ```php
