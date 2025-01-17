@@ -23,7 +23,13 @@ $my_array = [
 ```
 ***Keys** can be str or int, **values** can be any type*
 
+Values can be accessed like this
+```php
+$value1 = $my_array[key1];
+```
+
 #### Conditions
+##### if, elif, else
 ```php
 <?php  
 if (logical condition 1) {  
@@ -44,7 +50,7 @@ action for everything else;
         <?php if (isset($_GET['name'])){ ?>
             <h1>Hello <?php echo $_GET['name']; ?>!</h1>
         <?php } else { ?>
-            <h1>Hello nobody</h1>
+            <h1>Hello nobody!</h1>
         <?php } ?>
     </body>
 </html>
@@ -54,5 +60,13 @@ action for everything else;
 
 So, if a variable "name" is not "null" in the URL query string, H1 is "*Hello \[content of the variable "name"]!*"
 
-For instance, if I go to "http://localhost/test-website/index.php?name=Incelticide", H1 = "Hello Incelticide"
+For instance, if I go to "http://localhost/test-website/index.php?name=Incelticide", H1 = "Hello Incelticide"; if I go to "http://localhost/test-website/index.php", then H1 = "Hello nobody!"
 
+#### Docstrings
+```php
+// This is a comment on one line
+# This is another comment on one line
+
+/* This is a comment
+on several lines */
+```
