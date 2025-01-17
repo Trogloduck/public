@@ -40,7 +40,7 @@ def get_terminal_width():
         columns = 80  # Default width if the terminal size cannot be determined
     return columns
 
-def animate_text(signature,  width = get_terminal_width(), display_time=0.02, clear_time=0.001):
+def animate_text(signature,  width = get_terminal_width(), display_time=0.05, clear_time=0.001):
     # Determine the width of the text block (the longest line)
     text_width = max(len(line) for line in signature)
     position = -1
