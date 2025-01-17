@@ -42,6 +42,25 @@ action for everything else;
 ?>
 ```
 
+##### Comparison operators
+
+**`==`**: equal
+**`===`**: identical (also same type)
+**`!=`** or **`<>`**: not equal
+**`!==`**: not identical
+**`<`**: lower than
+**`>`**: greater than
+**`<=`**: lower or equal
+**`=>`**: greater or equal
+**`$x <=> $y`**: "*spaceship*", returns -1 if $x < $y, 1 if $x > $y, 0 if $x = $y
+
+##### Logical operators
+
+**`$a and $b`** or **`$a && $b`**: and
+**`$a or $b`** or **`$a || $b`**: or
+**`$a xor $b`**: either or, not both
+**`not $a`** or **`!$a`**: not
+
 ##### Inside HTML code
 ```php
 <html>
