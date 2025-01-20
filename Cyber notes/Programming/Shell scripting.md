@@ -1,13 +1,13 @@
 Table of content
-- [Basics](#basics)
-- [Variables](#variables)
-- [Calling arguments](#calling-arguments)
-- [Arrays](#arrays)
-- [Basic operations](#basic-operations)
-- [Decision making](#decision-making)
-- [Loops](#loops)
-- [Functions](#functions)
-- [Monitoring commands](Elements%20to%20monitor.md)
+- [[#Basics]]
+- [[#Variables]]
+- [[#Calling arguments]]
+- [[#Arrays]]
+- [[#Basic operations]]
+- [[#Decision making]]
+- [[#Loops]]
+- [[#Functions]]
+- [[Elements to monitor|Monitoring commands]]
 ___
 ### Basics
 
@@ -44,8 +44,7 @@ filelist=`ls`
 
 ___
 ### Calling arguments
-my_script.sh:
-
+my_script.sh
 ```bash
 #!/bin/bash
 echo "File name: "$0
@@ -166,8 +165,8 @@ ___
 ### Decision making
 
 ```bash
-if [ expression ]; then
-  code that will execute if 'expression' is true
+if [ condition ]; then
+  code that will execute if 'condition' is true
 fi
 ```
 
@@ -178,7 +177,7 @@ if [ "$NAME" = "John" ]; then
 fi
 ```
 
-Else condition:
+**Else condition**
 ```bash
 NAME="Bill"
 if [ "$NAME" = "John" ]; then
@@ -189,7 +188,7 @@ else
 fi
 ```
 
-Elif condition:
+**Elif condition**
 ```bash
 NAME="George"
 if [ "$NAME" = "John" ]; then
@@ -201,19 +200,19 @@ else
 fi
 ```
 
-Numeric comparisons:
+**Numeric comparisons**
 
 | $a **-lt** $b | $a **-gt** $b | $a **-le** $b | $a **-ge** $b | $a **-eq** $b | $a **-ne** $b |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 | a \< b        | a \> b        | a $\leq$ b    | a $\geq$ b    | a = b         | a $\neq$ b    |
 
-String comparisons:
+**String comparisons**
 
 | $a = $b            | $a == $b           | $a != $b              | -z "$variable" |
 | ------------------ | ------------------ | --------------------- | -------------- |
 | a is the same as b | a is the same as b | a is different from b | a is empty     |
 
-Conditions can be combined:
+Conditions can be **combined**
 ```bash
 if [[ $VAR_A[0] -eq 1 && ($VAR_B = "bee" || $VAR_T = "tee") ]] ; then
     command...
