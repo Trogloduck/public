@@ -86,3 +86,5 @@ For instance, if I go to "http://localhost/test-website/index.php?name=Inceltici
 /* This is a comment
 on several lines */
 ```
+
+resume at drill exercices
