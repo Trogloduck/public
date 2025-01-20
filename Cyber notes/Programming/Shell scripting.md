@@ -17,7 +17,13 @@ ___
 
 .sh: common extension for shell scripts
 
-`#`: used to comment
+```shell
+# comment
+'
+Multiple lines
+comment
+'
+```
 
 ___
 ### Variables
@@ -288,3 +294,22 @@ function function_name {
 
 ___
 
+### Menu
+
+```shell
+while true; do
+    echo "Select an option:"
+    echo "1. Function 1"
+    echo "2. Function 2"
+    echo "3. Exit"
+    read -p "Enter your choice: " choice
+
+    case $choice in
+        1) function_1 ;;
+        2) function_2 ;;
+        3) break ;;
+        *) echo "Invalid choice. Please try again." ;;
+    esac
+done
+```
+*This simple loop displays a menu in which the user can select a functionality the script can perform*
