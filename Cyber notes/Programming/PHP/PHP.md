@@ -8,7 +8,19 @@ $my_variable = "a string";
 
 Can be string, integer, float, boolean, null (NULL)
 
-**Array**
+##### String
+Similar to f-strings:
+```php
+$second_part = "the 2nd part of the string"
+$composed_string = "The 1st part of the string, {$second_part} and the 3rd part"
+```
+or
+```php
+$second_part = "the 2nd part of the string"
+$composed_string = "The 1st part of the string" . $second_part . "and the 3rd part"
+```
+
+##### Array
 ```php
 $my_array = array(
 	"key1" => "value1", 
@@ -81,6 +93,22 @@ So, if a variable "name" is not "null" in the URL query string, H1 is "*Hello \[
 
 For instance, if I go to "http://localhost/test-website/index.php?name=Incelticide", H1 = "Hello Incelticide"; if I go to "http://localhost/test-website/index.php", then H1 = "Hello nobody!"
 
+##### Switch
+*used only to test equality*
+```php
+switch ($variable0) {
+	case "$variable1":
+		# command1 to be executed if $variable0 == $variable1;
+		break; # prevents from executing command2 and 3
+	case "$variable2":
+	case "$variable3":
+		# command2, to be executed if $variable0 == $variable2 or $variable0 == $variable 3;
+		break; # prevents from executing command 0
+	default:
+		# command0 to be executed else
+}
+```
+
 #### Docstrings
 ```php
 // This is a comment on one line
@@ -88,4 +116,12 @@ For instance, if I go to "http://localhost/test-website/index.php?name=Inceltici
 
 /* This is a comment
 on several lines */
+```
+
+#### Functions
+
+```php
+function my_function($argument1, ...) {
+	return $my_result;
+}
 ```
