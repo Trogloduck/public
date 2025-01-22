@@ -3,12 +3,12 @@
 
 // different states of the room
 $possible_states = [
-    1=> "nuclear wasteland",
-    2=> "biohazard",
-    3=> "post flood",
-    4=> "war zone",
-    5=> "normal",
-    6=> "neat",
+    1=> "a nuclear wasteland",
+    2=> "a biohazard",
+    3=> "a war zone",
+    4=> "post flood",
+    5=> "dusty",
+    6=> "average",
     7=> "shiny",
 ];
 
