@@ -1,5 +1,8 @@
 "**;**" always ends a PHP declaration
 
+- [[#Variables]]
+- [[#Conditions]]
+- [[#Functions]]
 #### Variables
 are declared with "**$**"
 ```php
@@ -25,19 +28,30 @@ $composed_string = "The 1st part of the string" . $second_part . "and the 3rd pa
 $my_array = array(
 	"key1" => "value1", 
 	"key2" => "value2");
-```
-or
-```php
+# or
 $my_array = [
 	"key1" => "value1",
 	"key2" => "value2"
 ];
+# or
+$my_array = ["value1", "value2"] // $my_array[0] = "value1"
 ```
-***Keys** can be str or int, **values** can be any type*
+***Keys** can be str or int, **values** can be any type (including other arrays)*
 
 Values can be accessed like this
 ```php
 $value1 = $my_array[key1];
+```
+
+###### Array manipulations
+```php
+// display content of array
+var_dump($my_array)
+print_r($my_array) # less info
+
+// add element to array
+array_push($my_array, $element)
+$my_array[] = $element
 ```
 
 #### Conditions
@@ -131,14 +145,42 @@ $val = isset($_GET['user']) ? $_GET['user'] : 'default';
 $val = $_GET['user'] ?: 'default';
 ```
 
-#### Docstrings
-```php
-// This is a comment on one line
-# This is another comment on one line
+#### Loops
 
-/* This is a comment
-on several lines */
+##### foreach
+```php
+foreach ($my_array as $value) {
+	# action to be performed for each element of the array
+}
 ```
+
+##### while
+```php
+while (condition) {
+	# action to be performed if condition satisfied
+}
+```
+
+##### for
+```php
+for (expr1; expr2; expr3) {
+	# statement
+}
+```
+- `expr1`: initializes loop
+- `expr2`: is evaluated at each iteration, if true `statement` is executed
+- `expr3`: is performed at the end of each iteration
+
+Example
+```php
+for ($i = 1; $i <= 10; $i++) {
+	echo $i
+}
+```
+- `$i = 1`: loop starts with $i = 1
+- `$i <= 10`: as long as $i is lower or equal to 10, $i is printed
+- `$i++`: at the end of each iteration $i is incremented by 1
+	*$\Rightarrow$ Loop prints numbers from 1 to 10*
 
 #### Functions
 
@@ -146,4 +188,13 @@ on several lines */
 function my_function($argument1, ...) {
 	return $my_result;
 }
+```
+
+#### Docstrings
+```php
+// This is a comment on one line
+# This is another comment on one line
+
+/* This is a comment
+on several lines */
 ```
