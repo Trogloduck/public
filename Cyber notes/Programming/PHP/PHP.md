@@ -56,14 +56,11 @@ action for everything else;
 
 ##### Comparison operators
 
-**`==`**: equal
-**`===`**: identical (also same type)
-**`!=`** or **`<>`**: not equal
+**`==`** or **`===`**: equal or identical (also same type)
+**`!=`** or **`<>`** (SQL and older languages): not equal
 **`!==`**: not identical
-**`<`**: lower than
-**`>`**: greater than
-**`<=`**: lower or equal
-**`=>`**: greater or equal
+**`<`**, **`>`**: lower than, greater than
+**`<=`**, **`=>`**: lower/greater or equal
 **`$x <=> $y`**: "*spaceship*", returns -1 if $x < $y, 1 if $x > $y, 0 if $x = $y
 
 ##### Logical operators
@@ -87,11 +84,11 @@ action for everything else;
 </html>
 ```
 - **`$_GET`**: *superglobal array that contains data sent in URL query string*
-- **`isset()`**: *checks if variable is set and is not `null`.*
+- **`isset()`**: *checks if variable is set and is not `null`*
 
 So, if a variable "name" is not "null" in the URL query string, H1 is "*Hello \[content of the variable "name"]!*"
 
-For instance, if I go to "http://localhost/test-website/index.php?name=Incelticide", H1 = "Hello Incelticide"; if I go to "http://localhost/test-website/index.php", then H1 = "Hello nobody!"
+For instance, if I go to "http://localhost/test-website/index.php?name=Incelticide", H1 = "Hello Incelticide"; if I go to "http://localhost/test-website/index.php", H1 = "Hello nobody!"
 
 ##### Switch
 *used only to test equality*
