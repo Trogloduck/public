@@ -246,3 +246,97 @@ GET requests can be cached while POST cannot
 
 >In the above example, the ***keys*** of the array are the ***names*** we gave to each input ("username" and "password") and the ***values*** are whatever ***input*** the client entered.
 
+#### Data processing
+
+1. Sanitization
+2. Validation
+3. Execution
+4. Display/Redirection
+
+##### 1. Sanitization
+*Prevent toxic data from contaminating system*
+
+```php
+$sanitized_data = filter_var($_POST["input_data"], FILTER_SANITIZE_DATA);
+```
+
+`filter_var` function removes/encodes unwanted characters from `$_POST["input_data"]` using filter `FILTER_SANITIZE_DATA`
+
+**[Sanitizing filters list](https://www.php.net/manual/en/filter.constants.php#constant.filter-sanitize-string)**
+
+##### 2. Validation
+*Ensures data has valid format (string, int, email, IP, ...)*
+
+```php
+$validation = filter_var($sanitized_data, FILTER_VALIDATE_DATA);
+```
+
+**[Validation filters list](https://www.php.net/manual/en/filter.constants.php#constant.filter-validate-bool)**
+
+#### 3. Execution
+*Add sanitized and validated data to database*
+
+##### 4. Display/Redirection
+*Indicate success or redirect to another page*
+
+
+Sanitization $\rightarrow$ Display/Redirection, full example:
+```php
+<?php
+// Step 1: Sanitization
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Sanitize input data
+    $sanitized_email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
+
+    // Step 2: Validation
+    if (filter_var($sanitized_email, FILTER_VALIDATE_EMAIL) === false) {
+        echo "Invalid email address. Please try again.";
+        exit();
+    }
+
+    // Step 3: Execution (Adding to the database)
+    try {
+        // Database connection
+        $pdo = new PDO('mysql:host=localhost;dbname=test', 'username', 'password');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Use prepared statements to safely insert data
+        $stmt = $pdo->prepare("INSERT INTO users (email) VALUES (:email)");
+        $stmt->bindParam(':email', $sanitized_email);
+
+        // Execute the query
+        if ($stmt->execute()) {
+            // Step 4: Display/Redirection
+            echo "Registration successful!";
+            header("Location: success.php");
+            exit();
+        } else {
+            echo "An error occurred while saving your data. Please try again.";
+        }
+    } catch (PDOException $e) {
+        // Handle database connection or query errors
+        echo "Database error: " . htmlspecialchars($e->getMessage());
+    }
+} else {
+    // If the request method is not POST, show the registration form
+?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>User Registration</title>
+    </head>
+    <body>
+        <h2>User Registration</h2>
+        <form method="POST" action="">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+            <button type="submit">Register</button>
+        </form>
+    </body>
+    </html>
+<?php
+}
+?>
+```
