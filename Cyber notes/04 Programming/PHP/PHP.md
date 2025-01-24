@@ -198,3 +198,51 @@ function my_function($argument1, ...) {
 /* This is a comment
 on several lines */
 ```
+___
+
+### Forms
+
+#### GET & POST
+
+Used to send and retrieve information collected in a form
+
+```php
+<html>
+    <head>
+        <title>Form</title>
+    </head>
+    <body>
+        <form action="index.php" method="get">
+            <label>username</label><br>
+            <input type="text" name="username"><br>
+            <label>password</label><br>
+            <input type="password" name="password"><br>
+            <input type="submit" value="submit">
+        </form>
+    </body>
+</html>
+
+<?php
+if ( isset( $_GET["username"] ) ) {
+    echo "{$_GET["username"]}<br>";
+}
+if ( isset( $_GET["password"] ) ) {
+    echo "{$_GET["password"]}<br>";
+}
+?>
+```
+
+**Data is appended to URL**: http://localhost/exos/index.php?username=my_username&password=my_password
+
+Client can modify variables in URL as they wish $\Rightarrow$ less secure
+
+GET requests can be cached while POST cannot
+
+**$\Rightarrow$** **GET** can be more appropriate for a ***search page***
+
+**$\Rightarrow$** Use **POST** method (more secure) for sensitive information such as ***credentials***
+
+**`$_GET`** and **`$_POST`** are ***supervariables***: ***arrays*** storing other variables
+
+>In the above example, the ***keys*** of the array are the ***names*** we gave to each input ("username" and "password") and the ***values*** are whatever ***input*** the client entered.
+
