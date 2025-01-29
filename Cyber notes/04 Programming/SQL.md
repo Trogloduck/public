@@ -119,7 +119,7 @@ SELECT my_column, another_table_column, …
 FROM my_table
 INNER JOIN another_table
 	ON my_table.id = another_table.id
-… ;
+…;
 ```
 **`INNER JOIN`**: matches same key (.id) rows from my_table and another_table, key defined by **`ON`**
 
@@ -132,4 +132,38 @@ ON my_table.id = another_table.number
 - `FROM table_a` **`FULL JOIN`** `table_b`: union of both tables
 - `FROM table_a` **`LEFT JOIN`** `table_b`: includes all rows from table_a whether table_b has corresponding row or not
 - `FROM table_a` **`RIGHT JOIN`** `table_b`: same but for table_b
+___
+# Query execution order
 
+1. FROM & JOIN
+2. WHERE
+3. GROUP BY
+4. HAVING
+5. SELECT
+6. DISTINCT
+7. ORDER BY
+8. LIMIT & OFFSET
+---
+# Inserting rows
+
+**Schema**: *describes **structure** of each table, and **datatypes** that each column of the table can contain $\Rightarrow$ **efficiency** & **consistency***
+
+**`INSERT`**
+```sql
+INSERT INTO my_table
+VALUES (value_or_expr, another_value_or_expr, …),
+	   (value_or_expr_2, another_value_or_expr_2, …),
+	   …;
+```
+*number of values doesn't need to match number of columns, some columns can have default values*
+
+```sql
+INSERT INTO my_table
+(my_column, another_column, …)
+VALUES (value_or_expr, another_value_or_expr, …),
+	   (value_or_expr_2, another_value_or_expr_2, …),
+	   …;
+```
+*specifies for which columns we add data $\Rightarrow$ number of values needs to match number of columns*
+
+	
