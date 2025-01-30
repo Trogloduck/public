@@ -1,8 +1,14 @@
-- [[Python]]
-	- [[OOP]]
-	- [[Good practices]]
-	- [[Python packages]]
-	- [[Curses]]
-- [[git]]
-- [[HTML]]
-- [[CSS]]
+- Scripting
+	- [[Python]]
+		- [[OOP]]
+		- [[Good practices]]
+		- [[Python packages]]
+		- [[Curses]]
+	- [[git]]
+- Web
+	- [[HTML]]
+	- [[CSS]]
+	- [[PHP]]
+- Database
+	- [[SQL]]
+	- 

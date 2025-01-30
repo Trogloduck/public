@@ -3,6 +3,7 @@
 - SQL table: *entity* (object)
 - SQL row: *instance* (type of object)
 - SQL column: *property* (of the object)
+
 ___
 # Basics
 
@@ -15,6 +16,7 @@ FROM my_table;
 *N.B: not case-sensitive, not indentation sensitive (could be a line)*
 
 `SELECT *`: retrieve all columns
+
 ___
 ### Conditions
 
@@ -105,6 +107,7 @@ LIMIT num_limit OFFSET num_offset;
 `OFFSET` = x   \#start at x+1
 
 *Often used in conjunction with `ORDER BY`*
+
 ___
 # Multi-table query - `JOIN`
 
@@ -132,6 +135,7 @@ ON my_table.id = another_table.number
 - `FROM table_a` **`FULL JOIN`** `table_b`: union of both tables
 - `FROM table_a` **`LEFT JOIN`** `table_b`: includes all rows from table_a whether table_b has corresponding row or not
 - `FROM table_a` **`RIGHT JOIN`** `table_b`: same but for table_b
+
 ___
 # Query execution order
 
@@ -143,10 +147,13 @@ ___
 6. DISTINCT
 7. ORDER BY
 8. LIMIT & OFFSET
+
 ---
-# Inserting rows
+# Modifying data
 
 **Schema**: *describes **structure** of each table, and **datatypes** that each column of the table can contain $\Rightarrow$ **efficiency** & **consistency***
+
+### Inserting rows
 
 **`INSERT`**
 ```sql
@@ -166,4 +173,101 @@ VALUES (value_or_expr, another_value_or_expr, …),
 ```
 *specifies for which columns we add data $\Rightarrow$ number of values needs to match number of columns*
 
-	
+### Updating rows
+
+**`UPDATE`**
+```sql
+UPDATE my_table
+SET my_column = value_or_expr,
+	other_column = another_value_or_expr,
+	…
+WHERE _condition_;
+```
+*applies changes to rows of my_column, other_column which satisfy _condition_*
+
+### Deleting rows
+
+**`DELETE`**
+```sql
+DELETE FROM my_table
+WHERE _condition_;
+```
+
+___
+# Creating a table
+*and 2 chairs*
+
+### Schema
+
+```sql
+CREATE TABLE IF NOT EXISTS my_table (
+	my_column _DataType_ _TableConstraint_ DEFAULT _default_value_,
+	another_column _DataType_ _TableConstraint_ DEFAULT _default_value_,
+	…
+);
+```
+
+### Data types
+
+- INTEGER, BOOLEAN: integer number, boolean can be represented by 0/1
+- FLOAT, DOUBLE, REAL: different types of numbers
+- CHARACTER(num_chars), VARCHAR(num_chars), TEXT
+- DATE, DATETIME
+- BLOB: binary
+
+### Constraints
+
+- PRIMARY KEY: values in this column are unique, can be used to identify row
+- AUTOINCREMENT: value is incremented with each row insertion
+- UNIQUE: values in column are unique
+- NOT NULL: value inserted can't be null
+- CHECK (expression): use complex expression to test validity of values inserted (positive, certain size, start with certain prefix, etc.)
+- FOREIGN KEY: consistency check, ensures each value in this column corresponds to another value in a column in another table
+
+*Example:*
+```sql
+CREATE TABLE movies (
+	id INTEGER PRIMARY KEY,
+	title TEXT,
+	director TEXT,
+	year INTEGER,
+	length_minutes INTEGER
+);
+```
+
+___
+## Altering a table
+
+### Adding columns
+
+**`ADD`**
+```sql
+ALTER TABLE my_table
+ADD my_column DataType OptionalTableConstraint
+	DEFAULT default_value;
+```
+
+### Removing columns
+
+**`DROP`**
+```sql
+ALTER TABLE my_table
+DROP my_column;
+```
+
+### Renaming a table
+
+**`RENAME TO``**
+```sql
+ALTER TABLE my_table
+RENAME TO new_name;
+```
+
+## Dropping tables
+
+```sql
+DROP TABLE IF EXISTS my_table;
+```
+*deletes my_table*
+
+___
