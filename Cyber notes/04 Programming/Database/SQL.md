@@ -8,7 +8,6 @@ ___
 # Basics
 
 **`SELECT`**: query data from SQL database
-
 ```sql
 SELECT my_column, another_column, …
 FROM my_table;
@@ -21,7 +20,6 @@ ___
 ### Conditions
 
 **`WHERE`**
-
 ```sql
 SELECT my_column, another_column, …
 FROM my_table
@@ -155,7 +153,7 @@ ___
 
 ### Inserting rows
 
-**`INSERT`**
+**`INSERT INTO`**
 ```sql
 INSERT INTO my_table
 VALUES (value_or_expr, another_value_or_expr, …),
@@ -199,6 +197,7 @@ ___
 
 ### Schema
 
+**`CREATE TABLE`**
 ```sql
 CREATE TABLE IF NOT EXISTS my_table (
 	my_column _DataType_ _TableConstraint_ DEFAULT _default_value_,
@@ -236,8 +235,7 @@ CREATE TABLE movies (
 ```
 
 ___
-## Altering a table
-
+## Altering a table -- `ALTER TABLE`
 ### Adding columns
 
 **`ADD`**
@@ -257,7 +255,7 @@ DROP my_column;
 
 ### Renaming a table
 
-**`RENAME TO``**
+**`RENAME TO`**
 ```sql
 ALTER TABLE my_table
 RENAME TO new_name;
