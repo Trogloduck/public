@@ -27,8 +27,7 @@ CREATE TABLE IF NOT EXISTS my_table (
 In the creation of the table, I can make the "id" the primary key:
 ```mysql
 CREATE TABLE IF NOT EXISTS my_table (
-	id              INT unsigned NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY     (id),
+	id              INT unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	…
 );
 ```
