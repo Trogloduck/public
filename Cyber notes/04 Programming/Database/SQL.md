@@ -5,6 +5,22 @@
 - SQL column: *property* (of the object)
 
 ___
+- [[#Basics]]
+- [[#Conditions]]
+	- [[#Logical/Mathematical Operators]]
+	- [[#Expressions more complex conditions]], [[#Aggregate expressions -- Functions]]
+- [[#Filters]]
+- [[#Multi-table query - `JOIN`]]
+- [[#Query execution order]]
+- [[#Modifying data]]
+	- [[#Inserting rows]], [[#Updating rows]], [[#Deleting rows]]
+- [[#Creating a table]]
+	- [[#Schema]], [[#Data types]], [[#Constraints]]
+- [[#Altering a table -- `ALTER TABLE`]]
+	- [[#Adding columns]], [[#Removing columns]], [[#Renaming a table]]
+- [[#Dropping tables]]
+
+___
 # Basics
 
 **`SELECT`**: query data from SQL database
