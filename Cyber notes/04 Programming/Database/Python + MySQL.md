@@ -8,6 +8,7 @@
 	- [[#`INSERT INTO`]]
 	- [[#`DELETE FROM`]]
 	- [[#`SELECT`]]
+	- [[#`JOIN`]]
 ___
 ## Databases
 #### Common script - Connection
@@ -158,4 +159,3 @@ sql = "SELECT \
 - `FROM table_a` **`FULL JOIN`** `table_b`: union of both tables
 - `FROM table_a` **`LEFT JOIN`** `table_b`: includes all rows from table_a whether table_b has corresponding row or not
 - `FROM table_a` **`RIGHT JOIN`** `table_b`: same but for table_b
-
