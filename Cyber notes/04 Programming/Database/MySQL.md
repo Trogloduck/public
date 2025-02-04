@@ -10,7 +10,7 @@ Possible to write SQL command on several lines by not ending the line with **`;`
 
 **`SHOW DATABASES`**: show existing databases
 
-**`CREATE DATABASE my_database`**: create my_database
+**`CREATE DATABASE my_database`**: create my_database >< `DROP DATABASE`
 
 **Create a table**
 
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS my_table (
 In the creation of the table, I can make the "id" the primary key:
 ```mysql
 CREATE TABLE IF NOT EXISTS my_table (
-	id              INT unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id INT unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	…
 );
 ```
