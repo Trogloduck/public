@@ -1,3 +1,14 @@
+- [[#Basics]]
+	- [[#Common script - Connection]]
+	- [[#Show databases]]
+	- [[#Create/drop database]]
+	- [[#Connect to database]]
+- [[#Manipulate data]]
+	- [[#Create table]]
+	- [[#Insert rows]]
+	- 
+___
+## Basics
 #### Common script - Connection
 ```python
 import mysql.connector
@@ -12,7 +23,7 @@ mydb = mysql.connector.connect(
 *Common part to all subsequent scripts, connects to MySQL database using credentials*, `print(mydb)` to check if connection succeeded
 
 *In order to avoid displaying credentials in script, save credentials in other script that can be encrypted*
-
+___
 ##### Show databases
 ```python
 mycursor = mydb.cursor()
@@ -42,12 +53,15 @@ mydb = mysql.connector.connect(
 )
 ```
 
+___
+### Manipulate data
 ##### Create table
 ```python
 mycursor.execute("CREATE TABLE my_table (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255))")
 ```
 
 ##### Insert rows
+
 ```python
 sql = "INSERT INTO my_table (id, name) VALUES (%s, %s)"
 val = (1, "Jeremy Bower")
@@ -57,14 +71,19 @@ mydb.commit()
 
 print(mycursor.rowcount, "record inserted.")
 ```
-Multiple rows
+
+
+Multiple rows: **list**, **`.executemany`**
 ```python
 val = [
   (2, 'George'),
   (3, 'Michael'),
   …
 ]
+
+mycursor.executemany(sql, val)
 ```
+
 Return last record id
 ```python
 mycursor.lastrowid
