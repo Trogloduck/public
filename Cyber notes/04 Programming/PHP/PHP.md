@@ -1,3 +1,5 @@
+*Interesting to learn more about PHP because it's a **big attack vector** (SQL injections, reverse shell attack, ...) and people are not super into it so not many people are super skilled in it*
+
 "**;**" always ends a PHP declaration
 
 - [[#Variables]]
