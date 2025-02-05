@@ -6,6 +6,7 @@
 
 ___
 - [[#Basics]]
+	- [[#Data types]]
 - [[#Conditions]]
 	- [[#Logical/Mathematical Operators]]
 	- [[#Expressions more complex conditions]], [[#Aggregate expressions -- Functions]]
@@ -31,6 +32,14 @@ FROM my_table;
 *N.B: not case-sensitive, not indentation sensitive (could be a line)*
 
 `SELECT *`: retrieve all columns
+
+### Data types
+
+- INTEGER, BOOLEAN: integer number, boolean can be represented by 0/1
+- FLOAT, DOUBLE, REAL: different types of numbers
+- CHARACTER(#chars), VARCHAR(#chars), TEXT
+- DATE, DATETIME
+- BLOB: binary
 
 ___
 ### Conditions
@@ -221,14 +230,6 @@ CREATE TABLE IF NOT EXISTS my_table (
 	…
 );
 ```
-
-### Data types
-
-- INTEGER, BOOLEAN: integer number, boolean can be represented by 0/1
-- FLOAT, DOUBLE, REAL: different types of numbers
-- CHARACTER(num_chars), VARCHAR(num_chars), TEXT
-- DATE, DATETIME
-- BLOB: binary
 
 ### Constraints
 
