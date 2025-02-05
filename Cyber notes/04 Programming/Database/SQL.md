@@ -11,15 +11,15 @@ ___
 	- [[#Logical/Mathematical Operators]]
 	- [[#Expressions more complex conditions]], [[#Aggregate expressions -- Functions]]
 - [[#Filters]]
-- [[#Multi-table query - `JOIN`]]
+- [[#`JOIN` -- Multiple table query]]
 - [[#Query execution order]]
 - [[#Modifying data]]
-	- [[#Inserting rows]], [[#Updating rows]], [[#Deleting rows]]
+	- [[#`INSERT INTO`]], [[#`UPDATE`]], [[#`DELETE`]]
 - [[#Creating a table]]
 	- [[#Schema]], [[#Data types]], [[#Constraints]]
-- [[#Altering a table -- `ALTER TABLE`]]
-	- [[#Adding columns]], [[#Removing columns]], [[#Renaming a table]]
-- [[#Dropping tables]]
+- [[#`ALTER TABLE`]]
+	- [[#`ADD`]], [[#`DROP` -- Remove column]], [[#`RENAME TO`]]
+- [[#`DROP TABLE` -- Delete]]
 
 ___
 # Basics
@@ -132,7 +132,7 @@ LIMIT num_limit OFFSET num_offset;
 *Often used in conjunction with `ORDER BY`*
 
 ___
-# Multi-table query - `JOIN`
+# `JOIN` -- Multiple table query
 
 Tables sharing info about single entity have _primary key_ (identifies entity _uniquely_ across database).
 
@@ -176,9 +176,8 @@ ___
 
 **Schema**: *describes **structure** of each table, and **datatypes** that each column of the table can contain $\Rightarrow$ **efficiency** & **consistency***
 
-### Inserting rows
+### `INSERT INTO`
 
-**`INSERT INTO`**
 ```sql
 INSERT INTO my_table
 VALUES (value_or_expr, another_value_or_expr, …),
@@ -196,9 +195,8 @@ VALUES (value_or_expr, another_value_or_expr, …),
 ```
 *specifies for which columns we add data $\Rightarrow$ number of values needs to match number of columns*
 
-### Updating rows
+### `UPDATE`
 
-**`UPDATE`**
 ```sql
 UPDATE my_table
 SET my_column = value_or_expr,
@@ -208,9 +206,8 @@ WHERE _condition_;
 ```
 *applies changes to rows of my_column, other_column which satisfy _condition_*
 
-### Deleting rows
+### `DELETE`
 
-**`DELETE`**
 ```sql
 DELETE FROM my_table
 WHERE _condition_;
@@ -252,37 +249,33 @@ CREATE TABLE movies (
 ```
 
 ___
-## Altering a table -- `ALTER TABLE`
-### Adding columns
+## `ALTER TABLE`
+### `ADD`
 
-**`ADD`**
 ```sql
 ALTER TABLE my_table
 ADD my_column DataType OptionalTableConstraint
 	DEFAULT default_value;
 ```
 
-### Removing columns
+### `DROP` -- Remove column
 
-**`DROP`**
 ```sql
 ALTER TABLE my_table
 DROP my_column;
 ```
 
-### Renaming a table
+### `RENAME TO`
 
-**`RENAME TO`**
 ```sql
 ALTER TABLE my_table
 RENAME TO new_name;
 ```
 
-## Dropping tables
+## `DROP TABLE` -- Delete
 
 ```sql
 DROP TABLE IF EXISTS my_table;
 ```
-*deletes my_table*
 
 ___
