@@ -31,5 +31,5 @@ GitHub Pages -- `<username>.github.io`
 **Hardware**
 Rubber ducky
 
-**Special research**
+**Google dorking**
 "index of" ".env"
