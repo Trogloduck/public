@@ -11,5 +11,7 @@ mongod --config "C:\Program Files\MongoDB\Server\8.0\bin\mongod.cfg" --install
 
 Start MongoDB server: `net start MongoDB`
 
+For Python scripting, install pymongo: `pip install pymongo`
+
 ___
 

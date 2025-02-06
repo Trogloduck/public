@@ -11,4 +11,7 @@
 	- [[PHP]]
 - Database
 	- [[SQL]]
-	- 
+		- [[MySQL]], [[Python + MySQL]]
+	- [[NoSQL]]
+		- [[MongoDB]]
+	- [[KQL]]
