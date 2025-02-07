@@ -2,10 +2,13 @@
 - [[#Common script - Setup]]
 - [[#Create database and table]]
 	- [[#`.insert()`]], [[#`.insert_one()`]], [[#`.insert_many()`]], [[#`_id`]]
-- [[#Manipulate data]]
-	- [[#Find data]], [[#Filter data]], [[#Sort data]]
-	- [[#Miscellaneous]]
-
+- [[#Manipulate documents]]
+	- [[#Find doc]], [[#Filter doc]], [[#`.sort()`]]
+- [[#Alter collection]]
+	- [[#Update collection]]: [[#`.update_one()`]], [[#`.update_many()`]]
+	- [[#Delete doc]]: [[#`.delete_one()`]], [[#`.delete_many()`]]
+	- [[#`.drop()`]]
+- [[#Miscellaneous]] 
 
 ___
 ### Setup
