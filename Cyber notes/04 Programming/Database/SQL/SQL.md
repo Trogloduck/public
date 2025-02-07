@@ -1,8 +1,8 @@
 *Structured Query Language: query, manipulate, transform data from relational database (collection of related (two-dimensional) tables)*
 
-- SQL table: *entity* (object)
-- SQL row: *instance* (type of object)
-- SQL column: *property* (of the object)
+- SQL table: *entity* (collection of objects of the same type)
+- SQL row: *instance* (one occurrence of a property of an object belonging to that table)
+- SQL column: *property* (of objects belonging to that table)
 
 ___
 - [[#Basics]]
