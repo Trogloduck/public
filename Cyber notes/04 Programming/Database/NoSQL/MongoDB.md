@@ -2,8 +2,9 @@
 - [[#Common script - Setup]]
 - [[#Create database and table]]
 	- [[#`.insert()`]], [[#`.insert_one()`]], [[#`.insert_many()`]], [[#`_id`]]
-- [[#Find data]], [[#Filter data]]
-- [[#Miscellaneous]]
+- [[#Manipulate data]]
+	- [[#Find data]], [[#Filter data]], [[#Sort data]]
+	- [[#Miscellaneous]]
 
 
 ___
@@ -32,7 +33,7 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/") # connect to MongoD
 mydb = myclient["mydatabase"] # select database
 mycol = mydb["customers"] # select collection
 ```
-*"Collections" are tables*
+*"Collections" = tables*
 
 **NB**: MongoDB doesn't create empty databases/collections. It creates the database/collection when you insert rows into it.
 
@@ -73,9 +74,11 @@ x = mycol.insert_many(mylist)
 ```
 
 ___
-### Find data
+### Manipulate documents
+*"Documents" = rows*
+#### Find doc
 
-#### `.find_one()`
+##### `.find_one()`
 ```python
 x = mycol.find_one()  
 print(x)
@@ -95,7 +98,7 @@ Include several fields
 for x in mycol.find({},{ "_id": 0, "name": 1, "address": 1 }):  
   print(x)
 ```
-*Will not return the IDs*
+*will not return the IDs*
 
 **Exclude** one field: `{ "_id": 0 }`
 
@@ -103,9 +106,78 @@ for x in mycol.find({},{ "_id": 0, "name": 1, "address": 1 }):
 
 **NB**: `{ "_id": 0, "name":1, "address":0 }` will return an error. Can't have a combination of 0s and 1s other than with the `_id`field
 
-### Filter data
+##### `.limit()`
+`.limit(number)`: limit number of results to `number`
 
+#### Filter doc
+```python
+myquery = { "address": "Park Lane 38" }  
+  
+mydoc = mycol.find(myquery)  
 
+for x in mydoc:  
+  print(x)
+```
+*will return row where address = "Park Lane 38"*
+
+##### Advanced query
+```python
+myquery = { "address": { "$gt": "S" } }
+```
+*will return rows with addresses that start with S or a subsequent letter*
+
+**Regex** is supported
+```python
+myquery = { "address": { "$regex": "^S" } }
+```
+
+#### `.sort()`
+
+`.sort("field_name", direction)` (direction = 1 (default) or -1)
+```python
+mydoc = mycol.find().sort("name")
+```
+
+### Alter collection
+#### Update collection
+
+##### `.update_one()`
+```python
+myquery = { "address": "Valley 345" }  
+newvalues = { "$set": { "address": "Canyon 123" } }  
+  
+mycol.update_one(myquery, newvalues)
+```
+
+##### `.update_many()`
+```python
+myquery = { "address": { "$regex": "^S" } }  
+newvalues = { "$set": { "name": "Minnie" } }  
+  
+mycol.update_many(myquery, newvalues)
+```
+
+#### Delete doc
+##### `.delete_one()`
+```python
+myquery = { "address": "Mountain 21" }
+mycol.delete_one(myquery)
+```
+
+##### `.delete_many()`
+```python
+myquery = [
+	{ "address": "Mountain 21" },
+	{ "address": "Park Lane 38" },
+	…
+]
+x = mycol.delete_many(myquery)
+```
+
+`x = mycol.delete_many({})`: delete all docs
+
+##### `.drop()`
+`mycol.drop()`: delete collection
 
 ___
 ### Miscellaneous
@@ -114,4 +186,5 @@ ___
 myclient.list_database_names() # return database list
 mydb.list_collection_names() # return collection list
 x.inserted_id # return IDs created by operation x
+x.deleted_count # returns # deleted items
 ```
