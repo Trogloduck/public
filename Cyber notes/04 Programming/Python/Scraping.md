@@ -244,7 +244,6 @@ ___
 
 # Selenium
 
-<<<<<<< HEAD
 BeautifulSoup just parses through a website
 
 Selenium can be used to perform actions like a human browsing a website, such as writing input and clicking buttons
@@ -289,44 +288,4 @@ time.sleep(random.uniform(1.5, 2))
 
 # Close browser
 chrome_driver.close()
-```
-
-BeautifulSoup: parses through website source code
-
-Selenium: simulate human behavior like clicking buttons and writing input
-
-```python
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-
-import time
-import random
-
-# create Chrome session
-driver = webdriver.Chrome()
-
-# get webpage
-driver.get("http://www.python.org")
-
-# pause for random float [1, 2] seconds
-time.sleep(random.uniform(1, 2))
-
-# confirm title contains "Python"
-assert "Python" in driver.title
-
-# find element with name "q" (search bar)
-search_bar = driver.find_element(By.NAME, "q")
-
-# clear input field and search for "pycon"
-search_bar.clear()
-search_bar.send_keys("pycon")
-search_bar.send_keys(Keys.RETURN)
-
-# pause for random float [1, 2] seconds
-time.sleep(random.uniform(1, 2))
-
-# confirm results and close browser
-assert "No results found." not in driver.page_source
-driver.quit()
 ```
