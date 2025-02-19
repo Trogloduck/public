@@ -18,5 +18,40 @@ sudo apt-get update
 sudo apt-get install sysmonforlinux
 ```
 
+**`man sysmon`**
+
+**`-? config`**: config file documentation
 ### Configuration
 
+**Config by SwiftOnSecurity**
+
+https://github.com/SwiftOnSecurity/sysmon-config
+
+```bash
+sysmon -accepteula -i sysmonconfig-export.xml
+```
+
+**Custom config**
+
+Save config in sysmonconfig.xml file, then
+
+```bash
+# 1. stop sysmon
+sudo systemctl stop sysmon
+# 2. update config
+sudo sysmon -c /PATH_TO/sysmonconfig.xml
+# 3. start sysmon
+sudo systemctl start sysmon
+```
+
+### Monitor logs
+
+For robots
+```bash
+sudo journalctl -u sysmon
+```
+
+For humans
+```bash
+sudo journalctl -u sysmon | sudo /opt/sysmon/sysmonLogView -X
+```
