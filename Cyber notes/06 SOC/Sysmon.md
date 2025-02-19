@@ -52,3 +52,24 @@ For humans
 ```bash
 sudo journalctl -u sysmon | sudo /opt/sysmon/sysmonLogView -X
 ```
+
+### Config file
+
+Schema version: `sysmon -s`
+```xml
+<Sysmon schemaversion="4.81">
+    <!-- Specify hash algorithm -->
+    <HashAlgorithms>sha256</HashAlgorithms>
+    <!-- Check if certificate used for signing has been revoked -->
+    <CheckRevocation />
+    <!-- Name of directory to store logs -->
+    <ArchiveDirectory>%SystemRoot%\Sysmon</ArchiveDirectory>
+    <!-- Size of fields for Sysmon on Linux -->
+    <FieldSizes>CommandLine:50,Image:50</FieldSizes>
+    <!-- Perform DNS lookup for network connection events -->
+    <DnsLookup>true|false</DnsLookup>
+    <EventFiltering>
+    …
+    </EventFiltering>
+</Sysmon>
+```
