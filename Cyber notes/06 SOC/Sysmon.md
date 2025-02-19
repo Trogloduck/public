@@ -18,9 +18,6 @@ sudo apt-get update
 sudo apt-get install sysmonforlinux
 ```
 
-**`man sysmon`**
-
-**`-? config`**: config file documentation
 ### Configuration
 
 **Config by SwiftOnSecurity**
