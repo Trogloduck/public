@@ -69,3 +69,31 @@ ___
 ___
 ### `Get-WinEvent`
 
+*Can combine events from multiple sources and filter using XPath queries, structured XML queries and hash table queries*
+
+NB: replaced Get-EventLog
+
+Use `Get-Help` to obtain info about syntax
+
+**`Get-WinEvent -ListLog *`**: list all **logs**
+
+**`-ListProvider *`**: list all **providers**
+![[Pasted image 20250220140038.png]]
+Name: Provider
+LogLinks: Log where it's written
+
+**Filter**
+```powershell
+Get-WinEvent -LogName Application | Where-Object { $_.ProviderName -Match 'WLMS' }
+```
+
+With large event logs, more efficient to use **`FilterHashtable`**:
+```powershell
+Get-WinEvent -FilterHashtable @{
+  LogName='Application' 
+  ProviderName='WLMS' 
+}
+```
+
+(More about [[Hash tables]])
+
