@@ -1,3 +1,10 @@
+- [[#Types of logs]]
+- [[#Types of events]]
+- [[#Event Viewer]]
+	- [[#Events (middle pane)]]
+	- [[#Actions (right pane)]]
+
+___
 ### Types of logs
 
 - **System logs:** associated to OS (hardware, device drivers, system changes, ...)
@@ -16,6 +23,7 @@
 - **Success Audit:** successful audited security access (successful user attempt to log on to system for instance)
 - **Failure Audit:** failed audited security access (failed user attempt to access a network drive for instance)
 
+___
 ### Event Viewer
 
 ![[eventviewer.png]]
@@ -28,7 +36,7 @@
 
 #### Events (middle pane)
 
-**Top pane**
+**Top part**
 ![[Pasted image 20250220100605.png]]
 
 - **Level:** event type (error, warning, information, ...)
@@ -37,5 +45,14 @@
 - **Event ID:** maps to operation/event (in above image 40962 is related to PS Console Startup), not unique (same ID will have entirely different meaning in another event log)
 - **Task Category:** event category, helps organize and filter events
 
-**Middle pane**
+**Bottom part**
 ![[Pasted image 20250220101424.png]]
+
+*Provides more details on selected event*
+
+#### Actions (right pane)
+
+- **Open Saved Log:** especially useful if remote machine is inaccessible
+- **Create Custom View** and **Filter Current Log**: nearly identical, custom view allows to filter across logs
+- ...
+
