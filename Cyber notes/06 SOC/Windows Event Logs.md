@@ -3,6 +3,8 @@
 - [[#Event Viewer]]
 	- [[#Events (middle pane)]]
 	- [[#Actions (right pane)]]
+- [[#`wevutil.exe`]]
+- [[#`Get-WinEvent`]]
 
 ___
 ### Types of logs
@@ -37,7 +39,7 @@ ___
 #### Events (middle pane)
 
 **Top part**
-![[Pasted image 20250220100605.png]]
+![[top_part.png]]
 
 - **Level:** event type (error, warning, information, ...)
 - **Date and Time**
@@ -47,7 +49,6 @@ ___
 
 **Bottom part**
 ![[Pasted image 20250220101424.png]]
-
 *Provides more details on selected event*
 
 #### Actions (right pane)
@@ -55,4 +56,15 @@ ___
 - **Open Saved Log:** especially useful if remote machine is inaccessible
 - **Create Custom View** and **Filter Current Log**: nearly identical, custom view allows to filter across logs
 - ...
+
+___
+### `wevutil.exe`
+*Sift through thousands of events using CLI and scripting*
+
+**`wevtutil.exe [command_name] /?`**: details about usage of command
+
+**`wevtutil qe`**: read events from an event log, log file or using structured query
+
+___
+### `Get-WinEvent`
 
