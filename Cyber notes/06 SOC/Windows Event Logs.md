@@ -27,6 +27,7 @@ ___
 
 ___
 ### Event Viewer
+*Right-click Windows button $\rightarrow$ Event Viewer*
 
 ![[eventviewer.png]]
 
