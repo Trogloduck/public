@@ -27,7 +27,7 @@ ___
 
 ___
 ### Event Viewer
-*Right-click Windows button $\rightarrow$ Event Viewer*
+>*Right-click Windows button $\rightarrow$ Event Viewer*
 
 ![[eventviewer.png]]
 
@@ -35,7 +35,7 @@ ___
 2. General overview of **events** specific to a selected provider
 3. **Actions**
 
-> *Right-click on a provider > Properties > **Clear log** $\rightarrow$ adversaries can use this to **erase** their **tracks***
+>*Right-click on a provider > Properties > **Clear log** $\rightarrow$ adversaries can use this to **erase** their **tracks***
 
 #### Events (middle pane)
 
