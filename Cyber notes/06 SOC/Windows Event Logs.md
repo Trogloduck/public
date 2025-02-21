@@ -1,3 +1,5 @@
+### Table of contents
+
 - [[#Types of logs]]
 - [[#Types of events]]
 - [[#Event Viewer]]
@@ -6,9 +8,11 @@
 - [[#`wevutil.exe`]]
 - [[#`Get-WinEvent`]]
 - [[#XPath Queries]]
+- [[#Event IDs]]
 
 ___
 ### Types of logs
+[[#Table of contents|Back to the top]]
 
 - **System logs:** associated to OS (hardware, device drivers, system changes, ...)
 - **Security logs:** logon/logoff activities
@@ -19,6 +23,7 @@ ___
 - **Custom logs:** some apps require custom data storage
 
 ### Types of events
+[[#Table of contents|Back to the top]]
 
 - **Error:** significant problem (data/functionality loss)
 - **Warning:** not necessarily significant, possible future problem (low disk space for instance)
@@ -28,6 +33,7 @@ ___
 
 ___
 ### Event Viewer
+[[#Table of contents|Back to the top]]
 >*Right-click Windows button $\rightarrow$ Event Viewer*
 
 ![[eventviewer.png]]
@@ -61,6 +67,7 @@ ___
 
 ___
 ### `wevutil.exe`
+[[#Table of contents|Back to the top]]
 *Sift through thousands of events using CLI and scripting*
 
 **`wevtutil.exe [command_name] /?`**: details about usage of command
@@ -69,6 +76,7 @@ ___
 
 ___
 ### `Get-WinEvent`
+[[#Table of contents|Back to the top]]
 *Can combine events from multiple sources and filter using XPath queries, structured XML queries and hash table queries*
 
 https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-winevent
@@ -111,6 +119,7 @@ $\downarrow$  $\downarrow$  $\downarrow$
 
 ___
 ### XPath Queries
+[[#Table of contents|Back to the top]]
 
 https://learn.microsoft.com/en-us/windows/win32/wes/consuming-events#xpath-10-limitations
 
@@ -157,5 +166,8 @@ Get-WinEvent -LogName Security -FilterXPath '*/EventData/Data[@Name="TargetUserN
 ```
 
 ___
-### EventIDs
+### Event IDs
+[[#Table of contents|Back to the top]]
+
+Guidelines on which IDs to monitor: https://static1.squarespace.com/static/552092d5e4b0661088167e5c/t/580595db9f745688bc7477f6/1476761074992/Windows+Logging+Cheat+Sheet_ver_Oct_2016.pdf
 
