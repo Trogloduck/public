@@ -5,6 +5,7 @@
 	- [[#Actions (right pane)]]
 - [[#`wevutil.exe`]]
 - [[#`Get-WinEvent`]]
+- [[#XPath Queries]]
 
 ___
 ### Types of logs
@@ -68,8 +69,9 @@ ___
 
 ___
 ### `Get-WinEvent`
-
 *Can combine events from multiple sources and filter using XPath queries, structured XML queries and hash table queries*
+
+https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-winevent
 
 NB: replaced Get-EventLog
 
@@ -96,4 +98,64 @@ Get-WinEvent -FilterHashtable @{
 ```
 
 (More about [[Hash tables]])
+
+Accepted key/value pairs for Get-WinEvent FilterHashtable parameter
+![[Pasted image 20250221094957.png]]
+
+Recommended to to make hash table one key-value pair at a time
+
+Event Viewer provides info to build hash table:
+![[Pasted image 20250221100030.png#center]]
+$\downarrow$  $\downarrow$  $\downarrow$  
+![[Pasted image 20250221100100.png#center]]
+
+___
+### XPath Queries
+
+https://learn.microsoft.com/en-us/windows/win32/wes/consuming-events#xpath-10-limitations
+
+https://learn.microsoft.com/en-us/previous-versions/dotnet/netframework-4.0/ms256115(v=vs.100)
+
+wevtutil and Get-WinEvent support XPath for event filtering
+
+Event Viewer > middle pane > bottom half > Details > XML view provides info to build XPath query:
+![[Pasted image 20250221104845.png]]
+1st tag of query: `*` or `Event`
+
+`Get-WinEvent -LogName Application -FilterXPath '*'`
+
+![[Pasted image 20250221104949.png]]
+`Get-WinEvent -LogName Application -FilterXPath '*/System/'`
+
+![[Pasted image 20250221105118.png]]
+`Get-WinEvent -LogName Application -FilterXPath '*/System/EventID=100'`
+
+Same command with wevtutil:
+
+`wevtutil.exe qe Application /q:*/System[EventID=100]
+
+Note: `System/EventID=100` is equivalent to `System[EventID=100]`
+
+**`@Name`**: filter by provider: `*/System/Provider[@Name="WLMS"]`
+
+**`and`**: Combine 2 queries: `-FilterXPath '*/System/EventID=101 and */System/Provider[@Name="WLMS"]'`
+
+
+XPath for elements within **EventData**
+
+![[Pasted image 20250221110331.png]]
+Query for TargetUserName: 
+```powershell
+Get-WinEvent -LogName Security -FilterXPath '*/EventData/Data[@Name="TargetUserName"]="System"'
+```
+
+To display a certain property, pipe a `Select-Object`
+
+Example:
+```Powershell
+Get-WinEvent -LogName Security -FilterXPath '*/EventData/Data[@Name="TargetUserName"]="Sam" and */System/EventID=4720' | Select-Object Message, ProviderName
+```
+
+___
+### EventIDs
 

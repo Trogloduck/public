@@ -73,3 +73,4 @@ Schema version: `sysmon -s`
     </EventFiltering>
 </Sysmon>
 ```
+
