@@ -1,0 +1,1 @@
+Dynamic-Link Library: shared library (executable code designed to be used by multiple programs) in Microsoft Windows or OS/2 operating system. Can contain executable code (functions), data, resources.
