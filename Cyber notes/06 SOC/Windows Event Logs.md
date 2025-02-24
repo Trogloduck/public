@@ -158,11 +158,14 @@ Query for TargetUserName:
 Get-WinEvent -LogName Security -FilterXPath '*/EventData/Data[@Name="TargetUserName"]="System"'
 ```
 
-To display a certain property, pipe a `Select-Object`
-
-Example:
+Display certain property: `| Select-Object`
 ```Powershell
 Get-WinEvent -LogName Security -FilterXPath '*/EventData/Data[@Name="TargetUserName"]="Sam" and */System/EventID=4720' | Select-Object Message, ProviderName
+```
+
+Display all properties: `| Format-List -Property *`
+```powershell
+Get-WinEvent -Path ./merged.evtx -FilterXPath '*/System/EventID=4799' | Format-List -Property *
 ```
 
 ___
