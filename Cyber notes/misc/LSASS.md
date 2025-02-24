@@ -1,0 +1,1 @@
+Local Security Authority Subsystem Service -- responsible for **enforcing security policy** on system, verifies users **logging** on to Windows computer/server, handles **password** changes, and creates **access tokens**

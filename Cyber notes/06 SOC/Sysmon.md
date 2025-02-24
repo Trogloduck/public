@@ -5,6 +5,9 @@
 - [[#Configuration]]
 - [[#Monitor logs]]
 - [[#Config file]]
+- [[#Event IDs]]
+- [[#Best practices]]
+- [[#Hunting Metasploit]]
 
 https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
 https://github.com/microsoft/SysmonForLinux
@@ -102,8 +105,8 @@ Schema version: `sysmon -s`
 ```
 
 ___
-
 ### Event IDs
+[[#Table of contents|Back to the top]]
 
 ##### 1: Process Creation
 $\rightarrow$ Look for suspicious processes / processes with typos
@@ -138,3 +141,33 @@ $\rightarrow$ Exclude trusted domains
 	</DnsQuery>  
 </RuleGroup>
 ```
+
+___
+### Best practices
+[[#Table of contents|Back to the top]]
+
+- Exclude > Include
+- CLI for more control: `Get-WinEvent`, `wevtutil.exe`
+- Know your environment: know normal signals to detect abnormal signals
+
+___
+### Hunting Metasploit
+[[#Table of contents|Back to the top]]
+
+*Commonly used exploit framework for pentesting, can be used to easily run exploits on machine and connect back to meterpreter shell*
+
+By default, Metasploit uses port **4444** (https://docs.google.com/spreadsheets/d/17pSTDNpa0sf6pHeRhusvWG6rThciE8CsXTSlDUAZDyo)
+
+Start investigation: look at packet captures from date of log to begin looking for further information about adversary
+
+```powershell
+get-winevent -path .\Hunting_Metasploit_1609814643558.evtx -filterxpath '*/System/EventID=3 and */EventData/Data[@Name="DestinationPort"] and */EventData/Data=4444'
+```
+*Look for network event (EventID = 3) on Metasploit port (4444)*
+
+___
+### Detecting Mimikatz
+[[#Table of contents|Back to the top]]
+
+*Commonly used to dump credentials from memory along with other Windows post-exploitation activity, mainly known for dumping [[LSASS]]*
+
