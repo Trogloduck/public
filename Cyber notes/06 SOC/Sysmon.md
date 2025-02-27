@@ -171,3 +171,35 @@ ___
 
 *Commonly used to dump credentials from memory along with other Windows post-exploitation activity, mainly known for dumping [[LSASS]]*
 
+We can hunt for the file created, execution of the file from an elevated process, creation of a remote thread, and processes Mimikatz creates
+
+[Process Injection](https://attack.mitre.org/techniques/T1055/), [Mimikatz](https://attack.mitre.org/software/S0002/)
+
+##### Detecting File Creation
+
+Looking for files created with name Mimikatz by including this config snippet
+```xml
+<RuleGroup name="" groupRelation="or">  
+	<FileCreate onmatch="include">  
+		<TargetFileName condition="contains">mimikatz</TargetFileName>  
+	</FileCreate>  
+</RuleGroup>
+```
+
+##### Hunting Abnormal LSASS Behavior
+
+**ProcessAccess** event ID to hunt for abnormal LSASS behavior
+
+**LSASS** accessed by other process than **svchost.exe**: suspicious $\rightarrow$ investigate
+
+Config snippet
+```xml
+<RuleGroup name="" groupRelation="or">  
+	<ProcessAccess onmatch="include">
+		<TargetImage condition="image">lsass.exe</TargetImage>  
+	</ProcessAccess>  
+</RuleGroup>
+```
+
+Practical example of the THM room: *Open `C:\Users\THM-Analyst\Desktop\Scenarios\Practice\Hunting_LSASS.evtx` in Event Viewer to view an attack using an obfuscated version of Mimikatz to dump credentials from memory*
+
