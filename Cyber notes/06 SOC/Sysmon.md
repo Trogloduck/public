@@ -87,7 +87,7 @@ ___
 
 Schema version: `sysmon -s`
 ```xml
-<Sysmon schemaversion="4.81">
+<Sysmon schemaversion="4.90">
     <!-- Specify hash algorithm -->
     <HashAlgorithms>sha256</HashAlgorithms>
     <!-- Check if certificate used for signing has been revoked -->
@@ -188,7 +188,7 @@ Looking for files created with name Mimikatz by including this config snippet
 
 ##### Hunting Abnormal LSASS Behavior
 
-**ProcessAccess** event ID to hunt for abnormal LSASS behavior
+**ProcessAccess** event ID (10) to hunt for abnormal LSASS behavior
 
 **LSASS** accessed by other process than **svchost.exe**: suspicious $\rightarrow$ investigate
 
@@ -202,4 +202,31 @@ Config snippet
 ```
 
 Practical example of the THM room: *Open `C:\Users\THM-Analyst\Desktop\Scenarios\Practice\Hunting_LSASS.evtx` in Event Viewer to view an attack using an obfuscated version of Mimikatz to dump credentials from memory*
+1. Download sysmon
+2. Create `sysmon-config.xml` with snippet included, save in same folder as sysmon.exe
+```xml
+<Sysmon schemaversion="4.90">
+  <EventFiltering>
+    <RuleGroup name="" groupRelation="or">
+      <ProcessAccess onmatch="include">
+        <TargetImage condition="image">lsass.exe</TargetImage>
+      </ProcessAccess>
+    </RuleGroup>
+  </EventFiltering>
+</Sysmon>   
+```
+3. Install sysmon with config: `sysmon -accepteula -i sysmon-config.xml`
+4. Open Event Viewer and look for event ID 10 (ProcessAcess $\rightarrow$ LSASS)
 
+It's often necessary to exclude normal processes (svchost.exe)
+```xml
+<ProcessAccess onmatch="exclude">  
+	<SourceImage condition="image">svchost.exe</SourceImage>  
+</ProcessAccess>
+```
+
+##### Detecting LSASS Behavior with PowerShell
+
+```PowerShell
+Get-WinEvent -Path C:\Users\THM-Analyst\Desktop\Scenarios\Practice\Hunting_Mimikatz.evtx -FilterXPath '*/System/EventID=10 and */EventData/Data[@Name="TargetImage"] and */EventData/Data="C:\Windows\system32\lsass.exe"'
+```
