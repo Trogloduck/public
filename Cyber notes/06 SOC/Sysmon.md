@@ -8,6 +8,8 @@
 - [[#Event IDs]]
 - [[#Best practices]]
 - [[#Hunting Metasploit]]
+- [[#Detecting Mimikatz]]
+- [[#Hunting Malware]]
 
 https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
 https://github.com/microsoft/SysmonForLinux
@@ -230,3 +232,8 @@ It's often necessary to exclude normal processes (svchost.exe)
 ```PowerShell
 Get-WinEvent -Path C:\Users\THM-Analyst\Desktop\Scenarios\Practice\Hunting_Mimikatz.evtx -FilterXPath '*/System/EventID=10 and */EventData/Data[@Name="TargetImage"] and */EventData/Data="C:\Windows\system32\lsass.exe"'
 ```
+
+___
+### ﻿Hunting Malware
+[[#Table of contents|Back to the top]]
+
