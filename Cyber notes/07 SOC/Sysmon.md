@@ -422,8 +422,8 @@ Event ID **13** -- **Registry value set**
 - **Details**: PowerShell code used to launch payload
 
 Event ID **1** -- **Process Creation**
-- **Company**: PowerShell command to create task, path to payload at the end of command
+- **Company**: PowerShell command to **create** task, path to payload at the end of command
 
 Event ID **10** -- **Process Access**
-- **SourceImage**: process accessed
-- **TargetImage**: process accessing
+- **SourceImage**: process **accessed**
+- **TargetImage**: process **accessing**
