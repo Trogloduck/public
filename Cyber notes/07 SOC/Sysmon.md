@@ -12,6 +12,7 @@
 - [[#Hunting Malware (RATs and Backdoors)]]
 - [[#Hunting Persistence]]
 - [[#Detecting Evasion Techniques]]
+- [[#Practical investigation]]
 
 https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
 https://github.com/microsoft/SysmonForLinux
@@ -157,6 +158,8 @@ $\rightarrow$ **DLLs** loaded by processes $\rightarrow$ [[DLL]] injection, DLL 
 ##### 8: CreateRemoteThread
 $\rightarrow$ Processes injecting code into other processes
 - XML tags: SourceImage, TargetImage, StartAddress, StartFunction
+##### 10: Process Access
+$\rightarrow$ Process accesses another process
 ##### 11: File Created
 $\rightarrow$ Created or overwritten
 - XML tags: TargetFilename
@@ -172,10 +175,10 @@ $\rightarrow$ Exclude trusted domains
 
 *Example*:
 ```xml
-<RuleGroup name="" groupRelation="or">  
+<RuleGroup name="" groupRelation="or">
 	<DnsQuery onmatch="exclude">
-		<QueryName condition="end with">.microsoft.com</QueryName>  
-	</DnsQuery>  
+		<QueryName condition="end with">.microsoft.com</QueryName>
+	</DnsQuery>
 </RuleGroup>
 ```
 
@@ -192,6 +195,8 @@ ___
 [[#Table of contents|Back to the top]]
 
 *Commonly used exploit framework for **pentesting**, can be used to easily **run exploits** on machine and connect back to **meterpreter** shell*
+
+[MITRE Software](https://attack.mitre.org/software/)
 
 By default, Metasploit uses port **4444** (https://docs.google.com/spreadsheets/d/17pSTDNpa0sf6pHeRhusvWG6rThciE8CsXTSlDUAZDyo)
 
@@ -210,16 +215,16 @@ ___
 
 We can hunt for the file created, execution of the file from an elevated process, creation of a remote thread, and processes Mimikatz creates
 
-[Process Injection](https://attack.mitre.org/techniques/T1055/), [Mimikatz](https://attack.mitre.org/software/S0002/)
+[MITRE Process Injection](https://attack.mitre.org/techniques/T1055/), [MITRE Mimikatz](https://attack.mitre.org/software/S0002/)
 
 ##### File Creation
 
 Looking for files created with name Mimikatz by including this config snippet
 ```xml
-<RuleGroup name="" groupRelation="or">  
-	<FileCreate onmatch="include">  
-		<TargetFileName condition="contains">mimikatz</TargetFileName>  
-	</FileCreate>  
+<RuleGroup name="" groupRelation="or">
+	<FileCreate onmatch="include">
+		<TargetFileName condition="contains">mimikatz</TargetFileName>
+	</FileCreate>
 </RuleGroup>
 ```
 
@@ -231,10 +236,10 @@ Looking for files created with name Mimikatz by including this config snippet
 
 Config snippet
 ```xml
-<RuleGroup name="" groupRelation="or">  
+<RuleGroup name="" groupRelation="or">
 	<ProcessAccess onmatch="include">
-		<TargetImage condition="is">lsass.exe</TargetImage>  
-	</ProcessAccess>  
+		<TargetImage condition="is">lsass.exe</TargetImage>
+	</ProcessAccess>
 </RuleGroup>
 ```
 
@@ -257,8 +262,8 @@ Practical example of the THM room: *Open `C:\Users\THM-Analyst\Desktop\Scenario
 
 It's often necessary to exclude normal processes (svchost.exe)
 ```xml
-<ProcessAccess onmatch="exclude">  
-	<SourceImage condition="image">svchost.exe</SourceImage>  
+<ProcessAccess onmatch="exclude">
+	<SourceImage condition="image">svchost.exe</SourceImage>
 </ProcessAccess>
 ```
 
@@ -276,9 +281,10 @@ ___
 
 **Hypothesis-based hunting**: identify malware to hunt, identify ways to modify config file
 
-https://attack.mitre.org/software/
+[MITRE Software](https://attack.mitre.org/software/)
 
 #### RATs and C2 Servers
+*C2: Command and Control, server used for execution of actions on compromised machines*
 
 **Detect suspicious ports** open on endpoint (// hunting Metasploit)
 
@@ -308,17 +314,19 @@ ___
 
 *Maintain access*
 
+[MITRE T1547](https://attack.mitre.org/techniques/T1547/)
+
 2 main techniques: **registry modification**, **startup scripts**
  $\rightarrow$ File Creation (**11**) and Registry Modification (**12-14**) events
 
 #### Startup Persistence
 
 ```xml
-<RuleGroup name="" groupRelation="or">  
+<RuleGroup name="" groupRelation="or">
 	<FileCreate onmatch="include">
-		<TargetFilename name="T1023" condition="contains">\Start Menu</TargetFilename>  
-		<TargetFilename name="T1165" condition="contains">\Startup\</TargetFilename>  
-	</FileCreate>  
+		<TargetFilename name="T1023" condition="contains">\Start Menu</TargetFilename>
+		<TargetFilename name="T1165" condition="contains">\Startup\</TargetFilename>
+	</FileCreate>
 </RuleGroup>
 ```
 *Detect File Creation in \Start Menu or \Startup\\*
@@ -326,12 +334,12 @@ ___
 #### Registry Key Persistence
 
 ```xml
-<RuleGroup name="" groupRelation="or">  
-	<RegistryEvent onmatch="include">  
-		<TargetObject name="T1060,RunKey" condition="contains">CurrentVersion\Run</TargetObject>  
-		<TargetObject name="T1484" condition="contains">Group Policy\Scripts</TargetObject>  
-		<TargetObject name="T1060" condition="contains">CurrentVersion\Windows\Run</TargetObject>  
-	</RegistryEvent>  
+<RuleGroup name="" groupRelation="or">
+	<RegistryEvent onmatch="include">
+		<TargetObject name="T1060,RunKey" condition="contains">CurrentVersion\Run</TargetObject>
+		<TargetObject name="T1484" condition="contains">Group Policy\Scripts</TargetObject>
+		<TargetObject name="T1060" condition="contains">CurrentVersion\Windows\Run</TargetObject>
+	</RegistryEvent>
 </RuleGroup>
 ```
 *Detect Registry Activity in \CurrentVersion and other registries*
@@ -349,3 +357,73 @@ ___
 ### Detecting Evasion Techniques
 [[#Table of contents|Back to the top]]
 
+*Evade anti-virus and detection. Examples: Alternate Data Streams, Injections, Masquerading, Packing/Compression, Recompiling, Obfuscation, Anti-Reversing Techniques*
+
+#### Alternate Data Streams (ADS)
+*Used by malware to hide its files from normal inspection by saving files in different stream apart from `$DATA`*
+
+[MITRE T1564](https://attack.mitre.org/techniques/T1564/004/)
+
+```xml
+<RuleGroup name="" groupRelation="or">
+	<FileCreateStreamHash onmatch="include">
+		<TargetFilename condition="contains">Downloads</TargetFilename>
+		<TargetFilename condition="contains">Temp\7z</TargetFilename>
+		<TargetFilename condition="ends with">.hta</TargetFilename>
+		<TargetFilename condition="ends with">.bat</TargetFilename>
+	</FileCreateStreamHash>
+</RuleGroup>
+```
+
+Sysmon Event ID: **15**
+```powershell
+Get-WinEvent -Path C:\PATH_TO\Hunting_ADS.evtx -FilterXPath '*/System/EventID=15'
+```
+
+#### Injections -- Remote Threads
+*Thread Hijacking, PE Injection, DLL Injection, ...*
+
+[MITRE T1055](https://attack.mitre.org/techniques/T1055/)
+
+**DLL Injection** and **backdooring** DLLs: taking already used DLL used by an application, overwriting/including malicious code within DLL
+
+**Remote Thread**: created using Windows API **`CreateRemoteThread`**, accessed using **`OpenThread`** and **`ResumeThread`**
+
+```xml
+<RuleGroup name="" groupRelation="or">
+	<CreateRemoteThread onmatch="exclude">
+		<SourceImage condition="is">C:\Windows\system32\svchost.exe</SourceImage>
+		<TargetImage condition="is">C:\Program Files (x86)\Google\Chrome\Application\chrome.exe</TargetImage>
+	</CreateRemoteThread>
+</RuleGroup>
+```
+
+Sysmon Event ID: **8**
+```powershell
+Get-WinEvent -Path C:\PATH_TO\Detecting_RemoteThreads.evtx -FilterXPath '*/System/EventID=8'
+```
+
+___
+### Practical investigation
+[[#Table of contents|Back to the top]]
+
+Event ID **1** -- **Process Creation**
+- **CommandLine** 2nd element: path to **payload**
+- **CommandLine** 1st element: **binary** executes payload
+- **ParentCommandLine** 2nd element: path payload **masked** itself as
+
+Event ID **3** -- **Network Connection**
+- **DestinationIp**: **Adversary** IP
+	- Or **DestinationIsIpv6**, then DestinationIp is **C2 server hostname**
+- **DestinationPort**: **back connect port** used by adversary
+
+Event ID **13** -- **Registry value set**
+- **Image**: registry where payload is stored
+- **Details**: PowerShell code used to launch payload
+
+Event ID **1** -- **Process Creation**
+- **Company**: PowerShell command to create task, path to payload at the end of command
+
+Event ID **10** -- **Process Access**
+- **SourceImage**: process accessed
+- **TargetImage**: process accessing
