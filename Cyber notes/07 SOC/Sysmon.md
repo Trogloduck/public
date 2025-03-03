@@ -9,7 +9,8 @@
 - [[#Best practices]]
 - [[#Hunting Metasploit]]
 - [[#Detecting Mimikatz]]
-- [[#Hunting Malware]]
+- [[#Hunting Malware (RATs and Backdoors)]]
+- [[#Hunting Persistence]]
 
 https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
 https://github.com/microsoft/SysmonForLinux
@@ -46,7 +47,7 @@ ___
 ### Configuration
 [[#Table of contents|Back to the top]]
 
-*Determines which events to include/exclude, will vary depending on SOC team*
+*Determines which events to include/exclude, will vary depending on SOC team. Filtering occurs at the time of logging, cannot be used to filter when logs have been collected.*
 
 **Config by SwiftOnSecurity**
 
@@ -58,15 +59,24 @@ sysmon -accepteula -i sysmonconfig-export.xml
 
 **Custom config**
 
-Save config in sysmonconfig.xml file, then
+Save config in sysmon-config.xml file, then
 
 ```bash
 # 1. stop sysmon
 sudo systemctl stop sysmon
 # 2. update config
-sudo sysmon -c /PATH_TO/sysmonconfig.xml
+sudo sysmon -c /PATH_TO/sysmon-config.xml
 # 3. start sysmon
 sudo systemctl start sysmon
+```
+
+```powershell
+# 1. stop sysmon
+sc stop Sysmon
+# 2. update conf
+& "C:\PATH_TO\Sysmon.exe" -c "C:\PATH_TO\sysmon-config.xml"
+# 3. start sysmon
+sc start Sysmon
 ```
 
 ___
@@ -87,7 +97,7 @@ ___
 ### Config file
 [[#Table of contents|Back to the top]]
 
-Schema version: `sysmon -s`
+Schema version: **`sysmon -s`**
 ```xml
 <Sysmon schemaversion="4.90">
     <!-- Specify hash algorithm -->
@@ -234,6 +244,40 @@ Get-WinEvent -Path C:\Users\THM-Analyst\Desktop\Scenarios\Practice\Hunting_Mimik
 ```
 
 ___
-### ﻿Hunting Malware
+### ﻿Hunting Malware (RATs and Backdoors)
+[[#Table of contents|Back to the top]]
+
+**RAT** - Remote Access Trojan: gain remote access, anti-virus and detection evasion, typically client-server model with interface for easy user administration (*e.g.*: Xeexe, Quasar)
+
+**Hypothesis-based hunting**: identify malware to hunt, identify ways to modify config file
+
+https://attack.mitre.org/software/
+
+#### Hunting RATs and C2 Servers
+
+**Detect suspicious ports** open on endpoint (// hunting Metasploit)
+
+Snippet from **Ion-Storm** config, including Ports 1034 and 1604 and excluding Onedrive connections
+```xml
+<RuleGroup name="" groupRelation="or">
+	<NetworkConnect onmatch="include">
+		<DestinationPort condition="is">1034</DestinationPort>
+		<DestinationPort condition="is">1604</DestinationPort>
+	</NetworkConnect>
+	<NetworkConnect onmatch="exclude">
+		<Image condition="image">OneDrive.exe</Image>
+	</NetworkConnect>
+</RuleGroup>
+```
+>*Ion-Storm excludes port 53. Attackers have begun using port 53 to go undetected!*
+
+#### Hunting for Common Back Connect Ports with PowerShell
+
+```powershell
+C:\Users\THM-Analyst> Get-WinEvent -Path C:\Users\THM-Analyst\Desktop\Scenarios\Practice\Hunting_Rats.evtx -FilterXPath '*/System/EventID=3 and */EventData/Data[@Name="DestinationPort"] and */EventData/Data=8080'
+```
+
+___
+### Hunting Persistence
 [[#Table of contents|Back to the top]]
 
