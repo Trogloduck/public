@@ -6,6 +6,7 @@
 - [[#Outputs]]
 - [[#Practical Use]]
 - [[#Logs]]
+- [[#Signatures]]
 
 ___
 ### Network Monitoring
@@ -132,4 +133,57 @@ For correlation, better to use specialized tool like Splunk
 
 **`zeek-cut`**: select column to display
 *Example*: `cat conn.log | zeek-cut uid proto id.orig_h`
+
+___
+### Signatures
+[[#Table of contents|Back to the top]]
+
+| ID        | Conditions                                                                                                                                                                     | Action                                                                                                                                   |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Unique ID | - **Header**: filtering packet headers for specific source/destination addresses, protocol, port numbers<br>- **Content**: filtering packet payload for specific value/pattern | - **Default** action: create **`signature.log`** file in case of signature **match**<br>- **Additional** action: trigger Zeek **script** |
+
+
+Most common filtering conditions:
+
+| Condition Field               | Available Filters                                                                                                                                                                                                                                                                                                                                                              |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Header**                    | - **src-ip**: Source IP.<br>- **dst-ip**: Destination IP.<br>- **src-port**: Source port.<br>- **dst-port**: Destination port.<br>- **ip-proto**: Target protocol. Supported protocols; TCP, UDP, ICMP, ICMP6, IP, IP6                                                                                                                                                         |
+| **Content**                   | - **payload:** Packet payload.  <br>- **http-request:** Decoded HTTP requests.  <br>- **http-request-header:** Client-side HTTP headers.  <br>- **http-request-body:** Client-side HTTP request bodys.  <br>- **http-reply-header:** Server-side HTTP headers.  <br>- **http-reply-body:** Server-side HTTP request bodys.  <br>- **ftp:** Command line input of FTP sessions. |
+| **Context**                   | **same-ip:** Filtering the source and destination addresses for duplication.                                                                                                                                                                                                                                                                                                   |
+| Action                        | **event:** Signature match message.                                                                                                                                                                                                                                                                                                                                            |
+| **Comparison  <br>Operators** | **==, !=, <, <=, >, >=**                                                                                                                                                                                                                                                                                                                                                       |
+| **NOTE**                      | Filters accept string, numeric and **regex** values.                                                                                                                                                                                                                                                                                                                           |
+
+Run Zeek with signature: **`zeek -C -r sample.pcap -s sample.sig`**
+
+***Example signatures***:
+```Zeek
+signature http-password {
+	ip-proto == tcp
+	dst-port == 80
+	payload /.*password.*/
+	event "Cleartext Password Found!"
+}
+# signature: Signature name.
+# ip-proto: Filtering TCP connection.
+# dst-port: Filtering destination port 80.
+# payload: Filtering the "password" phrase.
+# event: Signature match message.
+```
+*looks for the keyword "password" in communications transmitted with HTTP (clear text)*
+
+```Zeek
+signature ftp-username {
+	ip-proto == tcp
+	ftp /.*USER.*/
+	event "FTP Username Input Found!"
+}
+
+signature ftp-brute {
+	ip-proto == tcp
+	payload /.*530.*Login.*incorrect.*/
+	event "FTP Brute-force Attempt!"
+}
+```
+*looks for failed attempt at FTP logging in as user*
 

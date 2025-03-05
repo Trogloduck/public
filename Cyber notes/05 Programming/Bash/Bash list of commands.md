@@ -34,7 +34,7 @@
 - `grep 'keyword'`: filter specific keyword
 - `| sort`: sort alphabetically
 - `| sort -n`: sort numerically
-- `| uniq`: eliminate duplicate lines
+- `| uniq`: eliminate duplicate adjacent lines (use `sort` before to eliminate all duplicates)
 - `| wc -l`: display number of lines
 - `| nl`: show line numbers (1 in front of line 1, 2 in front of line 2, etc.)
 - `| sed -n '11p'` or `| awk 'NR == 11'`: print line 11
