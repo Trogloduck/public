@@ -100,3 +100,36 @@ ___
 ### Logs
 [[#Table of contents|Back to the top]]
 
+[Log files](https://docs.zeek.org/en/current/script-reference/log-files.html), [Corelight cheatsheet](https://corelight.com/products/zeek-data/)
+
+Most commonly used logs:
+
+| Update Frequency | Log Name             | Description                                    |
+| ---------------- | -------------------- | ---------------------------------------------- |
+| Daily            | `known_hosts.log`    | Hosts that completed TCP handshakes            |
+| Daily            | `known_services.log` | Services used by hosts                         |
+| Daily            | `known_certs.log`    | SSL certificates                               |
+| Daily            | `software.log`       | Software used on network                       |
+| Per Session      | `notice.log`         | Anomalies detected by Zeek                     |
+| Per Session      | `intel.log`          | Traffic contains malicious patterns/indicators |
+| Per Session      | `signatures.log`     | Triggered signatures                           |
+
+
+Example use of logs in 4 steps of investigation:
+
+| **Overall Info**     | **Protocol Based** | **Detection**    | **Observation**      |
+| -------------------- | ------------------ | ---------------- | -------------------- |
+| _conn.log_           | _http.log_         | _notice.log_     | _known_host.log_     |
+| _files.log_          | _dns.log_          | _signatures.log_ | _known_services.log_ |
+| _intel.log_          | _ftp.log_          | _pe.log_         | _software.log_       |
+| _loaded_scripts.log_ | _ssh.log_          | _traceroute.log_ | _weird.log_          |
+1. **Overall info**: connections, shared files, loaded scripts
+2. **Protocol Based**: suspicious indicator found $\rightarrow$ focus on specific protocol
+3. **Detection**: use prebuild/custom scripts and signature outcomes for further investigation
+4. **Observation**: summary of hosts, services, software, unexpected activity stats
+
+For correlation, better to use specialized tool like Splunk
+
+**`zeek-cut`**: select column to display
+*Example*: `cat conn.log | zeek-cut uid proto id.orig_h`
+

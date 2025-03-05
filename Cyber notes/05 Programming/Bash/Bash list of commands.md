@@ -1,12 +1,5 @@
 # List of commands
 
-This file contains a list of useful commands on Linux. The descriptions down
-below are far from complete, they are only here to give an idea of the use case.
-Plus, there are many more commands and terminal tools out there for all sorts of
-needs, feel free to research.
-
-NOTE: Not all commands are necessarily installed on your system.
-
 ## Help
 
 * `man`: display system documentation
@@ -23,16 +16,30 @@ NOTE: Not all commands are necessarily installed on your system.
 
 ## File operation
 
-* `cat`: concatenate and print files
+* `cat`: display content of file
 * `touch`: create a file or update timestamps
-* `cp`: copy a file
-* `mkdir`: create a directory
-* `mv`: move or rename a file
-* `rm`: remove a file or directory
-* `rmdir`: remove an empty directory
+* `cp`: copy file
+* `mkdir`: create directory
+* `mv`: move/rename file
+* `rm`: remove file/directory
+* `rmdir`: remove empty directory
 * `ln`: link files
-* `head`: output the first part of files
-* `tail`: output the last part of files
+* `head`: display first 10 lines
+* `tail`: display last 10 lines
+
+#### Text file operation
+
+- `cut -f 1`: cut 1st field
+- `cut -c1`: cut 1st column
+- `grep 'keyword'`: filter specific keyword
+- `| sort`: sort alphabetically
+- `| sort -n`: sort numerically
+- `| uniq`: eliminate duplicate lines
+- `| wc -l`: display number of lines
+- `| nl`: show line numbers (1 in front of line 1, 2 in front of line 2, etc.)
+- `| sed -n '11p'` or `| awk 'NR == 11'`: print line 11
+- `| sed -n '10,15p'`: print lines 10-15
+- `| awk 'NR < 11'`: print lines <11
 
 ## System
 
