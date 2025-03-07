@@ -7,6 +7,7 @@
 - [[#Practical Use]]
 - [[#Logs]]
 - [[#Signatures]]
+- [[#Scripts]]
 
 ___
 ### Network Monitoring
@@ -186,4 +187,35 @@ signature ftp-brute {
 }
 ```
 *looks for failed attempt at FTP logging in as user*
+
+___
+### Scripts
+[[#Table of contents|Back to the top]]
+
+*Investigate and correlate events*
+
+[Learn Zeek scripting](https://try.bro.org/#/?example=hello)
+
+| Type of script      | Location                               |
+| ------------------- | -------------------------------------- |
+| Base (do not touch) | `/opt/zeek/share/zeek/base`            |
+| User                | `/opt/zeek/share/zeek/site`            |
+| Policy              | `/opt/zeek/share/zeek/policy`          |
+| Local*              | `/opt/zeek/share/zeek/site/local.zeek` |
+\**typically used for local customizations and configurations specific to your deployment*
+
+`.zeek` extension
+
+`load @/script/path` or `load @script-name` in `local.zeek` file: load script
+
+Example Zeek script "`dhcp-hostname.zeek`":
+```Zeek
+event dhcp_message (c: connection, is_orig: bool, msg: DHCP::Msg, options: DHCP::Options)
+{
+print options$host_name;
+}
+```
+Lines 1, 2 and 4 are predefined in Zeek syntax, only addition is line 3 that tells Zeek to extract DHCP hostnames
+
+Use the script: `zeek -C -r sample.pcap dhcp-hostname.zeek`
 
