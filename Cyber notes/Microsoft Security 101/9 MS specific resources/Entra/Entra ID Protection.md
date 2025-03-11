@@ -9,6 +9,7 @@ Cf. sign-in/user risk in [[Entra Conditional Access]]
 - **Risky users**: risky user reported when
     -  user has $\geq$ 1 risky sign-in(s) and/or
     - $\geq$ 1 risk detections reported associated with account
+
 #### Remediation
 
 Can be automated. For instance, access control can be automated (asking for additional authentication)

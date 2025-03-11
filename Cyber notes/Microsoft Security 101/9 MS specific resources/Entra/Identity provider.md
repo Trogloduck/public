@@ -8,7 +8,7 @@ The client no longer directly provides name and password (credentials) to the se
 4. Server gets token from identity provider (whom it *trusts*)
 5. Server checks tokens are identical
 
-Token *claims* (attributes):
+**Token** ***claims*** (attributes):
 - **Subject**: who?
 - **Issued at**: when?
 - **Expiration**: when no longer valid?

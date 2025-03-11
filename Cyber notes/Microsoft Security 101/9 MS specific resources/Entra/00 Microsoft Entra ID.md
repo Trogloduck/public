@@ -63,12 +63,12 @@ ___
 - **Security**: permission needs, users, devices, workloads, groups; created by Entra admin
 - **Microsoft 365**: collaboration needs, only users; created by anyone
 
-**Dynamic membership**: rules for automatic add/remove of identities in/from groups
+**Dynamic membership**: rules for automatic add/remove of identities to/from groups
 
 ___
 #### Hybrid ID
 
-Dig more
+\# Dig more
 - **Inter-directory**: provisioning identity between 2 different directory services systems; typically, from AD to Entra
 - **Synchronization**: matching on-premise identity with cloud
 

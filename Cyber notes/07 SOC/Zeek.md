@@ -2,12 +2,13 @@
 - [[#Network Monitoring]]
 - [[#Zeek]]
 - [[#Architecture]]
-- [[#Frameworks]]
+- [[#Intro to Frameworks]]
 - [[#Outputs]]
 - [[#Practical Use]]
 - [[#Logs]]
 - [[#Signatures]]
-- [[#Scripts]]
+- [[#Scripts]]: [[#Selecting info]], [[#Scripts and Signatures]]
+- [[#Frameworks]]
 
 ___
 ### Network Monitoring
@@ -53,7 +54,7 @@ Both ***open source*** and ***commercial***: some forks are ***enterprise-ready*
 
 ![[Pasted image 20250304104254.png]]
 
-### Frameworks
+### Intro to Frameworks
 [[#Table of contents|Back to the top]]
 
 - Extended functionality in scripting layer
@@ -217,5 +218,64 @@ print options$host_name;
 ```
 Lines 1, 2 and 4 are predefined in Zeek syntax, only addition is line 3 that tells Zeek to extract DHCP hostnames
 
-Use the script: `zeek -C -r sample.pcap dhcp-hostname.zeek`
+Use the script: **`zeek -C -r sample.pcap dhcp-hostname.zeek`**
+
+[Zeek Built-In Functions](https://docs.zeek.org/en/master/script-reference/scripts.html)
+- /opt/zeek/share/zeek/base/bif
+- /opt/zeek/share/zeek/base/bif/plugins
+- /opt/zeek/share/zeek/base/protocols
+
+#### Selecting info
+
+```Zeek
+event new_connection(c: connection)
+{
+	print c;
+}
+```
+*will print all info about connections*
+
+```Zeek
+event new_connection(c: connection)
+{
+	print ("###########################################################");
+	print ("");
+	print ("New Connection Found!");
+	print ("");
+	print fmt ("Source Host: %s # %s --->", c$id$orig_h, c$id$orig_p);
+	print fmt ("Destination Host: resp: %s # %s <---", c$id$resp_h, c$id$resp_p);
+	print ("");
+}
+
+# %s: Identifies string output for the source.
+# c$id: Source reference field for the identifier.
+```
+*will print selected info about connections in formatted and more readable way*
+
+NB: the names `orig_h`, `orig_p`, etc. can be found by zeeking the .pcap or in the output of the previous script
+
+#### Scripts and Signatures
+
+```Zeek
+event signature_match (state: signature_state, msg: string, data: string)
+{
+if (state$sig_id == "ftp-admin")
+    {
+    print ("Signature hit! --> #FTP-Admin ");
+    }
+}
+```
+*uses the event* `signature_match`*combined with the signature* `ftp-admin.sig` *to check if there are matches*
+
+Execute using this line: **`zeek -C -r ftp.pcap -s ftp-admin.sig 201.zeek`**
+
+[More about events](https://docs.zeek.org/en/master/scripts/base/bif/event.bif.zeek.html)
+
+Load Local Scripts: `zeek -C -r sample.pcap local`
+
+Load Specific Scripts: `zeek -C -r ftp.pcap /opt/zeek/share/zeek/policy/protocols/ftp/detect-bruteforcing.zeek`
+
+___
+### Frameworks
+[[#Table of contents|Back to the top]]
 

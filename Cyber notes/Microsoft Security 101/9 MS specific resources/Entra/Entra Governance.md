@@ -11,8 +11,8 @@ Capabilities
 - Secure privileged access for admin
 
 for employees, partners, vendors, across services, on-premises and in cloud
-___
 
+___
 #### Access reviews
 
 Ensure only right people have access to resources
@@ -20,7 +20,7 @@ Ensure only right people have access to resources
 When to use access reviews
 - **Too many users in privileged roles**: check \# users with admin access, invited guests /partners that haven't been removed after being assigned to admin task
 - **Business critical data access**: for certain resources, part of compliance processes to ask people to regularly reconfirm and give a justification on why they need continued access
-- **To maintain a policy's exception list**: manage exception and provide auditors with proof that exceptions are reviewed regularly
+- **Maintain a policy's exception list**: manage exception and provide auditors with proof that exceptions are reviewed regularly
 - **Ask group owners to confirm they still need guests in their groups**
 - **Have reviews recur periodically**
 
