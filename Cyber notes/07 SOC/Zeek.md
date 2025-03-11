@@ -7,8 +7,11 @@
 - [[#Practical Use]]
 - [[#Logs]]
 - [[#Signatures]]
-- [[#Scripts]]: [[#Selecting info]], [[#Scripts and Signatures]]
-- [[#Frameworks]]
+- [[#Scripts]]
+	- [[#Selecting info]]
+	- [[#Scripts and Signatures]]
+	- [[#Scripts Frameworks]]: [[#File Framework Hashes]], [[#File Framework Extract Files]], [[#Notice Framework Intelligence]]
+	- [[#Scripts Packages]]
 
 ___
 ### Network Monitoring
@@ -276,10 +279,10 @@ Load Local Scripts: `zeek -C -r sample.pcap local`
 Load Specific Scripts: `zeek -C -r ftp.pcap /opt/zeek/share/zeek/policy/protocols/ftp/detect-bruteforcing.zeek`
 
 ___
-### Frameworks
+### Scripts | Frameworks
 [[#Table of contents|Back to the top]]
 
-#### File Framework -- Hashes
+#### File Framework | Hashes
 
 Majority of frameworks meant to be used in scripting, not directly in CLI.
 
@@ -303,7 +306,7 @@ event file_new(f: fa_file)
 
 Used to hash .pcap files
 
-#### Extract Files
+#### File Framework | Extract Files
 
 ```Bash
 zeek -C -r case1.pcap /opt/zeek/share/zeek/policy/frameworks/files/extract-all-files.zeek
@@ -317,4 +320,37 @@ Name of extracted file
 - **`protocol`** -- source
 - **`conn_uids`** -- connection id
 	- *Example*: extract-1561667874.743959-HTTP-Fpgan59p6uvNzLFja
+
+Investigate further on a particular conn_uid across all available logs
+```Bash
+grep -rin CZruIO2cqspVhLuAO9 * | column -t | nl | less -S
+```
+
+#### Notice Framework | Intelligence
+*process, correlate, identify*
+
+`/opt/zeek/intel/zeek_intel.txt`
+
+1. Source file (`zeek_intel.txt`) has to be **tab-delimited**
+2. **Adding lines** to it doesn't require redeploying (deleting lines does)
+
+*Example* of a line inside `zeek_intel.txt`
+```
+smart-fax.com	Intel::DOMAIN	zeek-intel-test	Zeek-Intelligence-Framework-Test
+```
+
+Zeek script using intel
+```Zeek
+# Load intelligence framework!
+@load policy/frameworks/intel/seen
+@load policy/frameworks/intel/do_notice
+redef Intel::read_files += { "/opt/zeek/intel/zeek_intel.txt" };
+```
+*will use* `zeek_intel.txt` *as intel source*
+
+Output of zeek: `intel.log`
+
+___
+### Scripts | Packages
+[[#Table of contents|Back to the top]]
 
