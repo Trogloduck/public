@@ -279,3 +279,42 @@ ___
 ### Frameworks
 [[#Table of contents|Back to the top]]
 
+#### File Framework -- Hashes
+
+Majority of frameworks meant to be used in scripting, not directly in CLI.
+
+Calling a specific framework: `load @ $PATH/base/frameworks/framework-name`
+
+```Bash
+cat /opt/zeek/share/zeek/policy/frameworks/files/hash-all-files.zeek 
+```
+
+```Zeek
+# Enable MD5, SHA1 and SHA256 hashing for all files.
+
+@load base/files/hash
+event file_new(f: fa_file)
+	{
+	Files::add_analyzer(f, Files::ANALYZER_MD5);
+	Files::add_analyzer(f, Files::ANALYZER_SHA1);
+	Files::add_analyzer(f, Files::ANALYZER_SHA256);
+	}
+```
+
+Used to hash .pcap files
+
+#### Extract Files
+
+```Bash
+zeek -C -r case1.pcap /opt/zeek/share/zeek/policy/frameworks/files/extract-all-files.zeek
+```
+
+**`file * | nl`**: show more info on each file
+
+Name of extracted file
+- **`extract`**
+- **`ts`** -- timestamp
+- **`protocol`** -- source
+- **`conn_uids`** -- connection id
+	- *Example*: extract-1561667874.743959-HTTP-Fpgan59p6uvNzLFja
+
