@@ -1,3 +1,5 @@
+`Win + R`: Run dialog box
+
 MSConfig -- System Configuration
 
 `control.exe`: control pannel
