@@ -100,7 +100,7 @@ Running Zeek as service requires **ZeekControl** module which requires superuser
 | **-C**        | Ignoring checksum errors.                 |
 | **-v**        | Version information.                      |
 | **zeekctl**   | ZeekControl module.                       |
-*Example:* `zeek -C -r sample.pcap` *generates logs based on sample.pcap*
+*Example:* **`zeek -C -r sample.pcap`** *generates logs based on sample.pcap*
 
 ___
 ### Logs
@@ -354,3 +354,46 @@ ___
 ### Scripts | Packages
 [[#Table of contents|Back to the top]]
 
+Install thrid-party scripts/plugins
+
+**`zkg`** (with root privilege): package manager -- install, load, remove, update, create packages
+
+More about packages: [Zeek](https://packages.zeek.org/), [GitHub](https://github.com/zeek/packages)
+
+- **`zkg install /PATH_TO/package`**: install downloaded package
+- **`zkg install git-url`**: install package from github repo
+- **`zkg list`**: list installed packages
+- **`zkg remove`**: remove package
+- **`zkg refresh`**: check installed packages for updates
+- **`zkg upgrade`**: update installed packages
+
+Using package
+- Calling by path/directory
+- Most common: calling from script with **`@load`** method
+- Call by their name
+
+#### Clear text password submission
+
+`zkg install zeek/cybera/zeek-sniffpass`
+
+```Bash
+### Calling with script
+zeek -Cr http.pcap sniff-demo.zeek
+
+### View script contents
+cat sniff-demo.zeek @load /opt/zeek/share/zeek/site/zeek-sniffpass
+
+### Calling from path
+zeek -Cr http.pcap /opt/zeek/share/zeek/site/zeek-sniffpass
+
+### Calling with package name
+zeek -Cr http.pcap zeek-sniffpass
+```
+
+#### Geolocation data
+
+`geoip-conn` package depends on GeoLite2-City.mmdb database
+
+___
+
+Go furtherhttps://tryhackme.com/room/zeekbroexercises
