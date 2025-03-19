@@ -10,7 +10,7 @@ https://medium.com/@kuldeepkumawat195/how-to-install-and-use-zphisher-for-phishi
 Exegol
 Shodan (browser)
 https://www.adspower.com/download: spoofing tool
-nuclei: vulnerability scanner
+[[Enumeration-Scanning tools]]
 
 **Methods**
 Google dorking
