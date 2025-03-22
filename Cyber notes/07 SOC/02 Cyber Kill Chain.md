@@ -14,19 +14,32 @@ ___
 ### 1. Reconnaissance
 [[#Table of contents|Back to the top]]
 
-azer
+- **[theHarvester](https://github.com/laramies/theHarvester)**: gather emails, names, subdomains, IPs, URLs from public data sources 
+- **[Hunter.io](https://hunter.io/)**: email hunting tool - contact information associated with domain
+- **[OSINT Framework](https://osintframework.com/)**: collection of OSINT tools based on various categories
+- Social media
 
 ___
 ### 2. Weaponization
 [[#Table of contents|Back to the top]]
 
-azer
+*Combine **malware** and **exploit** into **payload***
+
+- **Malware**: software designed to damage, disrupt, gain unauthorized access
+- **Exploit**: code that takes advantage of vulnerability in application/system
+- **Payload**: code attacker runs on system
+
+[Intro to Macros and VBA For Script Kiddies](https://www.trustedsec.com/blog/intro-to-macros-and-vba-for-script-kiddies/)
 
 ___
 ### 3. Delivery
 [[#Table of contents|Back to the top]]
 
-azer
+- **Phishing**
+- Distributing infected **USB drives** in public
+- **Watering hole attack**
+	1. Determine which websites target visits frequently
+	2. Infect website/s with malware
 
 ___
 ### 4. Exploitation
