@@ -99,5 +99,8 @@ ___
 - Internal reconnaissance
 - Lateral movement through company's environment
 - Collect, exfiltrate sensitive data
-- Deleting backups and shadow copies
+- Deleting backups and shadow copies (MS tech: create files/volumes backup copies/snapshots)
 - Overwrite/corrupt data
+
+___
+Learn more: [MITRE ATT&CK](https://attack.mitre.org/), [Unified Kill Chain](https://unifiedkillchain.com/)
