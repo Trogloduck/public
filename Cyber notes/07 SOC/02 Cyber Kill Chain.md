@@ -8,6 +8,8 @@
 - [[#7. Actions on Objectives]]
 
 ___
+Military inspired model, released in 2011
+
 ![[Pasted image 20250322110855.png|500]]
 
 ___
