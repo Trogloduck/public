@@ -104,35 +104,42 @@ ___
 [[#Table of contents|Back to the top]]
 [MITRE Tactic TA0008](https://attack.mitre.org/tactics/TA0008/)
 
-
+Compromised system used as staging site, tunnel to victim's network, used as distribution point for later stages malware and backdoors
 #### 2.2 Discovery
 [[#Table of contents|Back to the top]]
 [MITRE Tactic TA0007](https://attack.mitre.org/tactics/TA0007/)
 
-
+Compromised host $\rightarrow$ acquire knowledge about active user accounts, permissions granted, applications and software in use, web browser activity, files, directories and network shares, system configurations
 
 #### 2.3 Privilege Escalation
 [[#Table of contents|Back to the top]]
 [MITRE Tactic TA0004](https://attack.mitre.org/tactics/TA0004/)
 
-
+Elevate to
+- SYSTEM/ROOT
+- Local Administrator
+- User account with Admin-like access
+- User account with specific access or functions
 
 #### 2.4 Execution
 [[#Table of contents|Back to the top]]
 [MITRE Tactic TA0002](https://attack.mitre.org/tactics/TA0002/)
 
-
+Deploy malicious code using pivot system as host
+Remote trojans, C2 scripts, malicious links and scheduled tasks are deployed to facilitate persistence
 
 #### 2.5 Credential Access
 [[#Table of contents|Back to the top]]
 [MITRE Tactic TA0006](https://attack.mitre.org/tactics/TA0006/)
 
-
+ Steal credentials: keylogging, credential dumping
+ Legitimate credentials $\Rightarrow$ Harder to detect
+ 
 #### 2.6 Lateral Movement
 [[#Table of contents|Back to the top]]
 [MITRE Tactic TA0008](https://attack.mitre.org/tactics/TA0008/)
 
-
+Jump to other targeted systems to achieve primary objective
 
 ___
 ### 3. Out -- Action on Objectives
