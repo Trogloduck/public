@@ -16,6 +16,10 @@
 	- [[#2.5 Credential Access]]
 	- [[#2.6 Lateral Movement]]
 - [[#3. Out -- Action on Objectives]]
+	- [[#3.1 Collection]]
+	- [[#3.2 Exfiltration]]
+	- [[#3.3 Impact]]
+	- [[#3.4 Objectives]]
 
 ___
 UKC (2017) has the advantage of being very comprehensive compared to other frameworks
@@ -144,3 +148,25 @@ Jump to other targeted systems to achieve primary objective
 ___
 ### 3. Out -- Action on Objectives
 
+#### 3.1 Collection
+[[#Table of contents|Back to the top]]
+[MITRE Tactic (TA0009)](https://attack.mitre.org/tactics/TA0009/)
+
+Gather all data of interest from main target sources: drives, browsers, audio, video, email
+
+#### 3.2 Exfiltration
+[[#Table of contents|Back to the top]]
+[MITRE Tactic TA0010](https://attack.mitre.org/tactics/TA0010/)
+
+**Encrypt** and **compress** data of interest to **avoid detection**, exfiltrate through C2 channel
+
+#### 3.3 Impact
+[[#Table of contents|Back to the top]]
+[MITRE Tactic TA0040](https://attack.mitre.org/tactics/TA0040/)
+
+Compromise **integrity**/**availability** of assets: removing account access, disk wipes, data encryption (ransomware), defacement, DoS
+
+#### 3.4 Objectives
+[[#Table of contents|Back to the top]]
+
+Mission accomplished!

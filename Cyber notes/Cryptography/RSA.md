@@ -1,25 +1,19 @@
 #### Encryption - Decryption process
 
 **Public key**: (e, N)
-
 **Private key**: (d, N)
-
 M: message; C: cipher text
 
 **Encryption**: C = M$^e$ mod N
-
 **Decryption**: M = C$^d$ mod N
 
 ##### Practical example
 
 **Public key**: (3, 33)
-
 **Private key**: (7, 33)
-
 M = 4
 
 **Encryption**: C = 4$^3$ mod 33 = 64 mod 33 = 31
-
 **Decryption**: M = 31$^7$ mod 33 = 27512614111 mod 33 = 4
 ___
 #### Key generation
@@ -31,7 +25,6 @@ ___
 5. $d \times e$ mod $\phi (N) = 1$
 
 **Public key**: (e, N)
-
 **Private key**: (d, N)
 
 ##### Practical example
