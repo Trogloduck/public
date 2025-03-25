@@ -54,7 +54,7 @@ Detection, Denial, Disruption Framework Empowering Network Defense -- https
 [[#Table of contents|Back to the top]]
 
 Knowledge graph of cybersecurity countermeasures
-
+Definition, How it works, Considerations, Example
 
 ___
 ### AEP
