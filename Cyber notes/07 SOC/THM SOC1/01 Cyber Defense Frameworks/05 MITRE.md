@@ -61,3 +61,12 @@ ___
 ATT&CK Emulation Plans
 [[#Table of contents|Back to the top]]
 
+[CTID](https://mitre-engenuity.org/cybersecurity/center-for-threat-informed-defense/) -- Center of Threat-Informed Defense: companies/vendors, conduct research on cyber threats and TTPs, share it to improve cyber defense (AttackIQ (founder), Verizon, Microsoft (founder), Red Canary (founder), Splunk)
+
+[Adversary Emulation Library](https://github.com/center-for-threat-informed-defense/adversary_emulation_library) public library making AEP free, each plan mimics a specific APT
+
+___
+### CTI - Cyber Threat Intelligence
+
+https://www.crowdstrike.com/en-us/
+https://attack.mitre.org/groups/
