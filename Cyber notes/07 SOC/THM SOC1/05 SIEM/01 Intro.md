@@ -3,6 +3,9 @@
 - [[#Log Sources & Ingestion]]
 - [[#Capabilities]]
 - [[#Analyzing Logs and Alerts]]
+	- [[#Dashboard]]
+	- [[#Correlation Rules]]
+	- [[#Alert Investigation]]
 
 ___
 *Security Information and Event Management System*
@@ -110,5 +113,3 @@ $\rightarrow$ Alert is True Positive $\rightarrow$ further investigation
 $\rightarrow$ Contact asset owner to inquire about activity
 $\rightarrow$ Suspicious activity is confirmed $\rightarrow$ Isolate infected host
 $\rightarrow$ Block suspicious IP
-
-___
