@@ -128,3 +128,13 @@ detection:
 ```
 *has to satisfy Image condition AND CommandLine condition*
 
+- **Transformation modifiers:** change values provided, can modify logical operations between values
+    - **`contains`**: value matched anywhere in field
+    - **`all`**: search condition has to match all listed values (turns OR into AND)
+    - **`base64`**: looks at values encoded with Base64
+    - **`endswith`**: value expected at end of field
+    - **`startswith`**: value at beginning of field
+
+- **Type modifiers:** change type of value or value itself.
+	- Currently, only usable type modifier is `re` (supported by Elasticsearch queries): handle value as regular expression
+
