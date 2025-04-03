@@ -26,11 +26,10 @@ More info: https://github.com/SigmaHQ/sigma
 
 ___
 ### Rule Syntax
-[[#Table of contents|Back to the top]]
 
 Written in **[[YAML]]**
-
-Mandatory/Optional fields
+#### Fields
+[[#Table of contents|Back to the top]]
 
 ![[Pasted image 20250403105133.png|350]]
 
@@ -70,10 +69,9 @@ logsource:
    category: wmi_event 
 ```
 
-- **Detection:** A required field in the detection rule describes the parameters of the malicious activity we need an alert for. The parameters are divided into two main parts: the search identifiers - the fields and values that the detection should be searching for -  and condition expression - which sets the action to be taken on the detection, such as selection or filtering. More on this is below.
-
-    This rule has a detection modifier that looks for logs with one of Windows Event IDs 19, 20 or 21. The condition informs the detection engine to match and select the identified logs.
-
+- **Detection:** parameters of malicious activity we need an alert for. 
+	- ***Search identifiers***: fields, values detection should be searching for
+	- ***Condition expression***: action to be taken on detection (selection, filtering)
 ```shell-session
 detection:
   selection:
@@ -83,10 +81,50 @@ detection:
       - 21
   condition: selection
 ```
+*Detection modifier looks for Windows Event IDs 19-21 logs*
+*Condition informs detection engine to match and select identified logs*
 
-- **FalsePositives:** A list of known false positive outputs based on log data that may occur.
+- **FalsePositives:** known false positive outputs based on log data that may occur
 
-- **Level:** Describes the severity with which the activity should be taken under the written rule. The attribute comprises five levels: Informational -> Low -> Medium -> High -> Critical
+- **Level:** severity with which the activity should be taken under the written rule. 5 levels: Informational < Low < Medium < High < Critical
 
-- **Tags:** Adds information that may be used to categorise the rule. Tags may include values for CVE numbers and tactics and techniques from the MITRE ATT&CK framework. Sigma developers have defined a list of [predefined tags](https://github.com/SigmaHQ/sigma/wiki/Tags)
+- **Tags:** information to categorize rule (CVE numbers, MITRE ATT&CK TTPs). [Predefined tags](https://github.com/SigmaHQ/sigma/wiki/Tags)
+```YAML
+falsepositives:
+- Exclude legitimate (vetted) use of WMI event subscription in your network
+ 
+level: medium
+ 
+tags:
+- attack.persistence # Points to the MITRE tactic.
+- attack.t1546.003 # Points to the MITRE technique.
+```
+
+##### Search Identifiers and Condition Expressions
+[[#Table of contents|Back to the top]]
+
+**List**: follow "***OR***" logical operation
+```YAML
+detection:
+ selection:
+  HostApplication|contains:
+   - 'powercat'
+   - 'powercat.ps1'
+ condition: selection
+```
+*contains 'powercat' OR 'powercat.ps1'*
+
+**Maps**: follow "***AND***" logical operation
+```YAML
+detection:
+ selection:
+  Image|endswith:
+   - '/rm' # covers /rmdir as well
+   - '/shred'
+  CommandLine|contains:
+   - '/var/log'
+   - '/var/spool/mail'
+ condition: selection
+```
+*has to satisfy Image condition AND CommandLine condition*
 
