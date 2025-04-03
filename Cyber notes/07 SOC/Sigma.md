@@ -17,10 +17,9 @@ Development process
 - **Machine Query:** resulting search query filter out alerts during investigations
 
 Use cases
-- Make detection methods and signatures shareable alongside IOCs and Yara rules
-- Write SIEM searches that avoid vendor lock-in
-- Share signatures with threat intelligence communities
-- Write custom detection rules for malicious behavior based on specific conditions
+- Make **detection methods** and **signatures shareable** alongside IOCs and Yara rules
+- Write **SIEM searches** that avoid vendor lock-in
+- Write **custom detection** rules for malicious behavior based on specific conditions
 
 More info: https://github.com/SigmaHQ/sigma
 
@@ -103,6 +102,8 @@ tags:
 ##### Search Identifiers and Condition Expressions
 [[#Table of contents|Back to the top]]
 
+**Search Identifiers**
+
 **List**: follow "***OR***" logical operation
 ```YAML
 detection:
@@ -138,3 +139,79 @@ detection:
 - **Type modifiers:** change type of value or value itself.
 	- Currently, only usable type modifier is `re` (supported by Elasticsearch queries): handle value as regular expression
 
+
+**Condition Expressions**
+
+Supported terms
+- `and`, `or`
+- `1 of` search-identifiers
+- `ALL of` search-identifiers
+- `not`
+
+```YAML
+detection:
+ include1:
+  - 'str1'
+ include2:
+  - 'str2'
+ exclude1:
+  - 'str3'
+ exclude2:
+  - 'str4'
+ # both include must match
+ condition: include1 and include2
+ # 1 of include must match
+ condition: 1 of include*
+ # 1 of include must match and exclude shouldn't matc
+ condition: 1 of include* and not ALL of exclude*
+```
+
+___
+### Rule Writing & Conversion
+#### Context
+- Administrators use remote tools to configure, patch, maintain devices
+- AnyDesk (legitimate remote tool) can be downloaded and installed silently on a user's machine to conduct malicious activity, using the file description below. (Source: [TheDFIRReport](https://twitter.com/TheDFIRReport/status/1423361127472377860))
+- As SOC analyst, analyse intel and write Sigma rule to detect AnyDesk installation on Windows devices
+
+SIGMA specification file available in `/root/Rooms/sigma/Sigma_Rule_File.yml`
+
+![[Pasted image 20250403135537.png]]
+
+#### Writing
+##### 1. Intel Analysis
+[[#Table of contents|Back to the top]]
+
+
+
+##### 2. Rule Identification
+[[#Table of contents|Back to the top]]
+
+
+
+##### 3. Log Source
+[[#Table of contents|Back to the top]]
+
+
+
+##### 4. Detection Description
+[[#Table of contents|Back to the top]]
+
+
+
+##### 5. Rule Metadata
+[[#Table of contents|Back to the top]]
+
+
+
+#### Conversion
+##### Sigmac
+[[#Table of contents|Back to the top]]
+
+
+
+##### undercoder.io
+[[#Table of contents|Back to the top]]
+
+
+
+___
