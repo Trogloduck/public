@@ -1,7 +1,19 @@
 ### Table of contents
 - [[#Intro]]
 - [[#Rule Syntax]]
-- 
+	- [[#Fields]]
+	- [[#Search Identifiers and Condition Expressions]]
+- [[#Rule Writing & Conversion]]
+	- [[#Context]]
+	- [[#Writing]]
+		- [[#1. Intel Analysis]]
+		- [[#2. Rule Identification]]
+		- [[#3. Log Source]]
+		- [[#4. Detection Description]]
+		- [[#5. Rule Metadata]]
+	- [[#Conversion]]
+		- [[#Sigmac]]
+		- [[#undercoder.io]]
 
 ___
 ### Intro
@@ -107,25 +119,25 @@ tags:
 **List**: follow "***OR***" logical operation
 ```YAML
 detection:
- selection:
-  HostApplication|contains:
-   - 'powercat'
-   - 'powercat.ps1'
- condition: selection
+  selection:
+    HostApplication|contains:
+      - 'powercat'
+      - 'powercat.ps1'
+  condition: selection
 ```
 *contains 'powercat' OR 'powercat.ps1'*
 
 **Maps**: follow "***AND***" logical operation
 ```YAML
 detection:
- selection:
-  Image|endswith:
-   - '/rm' # covers /rmdir as well
-   - '/shred'
-  CommandLine|contains:
-   - '/var/log'
-   - '/var/spool/mail'
- condition: selection
+  selection:
+    Image|endswith:
+      - '/rm' # covers /rmdir as well
+      - '/shred'
+    CommandLine|contains:
+      - '/var/log'
+      - '/var/spool/mail'
+  condition: selection
 ```
 *has to satisfy Image condition AND CommandLine condition*
 
@@ -150,14 +162,14 @@ Supported terms
 
 ```YAML
 detection:
- include1:
-  - 'str1'
- include2:
-  - 'str2'
- exclude1:
-  - 'str3'
- exclude2:
-  - 'str4'
+  include1:
+    - 'str1'
+  include2:
+    - 'str2'
+  exclude1:
+    - 'str3'
+  exclude2:
+    - 'str4'
  # both include must match
  condition: include1 and include2
  # 1 of include must match
@@ -169,6 +181,10 @@ detection:
 ___
 ### Rule Writing & Conversion
 #### Context
+[[#Table of contents|Back to the top]]
+
+https://tryhackme.com/room/sigma
+
 - Administrators use remote tools to configure, patch, maintain devices
 - AnyDesk (legitimate remote tool) can be downloaded and installed silently on a user's machine to conduct malicious activity, using the file description below. (Source: [TheDFIRReport](https://twitter.com/TheDFIRReport/status/1423361127472377860))
 - As SOC analyst, analyse intel and write Sigma rule to detect AnyDesk installation on Windows devices
@@ -181,22 +197,50 @@ SIGMA specification file available in `/root/Rooms/sigma/Sigma_Rule_File.yml`
 ##### 1. Intel Analysis
 [[#Table of contents|Back to the top]]
 
+From file description
+- **Source URL**: **`$url`** variable, download source for software
+- **Destination File**: **`$file`** variable, destination directory for download
+- **Installation Command**: various instances of `CMD.exe` used to install and set user password by the script. Installation attributes: **`--install`**, **`--start-with-win`**, **`--silent`**, ...
 
+- **Persistence**: create user account **`oldadministrator`**, give user elevated privileges to run other tasks
+- **Registry Edit**: new user is added to **`SpecialAccounts`** user list.
 
 ##### 2. Rule Identification
 [[#Table of contents|Back to the top]]
 
-
+```YAML
+title: AnyDesk Installation
+status: experimental
+description: AnyDesk Remote Desktop installation can be used by attacker to gain remote access.
+```
 
 ##### 3. Log Source
 [[#Table of contents|Back to the top]]
 
+Type of targeted devices, type of events
 
+Here: Windows, process and file creation
+```YAML
+logsource:
+  category: process_creation
+  product: windows
+```
 
 ##### 4. Detection Description
 [[#Table of contents|Back to the top]]
 
-
+From intel, commands contain strings: `install`, `start-with-win`
+Directory: `C:\ProgramData\AnyDesk.exe`
+```YAML
+detection:
+  selection:
+    CommandLine|contains|all:
+      - '--install'
+      - '--start-with-win'
+    CurrentDirectory|contains:
+      - 'C:\ProgramData\AnyDesk.exe'
+  condition: selection
+```
 
 ##### 5. Rule Metadata
 [[#Table of contents|Back to the top]]
