@@ -13,7 +13,7 @@
 		- [[#5. Rule Metadata]]
 	- [[#Conversion]]
 		- [[#Sigmac]]
-		- [[#undercoder.io]]
+		- [[#uncoder.io]]
 
 ___
 ### Intro
@@ -210,6 +210,7 @@ From file description
 
 ```YAML
 title: AnyDesk Installation
+id: # generate from https://uuidgenerator.net
 status: experimental
 description: AnyDesk Remote Desktop installation can be used by attacker to gain remote access.
 ```
@@ -245,17 +246,47 @@ detection:
 ##### 5. Rule Metadata
 [[#Table of contents|Back to the top]]
 
+False positives, level, references, tags (MITRE ATT&CK)
 
+```YAML
+falsepositives:
+  - Legitimate deployment of AnyDesk
+level: high
+references:
+  - https://twitter.com/TheDFIRReport/status/1423361119926816776
+tags:
+  - attack.command_and_control
+  - attack.t1219
+```
 
 #### Conversion
+
+Convert rule to appropriate SIEM target to store logs $\rightarrow$ convert into ElasticSearch / Splunk queries
 ##### Sigmac
 [[#Table of contents|Back to the top]]
 
+https://github.com/SigmaHQ/sigma/tree/8bb3379b6807610d61d29db1d76f5af4840b8208/tools
+$\rightarrow$ clone repo to use tool, deprecated since 2023 $\rightarrow$ switch to **sigma-cli** or [pySigma](https://github.com/SigmaHQ/pySigma)
 
+Python-written, converts Sigma rules by matching detection log source field values to appropriate SIEM backend fields
 
-##### undercoder.io
+`python3.9 root/Rooms/sigma/sigma/tools/sigmac`
+
+Main options:
+- **`-t`**: targeted SIEM backend
+- **`-c`**: configuration file used for conversion (field mappings between rule and target SIEM)
+- **`--backend-option`**: backend configuration file / individual modifications $\rightarrow$ alert options for target SIEM. For example, in ElasticSearch, specify specific field properties to be primary keyword_field to be searched against, fields that end in `.keyword` or `.security`:
+```Bash
+python3.9 sigmac -t es-qs -c tools/config/winlogbeat.yml --backend-option keyword_field=".keyword" --backend-option analyzed_sub_field_name=".security" ../rules/windows/sysmon/sysmon_accessing_winapi_in_powershell_credentials_dumping.yml
+```
+
+```Bash
+python3.9 sigmac -t splunk -c splunk-windows Process_Creation_AnyDesk_Installation.yml
+```
+
+##### uncoder.io
 [[#Table of contents|Back to the top]]
 
-
+Web application, copy-paste rule, select backend
 
 ___
