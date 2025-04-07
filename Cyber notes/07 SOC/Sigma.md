@@ -259,6 +259,8 @@ tags:
   - attack.t1219
 ```
 
+[[Full Sigma rule 1]]
+
 #### Conversion
 
 Convert rule to appropriate SIEM target to store logs $\rightarrow$ convert into ElasticSearch / Splunk queries
@@ -287,6 +289,15 @@ python3.9 sigmac -t splunk -c splunk-windows Process_Creation_AnyDesk_Installati
 ##### uncoder.io
 [[#Table of contents|Back to the top]]
 
-Web application, copy-paste rule, select backend
+Web application, copy-paste rule, select backend, clean result (remove `*` and `\` not in path)
+
+Don't know why but instead of `process.working_directory.txt` it gave me `CurrentDirectory` $\rightarrow$ had to change it
+
+```Elastic Stack Query (Lucene)
+(process.command_line.txt:--install AND process.command_line.txt:--start-with-win AND process.working_directory.txt:C\:\\ProgramData\\AnyDesk\.exe)
+```
 
 ___
+### SecOps Decision
+[[#Table of contents|Back to the top]]
+
