@@ -21,3 +21,13 @@ Detection/Prevention Techniques
 - **Behavior-based**: identify abnormal pattern (can identify unknown threats)
 - **Policy-based**: detect policy violations
 
+___
+### Snort
+[[#Table of contents|Back to the top]]
+
+*Open-source, rule-based NIDS/NIPS*
+
+3 main use models
+- **Sniffer**: read IP packets
+- **Packet Logger**: log IP packets
+- **NIDS/NIPS**: log/drop suspicious packets according to rules
