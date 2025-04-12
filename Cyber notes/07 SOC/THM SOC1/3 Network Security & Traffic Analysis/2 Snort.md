@@ -1,5 +1,6 @@
 ### Table of contents
 - [[#IDS/IPS]]
+- [[#Snort]]
 - 
 
 ___
@@ -31,3 +32,10 @@ ___
 - **Sniffer**: read IP packets
 - **Packet Logger**: log IP packets
 - **NIDS/NIPS**: log/drop suspicious packets according to rules
+
+`snort -V`: Snort version
+
+`snort -c /etc/snort/snort.conf -T`: **T**est **c**onfig file
+
+Config file: rules, plugins, detection mechanisms, default actions, output settings; multiple config files for different purposes, run one at a time
+
