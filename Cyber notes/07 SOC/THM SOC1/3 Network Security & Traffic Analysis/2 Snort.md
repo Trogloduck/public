@@ -39,3 +39,45 @@ ___
 
 Config file: rules, plugins, detection mechanisms, default actions, output settings; multiple config files for different purposes, run one at a time
 
+___
+### Sniffer
+[[#Table of contents|Back to the top]]
+
+`-v`: verbose
+`-d`: packet **d**ata (payload)
+`-e`: link-layer (TCP/IP/UDP/ICMP) headers
+`-X`: HEX packet details
+`-i`: network **i**nterface to sniff
+Ex: `sudo snort -v -i eth0`
+
+___
+### Packet Logger
+[[#Table of contents|Back to the top]]
+
+`-l`: logger mode, default output folder: `/var/log/snort`
+`-K ASCII`: log in ASCII format
+`-r`: read logs (like sniffer)
+`-n`: number of packets
+
+Whoever creates file becomes owner $\rightarrow$ `sudo snort` $\Rightarrow$ root owns log file
+$\Rightarrow$ always `sudo` to examine logs
+$\Rightarrow$ `sudo chown [username] [file] / -R [directory]`: change ownership of log file/directory
+
+ASCII can be read in text editor
+
+Binary file can be read with the following methods
+- `sudo snort -r snort.log.1638459842`
+- `sudo tcpdump -r snort.log.1638459842 -ntc 10`
+- Wireshark
+
+**[BPF](https://biot.com/capstats/bpf.html)**: filter results
+Ex: `snort -r snort.log.1640048004 -X  port 80`
+`port 80` is the BPF
+
+___
+### IDS/IPS
+[[#Table of contents|Back to the top]]
+
+
+
+___
