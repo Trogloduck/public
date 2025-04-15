@@ -6,6 +6,7 @@
 - [[#IDS/IPS]]
 - [[#PCAP Investigation]]
 - [[#Rule Structure]]
+- [[#Operation Logic]]: [[#`snort.conf`]]
 
 ___
 ### Intro
@@ -125,11 +126,13 @@ ___
 	- `drop`: block and log
 	- `reject`: block, log, terminate packet session
 - Protocol: IP, TCP, UDP, ICMP, can detect other protocols using port numbers and options (Ex: FTP can be investigated by investigating TCP on port 21)
+
 #### IP
 	- Filtering: `alert icmp 192.168.1.56 any <> any any  (msg: "ICMP Packet From "; sid: 100001; rev:1;)`
 	  - Range: `192.168.1.0/24`
 	- Multiple ranges: `[192.168.1.0/24, 10.1.1.0/24]`
 	- Exclude: `!192.168.1.0/24` ("!" -- negation operator)
+
 #### Ports
 	- Filtering: `alert tcp any any <> any 21  (msg: "FTP Port 21 Command Activity Detected"; sid: 100001; rev:1;)`
 	- Range
@@ -138,6 +141,7 @@ ___
 		- Type 3: `1025:`
 		- Type 4: `[21,23]` -- list, not a range $\rightarrow$ possible to include ranges within lists
 	- Exclude: `!21`
+
 #### Direction
 `->`: source to destination
 `<>`: bidirectional
@@ -176,3 +180,65 @@ No `<-` operator...
 	- `dsize:>min`
 	- `dsize:<max`
 - `sameip`: filter for IP duplicates
+
+Edit local rules: `sudo gedit /etc/snort/rules/local.rules`
+
+Test local rule against .pcap: `snort -c local.rules -A full -l . -r task9.pcap`
+
+___
+### Operation Logic
+[[#Table of contents|Back to the top]]
+
+Main components:
+- **Packet Decoder**: collect, prepare packets for pre-processing
+- **Pre-processors**: arranges, modifies packets for detection engine
+- **Detection Engine**: primary component, dissect, analyze packets, apply rules
+- **Logging and Alerting**
+- **Outputs and Plugins**
+
+Types of rules
+- **Community**
+- **Registered**: get subscriber rules 30 days after subscribers
+- **Subscriber (Paid)**: updated 2x/week
+
+https://www.snort.org/downloads
+
+To use community/paid rules, indicate them in the snort.conf file
+
+#### `snort.conf`
+
+`sudo gedit /etc/snort/snort.conf`
+
+`#` comments a line $\rightarrow$ uncomment line to activate operator
+
+**Step #1: Set the network variables.**
+`HOME_NET`: where we are protecting
+`EXTERNAL_NET`: `any` or `!$HOME_NET`
+`RULE_PATH`: hardcoded rule path (etc/snort/rules)
+`SO_RULE_PATH`: come with registered and subscriber rules ($RULE_PATH/so_rules)
+`PREPROC_RULE_PATH`: come with registered and subscriber rules ($RULE_PATH/plugin_rules)
+
+**Step #2: Configure the decoder.**
+`#config daq`: IPS mode selection
+`#config daq_mode`: activate inline mode
+`#config logdir`: hardcoded default log path (/var/logs/snort)
+
+DAQ -- Data Acquisition modules: specific libraries used for packet I/O (Input/Output)
+
+DAQ modules
+- pcap (default): sniffer
+- afpacket (inline): IPS mode
+- ipq: inline on Linux, using Netfilter, replaces snort_inline patch
+- nfq: inline mode on Linux
+- ipfw: inline on Open-/Free-BSD
+- dump: testing mode of inline and normalization
+
+**Step #6: Configure output plugins**
+Output of IDS/IPS (logging, alerting format details)
+
+**Step #7: Customise your ruleset**
+`# site specific rules`: hardcoded local / user rules path (includes $RULE_PATH/local.rule)
+`#include $RULE_PATH`: hardcoded default/downloaded rules path (include $RULE_PATH/rulename)
+
+___
+[[Snort Cheatsheet.pdf]]
