@@ -118,3 +118,61 @@ ___
 [[#Table of contents|Back to the top]]
 
 ![[Pasted image 20250415142338.png]]
+
+#### Action
+	- `alert`: generate alert and log packet
+	- `log`
+	- `drop`: block and log
+	- `reject`: block, log, terminate packet session
+- Protocol: IP, TCP, UDP, ICMP, can detect other protocols using port numbers and options (Ex: FTP can be investigated by investigating TCP on port 21)
+#### IP
+	- Filtering: `alert icmp 192.168.1.56 any <> any any  (msg: "ICMP Packet From "; sid: 100001; rev:1;)`
+	  - Range: `192.168.1.0/24`
+	- Multiple ranges: `[192.168.1.0/24, 10.1.1.0/24]`
+	- Exclude: `!192.168.1.0/24` ("!" -- negation operator)
+#### Ports
+	- Filtering: `alert tcp any any <> any 21  (msg: "FTP Port 21 Command Activity Detected"; sid: 100001; rev:1;)`
+	- Range
+		- Type 1: `1:1024`
+		- Type 2: `:1024`
+		- Type 3: `1025:`
+		- Type 4: `[21,23]` -- list, not a range $\rightarrow$ possible to include ranges within lists
+	- Exclude: `!21`
+#### Direction
+`->`: source to destination
+`<>`: bidirectional
+No `<-` operator...
+
+#### Options
+- General
+- Payload: related to payload $\rightarrow$ payload patterns
+- Non-Payload: specific patterns, network issues
+
+**General**
+- `msg: "message displayed if rule triggered"`
+- `sid`: Snort rule ID
+	- <100: reserved rules
+	- 100-999: rules came with the build
+	- >= 1 000 000: user created rules
+- `reference:cve,CVE-XXXX`: could be CVE or other reference
+- `rev`: analysts keep rule history, rev indicates # of revisions
+
+**Payload**
+- `content:"to be matched"`: like grep, case sensitive
+- `nocase`: disables case sensitivity
+- `fast_pattern`: when using multiple `content` options, prioritizes the directly preceding option
+
+**Non-Payload**
+- `id`: filter IP id field
+- `flags`: TCP flags
+	- `F`: FIN
+	- `S`: SYN
+	- `R`: RST
+	- `P`: PSH
+	- `A`: ACK
+	- `U`: URG
+- `dsize`: packet payload size
+	- `dsize:min<>max`
+	- `dsize:>min`
+	- `dsize:<max`
+- `sameip`: filter for IP duplicates
