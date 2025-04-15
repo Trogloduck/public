@@ -78,6 +78,17 @@ ___
 ### IDS/IPS
 [[#Table of contents|Back to the top]]
 
+Manage traffic according to user-defined rules
 
+`-c`: config file
+`-T`: testing config file
+`-N`: disable logging
+`-D`: background mode
+`-A`: alert modes (specify amount of information to display about alerts)
+- `full` (default): all possible information
+- `fast`: message, timestamp, source-destination IP, port numbers
+- `console`: fast style alert on console screen
+- `cmg`: console message generator style, basic header details, hex and text format payload
+- `none`: no alerting
 
 ___
