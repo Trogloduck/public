@@ -1,10 +1,14 @@
 ### Table of contents
-- [[#IDS/IPS]]
+- [[#Intro]]
 - [[#Snort]]
-- 
+- [[#Sniffer]]
+- [[#Packet Logger]]
+- [[#IDS/IPS]]
+- [[#PCAP Investigation]]
+- [[#Rule Structure]]
 
 ___
-### IDS/IPS
+### Intro
 [[#Table of contents|Back to the top]]
 
 **IDS** -- Network Intrusion Detection System: passive, ***generates alerts***
@@ -83,7 +87,7 @@ Manage traffic according to user-defined rules
 `-c`: config file
 `-T`: testing config file
 `-N`: disable logging
-`-D`: background mode
+`-D`: background mode, used for automation
 `-A`: alert modes (specify amount of information to display about alerts)
 - `full` (default): all possible information
 - `fast`: message, timestamp, source-destination IP, port numbers
@@ -91,4 +95,26 @@ Manage traffic according to user-defined rules
 - `cmg`: console message generator style, basic header details, hex and text format payload
 - `none`: no alerting
 
+Pre-defined ICMP rule: `alert icmp any any <> any any  (msg: "ICMP Packet Found"; sid: 100001; rev:1;)`
+*alerts ICMP packets, any direction, located @ /etc/snort/rules/local.rules*
+
+- Test config file: `sudo snort -c /etc/snort/snort.conf -T`
+- Disable logging: `sudo snort -c /etc/snort/snort.conf -N`
+- Drop packets: `-Q --daq afpacket`
+- ...
+
+Run snort with rule, without config file: `sudo snort -c /etc/snort/rules/local.rules -A console`
+
 ___
+### PCAP Investigation
+[[#Table of contents|Back to the top]]
+
+`snort -r pcap_file.pcap`
+`--pcap-list="item1.pcap item2.pcap"`
+`--pcap-show`
+
+___
+### Rule Structure
+[[#Table of contents|Back to the top]]
+
+![[Pasted image 20250415142338.png]]
