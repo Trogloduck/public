@@ -298,6 +298,5 @@ Don't know why but instead of `process.working_directory.txt` it gave me `Curren
 ```
 
 ___
-### SecOps Decision
-[[#Table of contents|Back to the top]]
 
+[[Sigma_cheatsheet.pdf]]
