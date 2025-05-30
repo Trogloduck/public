@@ -1,6 +1,8 @@
 """
 Discord bot that plays an audio file (specify path on line 33) in a voice channel when a user enters, and leaves when the channel is empty.
 
+Voice permissions neeed: Connect, Speak, Move Members
+
 Set the environment variable DISCORD_TOKEN with your bot token with the following command in PowerShell:
 [System.Environment]::SetEnvironmentVariable("DISCORD_TOKEN", "your_token_here", "User")
 
