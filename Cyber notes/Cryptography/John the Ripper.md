@@ -19,7 +19,7 @@ Kali has Jumbo John installed
 
 [Installation guide](https://github.com/openwall/john/blob/bleeding-jumbo/doc/INSTALL)
 
-Downloadable for Windows [here](https://www.openwall.com/john/)
+Downloads for Windows and Wiki [here](https://www.openwall.com/john/)
 
 Need a wordlist for dictionary attack $\rightarrow$ [SecLists](https://github.com/danielmiessler/SecLists)
 
@@ -128,11 +128,25 @@ $\rightarrow$ `[List.Rules:DumbPassword]`
 #### 1. Zip2John
 `zip2john [options] [zip file] > output.txt` (option aren't often required)
 #### 2. Crack
-`john output.txt`
+1. `john output.txt` $\rightarrow$ password
+2. `unzip file.zip` $\rightarrow$ use cracked password
 
 ### Password-protected RAR files
 [[#Table of contents|Back to the top]]
-
+#### 1. Rar2John
+`rar2john [rar file] > output.txt`
+#### 2. Crack
+1. `john output.txt` $\rightarrow$ password
+2. `unrar x -p[password] file.rar`
 
 ### SSH keys
 [[#Table of contents|Back to the top]]
+
+By default, you authenticate SSH log in using a password.
+But you can use your **private key `id_rsa`** to authenticate. Doing so often requires a password to access the private key $\rightarrow$ this password can be cracked
+#### 1. SSH2John
+`python3 ssh2john id_rsa > output.txt`
+#### 2. Crack
+`john output.txt`
+
+NB: if `john output.txt` doesn't work, try `john --wordlist=[wordlist location] output.txt`
