@@ -103,9 +103,30 @@ To use single crack mode, hash must be modified:
 ### Custom Rules
 [[#Table of contents|Back to the top]]
 
+When "password must contain uppercase letter, lowercase letter, number, symbol", user often build passwords like this: `Password123!`
+	$\rightarrow$ uppercase precedes lowercase, then number, then symbol
+	$\Rightarrow$ pattern can be exploited by attackers, using custom rules
+
+Custom rules usually located in `/etc/john/john.conf`
+
+Syntax: `[List.Rules:THMRules]`: define rule name
+Then uses **regex style pattern** match to define where the word will be modified
+- **`Az`**: **appends** with defined characters
+- **`A0`**: **prepends**
+- **`c`**: **capitalizes** positionally
+
+Define characters to be appended/prepended, inside **" "**: `[characters]` $\rightarrow$ `[A-z]`, `[0-9]`, `[!£$%@]`, ...
+
+`Password123!`
+$\rightarrow$ `[List.Rules:DumbPassword]`
+	**`cAz"[0-9] [!£$%@]"`**
+
+`--rule=DumbPassword`: apply custom rule
 
 ### Password-protected Zip files
 [[#Table of contents|Back to the top]]
+
+
 ### Password-protected RAR files
 [[#Table of contents|Back to the top]]
 ### SSH keys
