@@ -77,7 +77,7 @@ Where password hashes are stored on Linux, date of last password change, expirat
 	$\rightarrow$ `unshadow [path to passwd] [path to shadow] > unshadowed.txt`
 
 Unshadow entire files or specific line
-#### 2. Cracking
+#### 2. Crack
 `john --format=sha512crypt unshadowed.txt`
 
 ### Single Crack Mode
@@ -125,9 +125,14 @@ $\rightarrow$ `[List.Rules:DumbPassword]`
 
 ### Password-protected Zip files
 [[#Table of contents|Back to the top]]
-
+#### 1. Zip2John
+`zip2john [options] [zip file] > output.txt` (option aren't often required)
+#### 2. Crack
+`john output.txt`
 
 ### Password-protected RAR files
 [[#Table of contents|Back to the top]]
+
+
 ### SSH keys
 [[#Table of contents|Back to the top]]
