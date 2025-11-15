@@ -1,3 +1,5 @@
+https://tryhackme.com/room/webapplicationbasics
+
 ### Table of contents
 - [[#URL]]
 - [[#HTTP Messages]]
@@ -178,22 +180,30 @@ https://securityheaders.com/: analyze security headers
 ##### CSP - Content-Security-Policy
 [[#Table of contents|Back to the top]]
 
+Can help mitigate against XSS
+Designate which websites and domains are considered safe
+`default-src`, `script-src`, ... : define various levels of granularity
 
-##### HSTS - Strict-Transport-Security
+Example: `Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.tryhackme.com; style-src 'self'`
+
+##### HSTS - HTTP Strict-Transport-Security
 [[#Table of contents|Back to the top]]
 
+Ensures HTTPS always
+Example: `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`
 
 ##### X-Content-Type-Options
 [[#Table of contents|Back to the top]]
 
+Instruct browser not to guess MIME time of resource, only use Content-Type header
+Example: `X-Content-Type-Options: nosniff`
 
 ##### Referrer-Policy
 [[#Table of contents|Back to the top]]
 
-
-
-___
-### 
-[[#Table of contents|Back to the top]]
-
+Control amount of info sent to destination web server when user is redirected from source web server
+- `Referrer-Policy: no-referrer`: disables any information being sent
+- `Referrer-Policy: same-origin`: sends info only if destination is part of same origin (within same site)
+- `Referrer-Policy: strict-origin`: same protocol (HTTPS)
+- `Referrer-Policy: strict-origin-when-cross-origin`: similar to `strict-origin`except for same-origin requests where it sends the full URL path in origin header
 
