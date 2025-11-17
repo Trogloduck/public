@@ -1,3 +1,5 @@
+[[JavaScript Essentials]]
+
 1° Open Inspector in Web Browser > Open Console
 *Good option to test code snippets, but not to write longer code*
 
