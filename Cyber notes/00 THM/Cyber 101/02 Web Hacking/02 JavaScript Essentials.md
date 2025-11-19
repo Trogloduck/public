@@ -6,7 +6,7 @@ https://tryhackme.com/room/javascriptessentials
 	- [[#Internal JS]]
 	- [[#External JS]]
 - [[#Dialogue Functions]]
-- [[]]
+- [[#Control Flow Statements]]
 
 
 ___
@@ -133,17 +133,41 @@ ___
 ### Control Flow Statements
 [[#Table of contents|Back to the top]]
 
+Control flow: order in which statements and blocks are executed based on conditions
+
+Conditional Statements
+`if-else`
+```JS
+if (condition) {
+	// action to be completed if condition returns true
+} else {
+	// action to be completed if condition returns false
+}
+```
+
 
 ___
-### Control Flow Statements
+### Minification
 [[#Table of contents|Back to the top]]
 
+*Compressed in JS*
+
+Removes unnecessary characters: spaces, line breaks, comments, shortens variable names.
+Reduces file size, improves loading time of web pages
+
+// Obfuscation: make code harder to understand
 
 ___
-### Control Flow Statements
+### Best practices
 [[#Table of contents|Back to the top]]
 
+- Avoid client-side validation only. Client can disable/manipulate JS --> validate server-side too
 
+- Trusted libraries only (`src`)
+
+- No hardcoded secrets: API keys, access tokens, credentials, ...
+
+- Minify and obfuscate: reduce size, improve loading time, make it harder for attacker to understand logic
 ___
 ### Control Flow Statements
 [[#Table of contents|Back to the top]]
