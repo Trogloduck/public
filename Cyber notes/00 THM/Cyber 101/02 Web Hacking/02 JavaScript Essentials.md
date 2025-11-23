@@ -168,13 +168,3 @@ ___
 - No hardcoded secrets: API keys, access tokens, credentials, ...
 
 - Minify and obfuscate: reduce size, improve loading time, make it harder for attacker to understand logic
-___
-### Control Flow Statements
-[[#Table of contents|Back to the top]]
-
-
-___
-### Control Flow Statements
-[[#Table of contents|Back to the top]]
-
-
