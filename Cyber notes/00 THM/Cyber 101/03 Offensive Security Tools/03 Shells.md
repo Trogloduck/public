@@ -214,11 +214,8 @@ After shell has been uploaded to web server, it can accessed through URL where s
 The script specifies the variable `cmd` should be set through GET method
 --> `http://target.com/uploads/shell.php?cmd=whoami`
 
-
-___
-### 
-[[#Table of contents|Back to the top]]
-
-
-
-___
+Popular web shells:
+- [p0wny-shell](https://github.com/flozz/p0wny-shell): minimalistic single-file PHP
+- [b374k shell](https://github.com/b374k/b374k): more feature-rich PHP
+- [c99 shell](https://www.r57shell.net/single.php?id=13): well-known and robust PHP shell, extensive functionality
+- More @ [https://www.r57shell.net/index.php](https://www.r57shell.net/index.php)
