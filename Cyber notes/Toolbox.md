@@ -1,7 +1,6 @@
 **Software**
 hyper-v
 docker
-burp suite
 wireshark
 android emulator
 [zphisher](https://github.com/htr-tech/zphisher)
@@ -11,9 +10,6 @@ Exegol
 Shodan (browser)
 https://www.adspower.com/download: spoofing tool
 [[Enumeration-Scanning tools]]
-
-**Methods**
-Google dorking
 
 **Websites**
 Whois
