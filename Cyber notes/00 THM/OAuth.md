@@ -1,0 +1,162 @@
+https://tryhackme.com/room/oauthvulnerabilities
+
+### Table of contents
+- [[#Key Concepts]]
+- [[#OAuth Grant Types]]
+- [[#OAuth Flow]]
+- [[#Identifying OAuth Services]]
+- 
+
+___
+### Key Concepts
+[[#Table of contents|Back to the top]]
+
+##### Resource Owner
+Person or system that controls certain data and can access app to access data
+##### Client
+Mobile app or server-side web app, acts as intermediary between user and owner
+##### Authorization Server
+Issues access tokens to client after successful authentication with resource owner
+##### Resource Server
+Hosts protected resources, accepts and responds to protected resource requests using access tokens
+##### Authorization Grant
+Means through which client obtains access token
+Grant types: Authorization Code, Implicit, Resource Owner Password Credentials, Client Credentials
+##### Access Token
+Credential used by client to access protected resources, limited lifespan and scope
+Prevents from repeatedly asking for credentials to resource owner
+##### Refresh Token
+Credential used by client without requiring resource owner to re-authenticate
+##### Redirect URI
+URI to which authorization server redirects resource owner's user-agent after grant/denial of authorization
+##### Scope
+Resource owner grants/denies, limit app's access to user's account, enforce principle of least privilege
+##### State Parameter
+Optional parameter maintains state between client and authorization server, prevents CSRF (cross-site request forgery)
+##### Token & Authorization Endpoint
+- Authorization server's endpoint: client exchanges authorization grant (/refresh token) for access token
+- Authorization endpoint: resource owner is authenticated and authorizes client to access protected resources.
+
+___
+### OAuth Grant Types
+[[#Table of contents|Back to the top]]
+
+##### Authorization Code
+Most commonly used for server-side apps (PHP, JAVA, .NET, ...)
+![[Pasted image 20251026151727.png]]
+##### Implicit Grant
+Designed for mobile and web apps where clients can't securely store secrets, directly issues access token without requiring authorization code exchange
+Less secure as it exposes access token which can be logged in browser history, doesn't support refresh tokens
+![[Pasted image 20251026151917.png]]
+##### Resource Owner Password Credentials
+Client is highly trusted by resource owner (1st party app)
+![[Pasted image 20251026152122.png]]
+##### Client Credentials
+Server-to-server interactions without user involvement
+![[Pasted image 20251026152255.png]]
+___
+### OAuth Flow
+[[#Table of contents|Back to the top]]
+
+![[Pasted image 20251026152557.png]]
+1. Authorization Request
+a) Tom wants to use [http://bistro.thm:8000/oauthdemo](http://bistro.thm:8000/oauthdemo), where he wants to log in via CoffeeShopApp
+b) App redirects Tom to authorization server with authorization request
+--> http://coffee.thm:8000/o/authorize/?client_id=zlurq9lseKqvHabNqOc2DkjChC000QJPQ0JvNoBt&response_type=code&redirect_uri=http://bistro.thm:8000/oauthdemo/callback
+- `response_type=code`: `CoffeeShopApp` is expecting authorization code
+- `client_id`: public identifier for client application, uniquely identifying `CoffeeShopApp`
+- `redirect_uri`: URL where authorization server will send Tom after he grants permission, must match one of the pre-registered redirect URIs for client app
+- `scope`: specifies level of access requested
+
+```python
+def oauth_login(request):
+	app = Application.objects.get(name="CoffeeApp")
+	redirect_uri = request.GET.get("redirect_uri", "http://bistro.thm:8000/oauthdemo/callback")
+	authorization_url = (
+		f"http://coffee.thm:8000/o/authorize/?client_id={app.client_id}&response_type=code&redirect_uri={redirect_uri}"
+		)
+	return redirect(authorization_url)
+```
+
+2. Authentication & Authorization
+Tom reaches authorization server, prompted to log in using credentials
+Successful login --> authorization server asks Tom if he agrees to grant bistro app access
+
+3. Authorization Response
+Tom agrees to grant access, authorization server generates authorization code
+Server redirects Tom to bistro website using `redirecte_uri`
+
+4. Token Request
+Bistro website exchanges authorization code for access token by requesting authorization server's token endpoint through POST request with
+- `grant_type`: type of grant being used; usually set as `code` to specify authorization code
+- `code`: authorization code received from authorization server
+- `redirect_uri`: must match original redirect URI provided in authorization request
+- `client_id and client_secret`: credentials for authenticating client application
+
+```python
+token_url = "http://coffee.thm:8000/o/token/"
+	client_id = Application.objects.get(name="CoffeeApp").client_id
+	client_secret = Application.objects.get(name="CoffeeApp").client_secret
+	redirect_uri = request.GET.get("redirect_uri", "http://bistro.thm:8000/oauthdemo/callback")
+
+	data = {
+		"grant_type": "authorization_code",
+		"code": code,
+		"redirect_uri": redirect_uri,
+		"client_id": client_id,
+		"client_secret": client_secret,
+		}
+	headers = {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		'Authorization': f'Basic {base64.b64encode(f"{client_id}:{client_secret}".encode()).decode()}',
+		}
+		
+	response = requests.post(token_url, data=data, headers=headers)
+	tokens = response.json()
+```
+
+Bistro app exchanges authorization code for access token
+Authorization server verifies information provided and responds with access token
+
+5. Token Response
+Authorization server authenticates bistro website and validates authorization code, and responds with access token (and optionally refresh token)
+
+Authorization server's response
+- `access_token`
+- `token_type`: typically "Bearer"
+- `expires_in`: duration in seconds for which access token is valid
+- `refresh_token (optional)`: token used to obtain new access tokens without requiring user to log in again
+
+___
+### Identifying OAuth Services
+[[#Table of contents|Back to the top]]
+
+Look for options to **log in using external service providers**
+
+Analyze **network traffic**, pay attention to **HTTP redirects**: look for `response_type`, `client_id`, `redirect_uri`, `scope`, `state`
+
+Identify framework
+- **HTTP Headers and Responses**: inspect for unique identifiers / comments referencing specific OAuth libraries/frameworks
+- **Source Code Analysis**: search for specific keywords, import statements that can reveal framework in use. Libraries like `django-oauth-toolkit`, `oauthlib`, `spring-security-oauth`, or `passport` in `Node.js`, have unique characteristics and naming conventions
+- **Authorization and Token Endpoints**: Different OAuth implementations might have unique endpoint patterns/structures. `Django OAuth Toolkit` typically follows the pattern `/oauth/authorize/` and `/oauth/token/`
+- **Error Messages**: inadvertently reveal underlying technology stack
+
+___
+### 
+[[#Table of contents|Back to the top]]
+
+
+
+___
+### 
+[[#Table of contents|Back to the top]]
+
+
+
+___
+### 
+[[#Table of contents|Back to the top]]
+
+
+
+___

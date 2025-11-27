@@ -22,7 +22,6 @@ import discord
 from discord.ext import commands
 import os
 
-
 TOKEN = os.getenv("DISCORD_TOKEN")
 if not TOKEN:
     raise ValueError("Please set the DISCORD_TOKEN environment variable with your bot token.")
