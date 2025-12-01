@@ -10,6 +10,8 @@ ___
 ### Intro
 [[#Table of contents|Back to the top]]
 
+[[04 Burp Suite Basics|Burp Suite Basics]]
+
 Modify and resend intercepted (in Proxy) requests / or manually create requests from scratch
 
 ![[Pasted image 20251201144912.png]]

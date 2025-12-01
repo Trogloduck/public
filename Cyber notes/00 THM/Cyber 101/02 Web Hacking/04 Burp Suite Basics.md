@@ -7,7 +7,7 @@
 - [[#Site Map and Issue Definitions]]
 - [[#Burp Browser]]
 - [[#Scoping]]
-- 
+- [[#Proxying HTTPS]]
 
 ___
 ### Intro
