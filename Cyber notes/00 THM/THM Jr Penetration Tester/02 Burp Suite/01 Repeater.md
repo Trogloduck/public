@@ -12,7 +12,7 @@ ___
 
 [[04 Burp Suite Basics|Burp Suite Basics]]
 
-Modify and resend intercepted (in Proxy) requests / or manually create requests from scratch
+***Modify** and **resend** intercepted (in Proxy) **requests** / or manually create requests from scratch*
 
 ![[Pasted image 20251201144912.png]]
 1. **Request List**: top left of tab, displays list of Repeater requests
@@ -26,7 +26,7 @@ ___
 ### Basic Usage
 [[#Table of contents|Back to the top]]
 
-Right-click on request and Send to Repeater / **`CTRL + R`**
+Right-click --> Send to Repeater / **`CTRL + R`**
 
 Request ends up in **Request View**
 

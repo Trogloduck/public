@@ -17,13 +17,13 @@ ___
 ### Intro
 [[#Table of contents|Back to the top]]
 
-Automated and customisable attacks -- modify parts of request, perform repetitive tests with variations of input data --> fuzzing, brute-force
+*Automated and customisable **attacks** -- modify parts of request, perform repetitive tests with variations of input data --> **fuzzing**, **brute-force***
 
-Comparable to command-line tools like wfuzz and ffuf
+Comparable to command-line tools like **`wfuzz`** and **`ffuf`**
 
 Rate limitation on community edition --> use other tools for fuzzing and brute-forcing
 
-Right-click on request and Send to Intruder / **`CTRL + I
+Right-click --> Send to Intruder / **`CTRL + I
 
 Intruder sub-tabs
 - **Positions**: select attack type, configure where to insert payloads in request template
@@ -36,17 +36,17 @@ ___
 ### Positions
 [[#Table of contents|Back to the top]]
 
-Burp *automatically* attempts to identify most probable position of payloads, highlighted in green and enclosed with "`§`"
+Burp *automatically* attempts to identify most probable position of payloads, highlighted in green and enclosed with "**`§`**"
 
-- `Add §`: define new positions manually
-- `Clear §`: removes all defined positions
-- `Auto §`: automatically attempts to identify most likely positions based on request
+- **`Add §`**: define new positions manually
+- **`Clear §`**: removes all defined positions
+- **`Auto §`**: automatically attempts to identify most likely positions based on request
 
 ___
 ### Payloads
 [[#Table of contents|Back to the top]]
 
-*Create, assign, configure payloads*
+***Create**, **assign**, **configure payloads***
 
 ![[Pasted image 20251201172318.png]]
 1. **Payload Sets**: choose position, select payload type
@@ -62,7 +62,7 @@ ___
 ### Attack Types
 #### Sniper
 [[#Table of contents|Back to the top]]
-*Cycles through payloads, inserting one payload at a time into each position defined in request, precise and focused testing*
+*Cycles through payloads, inserting **one payload at a time** into each position defined in request, precise and focused testing*
 
 **Positions:** `username=§pentester§&password=§Expl01ted§`
 **Payload:** wordlist containing the words `burp`, `suit`, `intruder`
@@ -79,7 +79,7 @@ Number of requests = number of words \* number of positions
 
 #### Battering Ram
 [[#Table of contents|Back to the top]]
-*Sends all payloads simultaneously, each payload inserted into its respective position, testing for race conditions for instance*
+*Sends **all payloads simultaneously**, each payload inserted into its respective position, testing for race conditions for instance*
 
 **Positions:** `username=§pentester§&password=§Expl01ted§`
 **Payload:** wordlist containing the words `burp`, `suit`, `intruder`
@@ -92,7 +92,7 @@ Number of requests = number of words \* number of positions
 
 #### Pitchfork
 [[#Table of contents|Back to the top]]
-*Simultaneous testing of multiple positions with different payloads. Define multiple payload sets, each associated with specific position in request.*
+*Simultaneous testing of **multiple positions** with **different payloads**. Define multiple payload sets, each associated with specific position in request.*
 
 **Positions:** `username=§pentester§&password=§Expl01ted§`
 **Payloads:** one set per position (max 20)
@@ -107,7 +107,7 @@ Number of requests = number of words \* number of positions
 
 #### Cluster Bomb
 [[#Table of contents|Back to the top]]
-*Sniper x Pitchfork: Sniper-like attack on each position but simultaneously tests all payloads from each set. Multiple positions have different payloads, and we want to test them all together.*
+***Sniper x Pitchfork**: Sniper-like attack on each position but **simultaneously tests all payloads from each set**. Multiple positions have different payloads, and we want to test them all together.*
 
 **Positions:** `username=§pentester§&password=§Expl01ted§`
 **Payloads:** one set per position (max 20)
