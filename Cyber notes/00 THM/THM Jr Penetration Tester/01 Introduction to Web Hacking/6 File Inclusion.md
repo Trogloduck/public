@@ -4,7 +4,7 @@
 - [[#LFI 1]]
 - [[#LFI 2]]
 - [[#RFI -- Remote File Inclusion]]
-- 
+- [[#Remediation]]
 
 ___
 ### Intro
