@@ -1,5 +1,7 @@
 ### Table of contents
 - [[#Types of Firewalls]]
+- [[#Rules]]
+- [[#Linux]]
 
 ___
 ### Types of Firewalls
