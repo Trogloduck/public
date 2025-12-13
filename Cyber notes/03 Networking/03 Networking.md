@@ -4,7 +4,7 @@
 ___
 ##### ***Networking***: connecting things together
 
-Internet: network of smaller networks, repository to store and share information
+**Internet**: network of smaller networks, repository to store and share information
 *Private* network < *public* network < Internet
 
 Every machine on a network is called a **host**, 2 types of software on those hosts:
@@ -13,7 +13,7 @@ Every machine on a network is called a **host**, 2 types of software on those ho
 
 ***Peer-to-peer***: network composed of hosts that are both client and server
 
-A network uses **[[public/Cyber notes/03 Networking/Protocols/IP]]** and **[[MAC]]** to identify devices on it
+A network uses **[[IP]]** and **[[MAC]]** to identify devices on it
 
 **ping** uses **ICMP** (Internet Control Message Protocol) to assess ***performance of connection*** between 2 devices
 

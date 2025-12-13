@@ -1,6 +1,7 @@
 < [[03 Networking]]
 
-Subdividing a network into smaller networks within itself
+**Network segment**: group of computers connected using shared medium (Ethernet switch, WiFi access point, ...), *physical connection*
+**Subnet**: one or more network segments configured to use same router, *logical connection*
 
 - ***Host*** address: IP address of a device within a subnet
 	Ex: 192.168.1.**100**
