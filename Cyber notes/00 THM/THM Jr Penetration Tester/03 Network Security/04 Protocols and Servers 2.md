@@ -2,7 +2,6 @@ https://tryhackme.com/room/protocolsandservers2
 
 [[Protocols and Servers|Protocols and Servers 1]]
 
-
 ### Table of contents
 - [[#Sniffing Attack]]
 - [[#MITM]]
