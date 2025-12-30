@@ -4,6 +4,7 @@ https://tryhackme.com/room/introtoshells
 - [[#Tools]]
 - [[#Shell Types]]
 - [[#Netcat]]
+- [[#Netcat Shell Stabilization]]
 
 ___
 ### Tools
@@ -40,11 +41,19 @@ ___
 ### Netcat
 [[#Table of contents|Back to the top]]
 
+**Reverse Shell**
+1. `nc -lvnp <port-number>`: set up listener on attacker machine
+   Options: **-l**istening, **-v**erbose, **-n**o DNS resolution, **-p**ort specification (--> use well-know port number in order to get past firewall and detection)
+2. Execute **payload** on target machine to connect back to listener
 
+**Bind Shell**
+1. Set up listener on target machine
+2. `nc <target-ip> <chosen-port>`: connect attacker machine to listener
 
 ___
-###
+### Netcat Shell Stabilization
 [[#Table of contents|Back to the top]]
+
 
 
 ___
