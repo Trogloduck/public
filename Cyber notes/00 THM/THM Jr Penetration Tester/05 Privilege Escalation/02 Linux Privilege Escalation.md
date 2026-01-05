@@ -10,6 +10,8 @@ https://tryhackme.com/room/linprivesc
 - [[#Capabilities]]
 - [[#Cron Jobs]]
 - [[#PATH]]
+- [[#NFS]]
+- [[#Practical]]
 
 
 ___
@@ -140,7 +142,7 @@ ___
 
 **NB:** failed kernel exploit can lead to system crash
 
-##### Practical
+##### Kernel Practical
 1. Kernel version: 3.13.0
 2. Exploit-DB --> CVE-2015-1328
 3. Compile: `gcc 37292.c -o exploit`
@@ -215,7 +217,7 @@ find / -type f -perm -04000 -ls 2>/dev/null
 
 **Compare executables with [GTFO Bins list](https://gtfobins.github.io/#+suid)**
 
-##### Practical
+##### SUID Practical
 1. `find / -type f -perm -04000 -ls 2>/dev/null`: find binaries with SUID set
 2. Compare with [GTFO Bins list](https://gtfobins.github.io/#+suid)
 	   --> base64 allows to read unreadable files
@@ -333,20 +335,3 @@ int main()
 ```
 `gcc nfs.c -o nfs`
 `chmod +s nfs`
-
-___
-### Practical
-[[#Table of contents|Back to the top]]
-
-10.80.136.191
-
-leonard
-Penny123
-
-SUID: base64
-
-```
-LFILE=file_to_read
-base64 "$LFILE" | base64 --decode
-```
-
