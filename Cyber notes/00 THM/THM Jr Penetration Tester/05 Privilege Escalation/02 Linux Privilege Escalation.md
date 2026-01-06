@@ -11,7 +11,6 @@ https://tryhackme.com/room/linprivesc
 - [[#Cron Jobs]]
 - [[#PATH]]
 - [[#NFS]]
-- [[#Practical]]
 
 
 ___
