@@ -38,6 +38,29 @@ type %userprofile%\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\Conso
 type $Env:userprofile\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
 ```
 
+**Save Windows Credentials**
+List saved credentials: `cmdkey /list`
+Test running powershell with elevated privilege without having password:
+```Powershell
+runas /savecred /user:admin powershell.exe
+```
+
+**IIS Configuration**
+Internet Information Services: default web browser on Windows installations
+`web.config` stores config of websites and credentials
+- C:\inetpub\wwwroot\web.config
+- C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Config\web.config
+Find database connection strings: 
+```Powershell
+type C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Config\web.config | findstr connectionString
+```
+
+**PuTTY**
+SSH client
+```Powershell
+reg query HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions\ /f "Proxy" /s
+```
+*Note: Simon Tatham is PuTTY's creator and part of path*
 
 ___
 ### 
