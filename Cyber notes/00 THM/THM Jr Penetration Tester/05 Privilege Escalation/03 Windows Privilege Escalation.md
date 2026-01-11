@@ -328,5 +328,3 @@ Runs on attacking machine (doesn't require to upload to target machine, making n
 
 **Metasploit**
 Meterpreter on target system --> use `multi/recon/local_exploit_suggester`
-
-___
