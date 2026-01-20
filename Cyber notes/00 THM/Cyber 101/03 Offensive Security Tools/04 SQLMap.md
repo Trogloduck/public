@@ -2,6 +2,7 @@ https://tryhackme.com/room/sqlmapthebasics
 
 ### Table of contents
 - [[#Intro]]
+- [[#Automated SQL Injection]]
 
 ___
 ### Intro
