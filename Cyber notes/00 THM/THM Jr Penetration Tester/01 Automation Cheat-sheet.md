@@ -1,10 +1,8 @@
-https://tryhackme.com/room/writingpentestreports
-
 ### Table of contents
-- [[#Intro]]
+- [[#]]
 
 ___
-### Intro
+### 
 [[#Table of contents|Back to the top]]
 
 
