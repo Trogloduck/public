@@ -2,7 +2,14 @@ https://tryhackme.com/room/adauthenticatedenumeration
 
 ### Table of contents
 - [[#AS-REP Roasting]]
-- 
+- [[#Manual Enumeration]]
+	- [[#1. `whoami`]]
+	- [[#2. **Check Your Privileges**]]
+	- [[#3. System & Domain Info]]
+	- [[#4. Enumerate Users & Groups]]
+	- [[#5. Identify Service Accounts]]
+	- [[#6. Environment & Registry]]
+- [[#Bloodhound]]
 
 ___
 ### AS-REP Roasting
@@ -63,12 +70,68 @@ Credentials: asrepuser1:qwerty123!
 
 ##### 4. Enumerate Users & Groups
 
+**`NET`**
+`net help`: display all available commands
 
+**Users**
+`net user`: queries computer for local accounts
+`net user /domain`: queries DC for list of all domain user accounts
+`net user <username> /domain`: more info about specific account
 
+**Groups**
+`net group /domain`
+`net group <group_name> /domain`: discover names of computers on domain
+`net localgroup`: lists only local groups
+`net localgroup <group_name>`: lists members of specific local group
 
+Most interesting domain groups
+- Domain Admins / Administrators
+- Enterprise Admins --> multi domain forests
+- Server Operators / Backup Operators
+- Any group with "Admin" in its name
+
+**Sessions**
+`quser`/`query user`: lists logged on users
+--> finding an admin that way is big --> could lead to finding their credentials (--> LSASS dump / Kerberos ticket / impersonate session token with `SeImpersonatePrivilege` account)
+Require elevated privilege:
+`tasklist`: list of running processes (`/V`: verbose mode)
+`net session`: list SMB sessions between computer and other computers (admin privilege to run)
+
+##### 5. Identify Service Accounts
+*not human, used by app/service, have privilege to get the job done but could still be high*
+
+**`WMIC`**
+`wmic service get`
+`wmic service get Name, StartName`: name and associated account (admin privilege to run)
+--> if service has `DomainName\username` StartName --> could be interesting because it could be reused elsewhere, could have weak password
+(PS equivalent: `Get-WmiObject Win32_Service | select Name, StartName`)
+
+**`SC`**: communicates with Service Control Manager
+`sc query state= all`: list all services (admin privilege to run)
+`sc query state= all | find "Keyword"`: filter
+`sc qc <service_name>`: more info about service, including StartName
+
+##### 6. Environment & Registry
+*persistent system configuration: environment variables and Windows Registry*
+
+**Saved Auto-Logon Credentials**
+`HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon`
+
+`reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" /v <search_word>` ("search_word" --> "DefaultPassword","DefaultUsername")
+
+`HKLM\Security\Cache` (admin privilege to access) --> hashed passwords
+
+**Installed apps**
+`reg query reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall`: list installed apps
+
+**Registry Search**
+`reg query HKLM /f "password" /t REG_SZ /s`
+
+**Scheduled Tasks**
+`schtasks /query`, `schtasks /create`, `schtasks <task_name> /run`
 
 ___
-### 
+### Bloodhound
 [[#Table of contents|Back to the top]]
 
 
