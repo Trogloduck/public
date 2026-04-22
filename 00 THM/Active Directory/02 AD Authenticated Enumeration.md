@@ -134,7 +134,73 @@ ___
 ### Bloodhound
 [[#Table of contents|Back to the top]]
 
+*Tool for AD enumeration, graph-based perspective*
 
+##### Two-Stage Attack Model
+
+1° Enumeration
+Deploy data collectors (SharpHound / Bloodhound-python), gather info about AD structure (user sessions, group memberships, ACLs, delegation settings), even if detected attacker possess data for attack
+
+2° Targeted Attack
+Bloodhound offline, identify precise, efficient paths for goals --> when re-enter environment, move laterally and escalate within minutes
+
+Evolution - Modern Capabilities
+- **AzureHound:** Entra ID enumeration
+- **RBCD** (Resource-Based Constrained Delegation): primitives `AddAllowedToAct` and `AllowedToAct` can be detected
+- **Butterfly algorithm:** deeper understanding of relationships and vulnerabilities
+
+SharpHound collects data, while BloodHound makes the graphs
+
+##### SharpHound
+
+Enumerates
+- Group memberships
+- Session data
+- ACLs
+- Domain trusts
+- Privileged relationships (like local administrator rights)
+
+SharpHound collectors
+- **`SharpHound.exe`**: standard enumeration on domain-joined Windows machines, versatile and robust functionality --> recommended method
+- **`AzureHound.ps1`**: focused on Azure Entra ID environments, enumerate cloud-specific configurations and identities seamlessly into hybrid AD scenarios
+- **`SharpHound.ps1` (Deprecated)**: previously used for stealth operations, load scripts directly into memory to avoid antivirus detection
+
+BloodHound.py: ideal for Linux
+
+`C:\> .\SharpHound.exe --CollectionMethods All --Domain tryhackme.loc --ExcludeDCs`
+- `ExcludeDCs`: exclude DCs to reduce detection risk
+
+`bloodhound-python -u asrepuser1 -p qwerty123! -d tryhackme.loc -ns 10.211.12.10 -c All --zip`
+- `c All`: all available collection methods
+- `zip` archive, easy to import into BloodHound
+
+Minimise Detection
+- `--ExcludeDCs`: avoid querying DCs
+- `DCOnly`: limit interactions with sensitive systems
+- Run collectors from systems with appropriate antivirus exclusions / non-domain-joined machines using `runas` with `/netonly` to authenticate without joining domain
+
+**Practical**
+
+1. Go to `http://10.211.12.100:8080` (where BloodHound-CE is hosted) and login
+	- Username: `admin`
+	- Password: `weU^BjZr33OIWsC^`
+2. Administration > File Ingest > Upload zip file (`bloodhound-python -u asrepuser1 -p qwerty123! -d tryhackme.loc -ns 10.211.12.10 -c All --zip`)
+3. Explore
+
+Node info
+- **Object information:** name, type, domain
+- **Sessions:** active logon sessions
+- **Member of:** AD groups
+- **Local admin privileges:** machines where object has local admin rights
+- **Execution privileges:** rights such as RDP or equivalent permissions
+- **Outbound object control:** rights object has over other objects
+- **Inbound object control:** rights other objects have over object
+
+4. Attack Path Discovery
+	1. Pathfinding
+	2. `EMPANADAL0V3R` as Start Node
+	3. `Tier 1 ADMINS` as End Node
+	4. Run
 
 ___
 ### 
