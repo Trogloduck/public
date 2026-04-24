@@ -10,6 +10,7 @@ https://tryhackme.com/room/adauthenticatedenumeration
 	- [[#5. Identify Service Accounts]]
 	- [[#6. Environment & Registry]]
 - [[#Bloodhound]]
+- [[#PS ActiveDirectory & PowerView]]
 
 ___
 ### AS-REP Roasting
@@ -203,27 +204,44 @@ Node info
 	4. Run
 
 ___
-### 
+### PS ActiveDirectory & PowerView
 [[#Table of contents|Back to the top]]
 
+##### PS ActiveDirectory
 
+Available on DCs
+For other machines, use RSAT (Remote SErver Administration Tools)
 
-___
-### 
-[[#Table of contents|Back to the top]]
+1. SSH login
+2. `powershell`
+3. `Get-Module -ListAvailable ActiveDirectory`: check module availability
+4. `Import-Module ActiveDirectory`
+***User enumeration***
+5. `Get-ADUser -Filter *`
+	- `-Identity <username>`: get specific user's info
+	- `-Properties *` for more info, `-Properties LastLogonDate,MemberOf,Title,Description,PwdLastSet` for specific info
+	- `-Filter "Name -like '*admin*"`: name contains "admin"
+***Group enumeration***
+6. `Get-ADGroup -Filter *`
+	- `| Select Name`: only display Name
+	- `Get-ADGroupMember -Identity "Group Name"`: list all members of "Group Name"
+***Machine enumeration***
+7. `Get-ADComputer -Filter *`
+	- `| Select Name, OperatingSystem`
 
+8. `Get-ADDefaultDomainPasswordPolicy`
 
+Other available commands [here](https://learn.microsoft.com/en-us/powershell/module/activedirectory/?view=windowsserver2025-ps)
 
-___
-### 
-[[#Table of contents|Back to the top]]
+##### PowerView
+*Part of PowerSploit*
 
-
-
-___
-### 
-[[#Table of contents|Back to the top]]
-
-
-
-___
+Same 1. and 2.
+3. Go to `Recon` folder (in room: `C:\Users\asrepuser1\Downloads\PowerSploit-master\Recon`)
+4. `Import-Module .\PowerView.ps1`
+***User enumeration***
+5. `Get-DomainUser`, `Get-DomainUser *admin*`
+***Group enumeration***
+6. `Get-DomainGroup`/`Get-NetGroup`, `Get-DomainGroup *admin*`
+***Machine enumeration***
+7. `Get-DomainComputer`
