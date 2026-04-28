@@ -36,7 +36,7 @@ e.g. : `hashcat -m 18200 hashes.txt wordlist.txt`
 
 **Mitigation**
 - Enforce pre-authentication
-- Strong, complex paswords
+- Strong, complex passwords
 - Monitor anomalous AS-REP requests on KDC
 
 ___
