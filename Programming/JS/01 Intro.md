@@ -1,6 +1,11 @@
 `console.log()`: outputs information to console (part of web browser used for debugging)
 
-`//`: comment
+```JS
+// comment
+
+/* Multiple lines
+Comment */
+```
 
 ### Variables
 
@@ -24,6 +29,12 @@ Symbol('mySymbol');
 1234567890123456789012345678901234567890n;
 ```
 *Create `BigInt` by `n` at the end*
+
+**`typeof`**
+```JS
+let score = 10;
+console.log(typeof score); // "number"
+```
 
 ### Declare Variable
 
