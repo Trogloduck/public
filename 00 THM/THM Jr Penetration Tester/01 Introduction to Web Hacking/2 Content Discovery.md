@@ -125,6 +125,27 @@ Wordlists: .txt list containing commonly used words
 1. Download worldlist
 2. Feed wordlist path into automated tool
 
+**`gobuster`**
+```Shell
+gobuster dir --url http://10.10.124.235/ -w /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt
+```
+
+Subdomain: resolved through DNS (DNS record points to IP)
+Vhost: resolved by web server -- multiple sites can run on same IP, server uses `Host:` HTTP header to decide which site to serve
+
+- DNS mode: performs DNS lookups
+```Shell
+gobuster dns -d example.thm -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt --wildcard
+```
+*`--wildcard`: force enumeration even if wildcard DNS is detected*
+
+- Vhost mode: doens't perform DNS lookups, sends HTTP requests to target IP, cycling through wordlist as `Host:` header values
+```Shell
+gobuster vhost -u "http://10.128.142.197" --domain example.thm -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt --append-domain --exclude-length 250-320
+```
+*`--exclude-length` used to filter out false positives*
+
+
 **`fuff`**
 ```Shell
 ffuf -w /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt -u http://10.10.124.235/FUZZ
@@ -133,9 +154,4 @@ ffuf -w /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt -u http:/
 **`dirb`**
 ```Shell
 dirb http://10.10.124.235/ /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt
-```
-
-**`gobuster`**
-```Shell
-gobuster dir --url http://10.10.124.235/ -w /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt
 ```
