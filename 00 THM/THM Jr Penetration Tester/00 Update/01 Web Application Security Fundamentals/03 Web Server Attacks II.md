@@ -278,7 +278,3 @@ Confirmed by WebDAV-specific verbs in `Public Options` line (`PROPFIND`, `PROPP
 |`http-webdav-scan`|Probes for WebDAV support and retrieves the server's DAV headers|
 |`http-iis-webdav-vuln`|Tests for IIS WebDAV authentication bypass (CVE-2009-1535, affects IIS 5 and 6)|
 |`http-ntlm-info`|Sends an `NTLM` authentication request to a given path and extracts target information from the NTLM challenge response.|
-
-
-
-___
