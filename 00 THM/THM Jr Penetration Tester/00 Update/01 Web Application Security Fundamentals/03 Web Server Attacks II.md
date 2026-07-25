@@ -3,6 +3,7 @@ https://tryhackme.com/room/webserverattacks2
 ### Table of contents
 - [[#IIS]]
 - [[#Fingerprinting & Enumeration]]
+- [[#~Tilde Enumeration]]
 - 
 
 ___
@@ -47,10 +48,9 @@ Read response headers from
 
 `X-AspNet-Version`: .NET framework version --> CVEs
 
-##### WebDAV Detection - OPTIONS
+##### WebDAV Detection -- OPTIONS
 
-WebDAV -- Distributed Authoring and Versioning: HTTP extension ads files management verbs (`PUT` (upload), `DELETE`, `COPY`, `MOVE`, `PROPFIND`, and `LOCK`). Legitimate use: SharePoint, web-based file editing tools
-If left enabled on directory with writing and execution permissions --> direct to uploading shell
+If [[WebDAV]] left enabled on directory with writing and execution permissions --> direct path to uploading shell
 
 `curl -X OPTIONS http://10.130.175.183 -sv 2>&1 | grep -E "Allow:|DAV:"`
 *informs whether WebDAV is active*
@@ -83,7 +83,42 @@ ___
 ### ~Tilde Enumeration
 [[#Table of contents|Back to the top]]
 
+8.3 filename format from DOS (Disk Operating System): < 8 characters for name, < 3 for extension
+Windows creates short 8.3 filenames and long filenames for every file created on [[NTFS]] volumes 
 
+Conversion rule
+- First **6** characters of long name
+- Append **`~1`** (or `~2`, `~3` if more than one)
+- First **3** characters of extension
+
+IIS receives request with `~` in path --> processes it against 8.3 short name namespace
+Match returns different status code than no match
+
+Affects IIS 5.x - IIS 10.0
+Recommended mitigation: disable 8.3 filename creation in Windows registry
+
+##### `iis_shortname_scan.py`
+
+`python3 iis_shortname_scan.py http://10.130.167.138/`
+*2 example results: `/backup~1` and `/aspnet~1`*
+
+##### Short Name Interpretation
+
+|Short Name Discovered|Likely Full Name|Why It Matters|
+|---|---|---|
+|`BACKUP~1/`|`BackupFiles/`, `Backup_2024/`|Backup data, likely sensitive|
+|`ADMINI~1/`|`AdminInterface/`, `Administration/`|Admin panel, restricted access|
+|`CONFIG~1.ASP`|`configuration.asp`, `config_old.asp`|The configuration file may contain credentials|
+|`USERS_~1.XLS`|`users_backup.xlsx`|User data export, high value target|
+
+##### Enumerate Directory
+
+IIS doesn't serve content via short name URL path directly --> try to guess long name: `/backup/`, `/BackupFiles/`, `/backup_data/`, ... / use wordlist against confirmed 6-character prefix
+
+`curl http://10.130.167.138/BackupFiles/`
+
+`curl http://10.130.167.138/BackupFiles/webdav_notes.txt`
+`webdav_user:P@ssw0rd!123`
 
 ___
 ### 

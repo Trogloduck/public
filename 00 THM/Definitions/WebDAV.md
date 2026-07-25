@@ -1,0 +1,1 @@
+Distributed Authoring and Versioning: HTTP extension which adds files management verbs (`PUT` (upload), `DELETE`, `COPY`, `MOVE`, `PROPFIND`, and `LOCK`). Legitimate use: SharePoint, web-based file editing tools
