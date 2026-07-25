@@ -1,0 +1,1 @@
+New Technology LAN Manager: suite of Microsoft security protocols, provides authentication, integrity, confidentiality to users
