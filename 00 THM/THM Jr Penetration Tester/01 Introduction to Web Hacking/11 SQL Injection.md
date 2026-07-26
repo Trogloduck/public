@@ -145,11 +145,43 @@ ___
 ### Remediation
 [[#Table of contents|Back to the top]]
 
-**Prepared Statements** (with parametrized queries)
+##### Prepared Statements
+(with parametrized queries)
 Ensure SQL code structure doesn't change, database can distinguish between query and data
 
-**Input Validation**
+**PHP**
+Vulnerable
+```php
+$query = "SELECT * FROM users WHERE username='" . $_POST['username'] . "'";
+$result = mysqli_query($conn, $query);
+```
+User input concatenated into query string
+Attacker can escape quotes and inject whatever they want
+
+Fixed with prepared statements (PDO)
+```php
+$stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+$stmt->execute([$_POST['username']]);
+$result = $stmt->fetchAll();
+```
+`?` is a placeholder: whatever user enters, even `' OR 1=1--`, database treats whole thing as literal string, never touches query structure
+
+**Python**
+Vulnerable
+```python
+query = f"SELECT * FROM users WHERE username='{username}'"
+cursor.execute(query)
+```
+Fixed
+```python
+cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+```
+
+##### Input Validation
 Allow list, string replacement method filter characters
 
-**Escaping User Input**
+##### Escaping User Input
 Prepend "`\`" to special characters such as `'`, `"`, `$`, `\` to make them parse as regular string and not special characters
+
+##### WAF
+Blocks incoming requests containing known attack patterns: `' OR 1=1`, `UNION SELECT`, `information_schema`, ...

@@ -59,7 +59,7 @@ WHERE _condition_
 - (`NOT`) `BETWEEN ... AND ...`
 - (`NOT`) `IN (...)` (in a list)
 - `"my_column"` (`NOT`) `LIKE "string_2"`: case-insensitive str comparison
-	- `%`: matches zero or more characters
+	- `%`: wildcard -- matches zero or more characters
 	- `_`: matches any one character
 - `IS` (`NOT`) `NULL`
 
