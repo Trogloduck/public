@@ -31,9 +31,6 @@ nmap -sV
 	- .htpasswd.bak
 	- ...
 
-
-`gobuster dir -u http://10.129.136.60:80 -w /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt -t 20`
-
 Finding in /mail
 mail.log
 HR credential (username: hr) in `config.php`
