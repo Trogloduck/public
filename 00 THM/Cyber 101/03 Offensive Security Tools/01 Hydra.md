@@ -31,7 +31,10 @@ Example: brute force **FTP** with username "user" and password list "passlist.tx
 | `<login_credentials>` | username and password used to log in (e.g. `username=^USER^&password=^PASS^`) |
 | `<invalid_response>`  | part of the response when the login fails                                     |
 | `-V`                  | verbose output for every attempt                                              |
-Example: `hydra -l <username> -P <wordlist> 10.80.174.80 http-post-form "/login:username=^USER^&password=^PASS^:Your username or password is incorrect." -V`
+Example: 
+```Shell
+hydra -l <username> -P <wordlist> 10.80.174.80 http-post-form "/login:username=^USER^&password=^PASS^:Your username or password is incorrect." -V
+```
 - `/login`: authentication page
 - `username=^USER^&password=^PASS^`: format of the input (can be retrieved by trying to authenticate and intercepting the request with Burp)
 - `Your username or password is incorrect.`: statement when authentication fails

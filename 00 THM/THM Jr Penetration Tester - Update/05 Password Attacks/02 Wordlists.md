@@ -132,6 +132,11 @@ crunch 11 11 -t Helios20%%! -o pass_helios.txt
 - `11 11`: minimum & maximum 11 characters
 - `-t`: pattern with `%` replaced by digits
 
+Automated tool to generate wordlist from personal info
+```Shell
+git clone https://github.com/Mebus/cupp.git
+```
+
 ___
 ### Using Wordlists
 [[#Table of contents|Back to the top]]
