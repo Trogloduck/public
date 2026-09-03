@@ -139,7 +139,7 @@ gobuster dns -d example.thm -w /usr/share/wordlists/SecLists/Discovery/DNS/subdo
 ```
 *`--wildcard`: force enumeration even if wildcard DNS is detected*
 
-- Vhost mode: doens't perform DNS lookups, sends HTTP requests to target IP, cycling through wordlist as `Host:` header values
+- Vhost mode: doesn't perform DNS lookups, sends HTTP requests to target IP, cycling through wordlist as `Host:` header values
 ```Shell
 gobuster vhost -u "http://10.128.142.197" --domain example.thm -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt --append-domain --exclude-length 250-320
 ```
